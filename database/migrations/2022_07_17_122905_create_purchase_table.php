@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('balance_payment');
             $table->double('percen_current');
             $table->double('percen_consider');
+            $table->integer('amount_consider');
             $table->integer('status');
             $table->timestamps();
         });

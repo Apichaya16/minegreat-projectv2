@@ -62,13 +62,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{}}">
+                    <form action="{{route('accounting.store')}}" method="POST">
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">รหัสลูกค้า</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="user_id" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุรหัสลูกค้า">
                         </div>
 
@@ -82,7 +82,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">ชื่อสินค้า</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="product" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุชื่อของสินค้าที่ผ่อน">
                         </div>
 
@@ -90,7 +90,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">แบรนด์สินค้า</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="brand" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุแบรนด์ของสินค้า">
                         </div>
 
@@ -98,7 +98,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">รายละเอียด</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="details" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุรายละเอียดของสินค้า">
                         </div>
 
@@ -106,7 +106,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">ประเภทการผ่อน</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01">
+                            <select class="custom-select" id="inputGroupSelect01" name="type">
                                 <option selected>เลือกประเภทการผ่อน</option>
                                 <option value="1">ผ่อนไปใช้ไป</option>
                                 <option value="2">ผ่อนครบรับของ</option>
@@ -119,7 +119,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">ประเภทการส่งยอดผ่อน</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01">
+                            <select class="custom-select" id="inputGroupSelect01" name="type_pay">
                                 <option selected>เลือกประเภทการส่งยอดผ่อน</option>
                                 <option value="1">รายวัน</option>
                                 <option value="2">รายวันเว้นวัน</option>
@@ -133,7 +133,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">ส่วนลดหรือโปรโมชั่น</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="discount" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุส่วนลดหรือโปรโมชั่นที่ใช้">
                         </div>
 
@@ -141,7 +141,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">จำนวนเงินที่เปิดบิลผ่อน</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="installment" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุจำนวนเงินที่ลูกค้าเปิดบิลผ่อน">
                         </div>
 
@@ -149,7 +149,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">ราคาสินค้า</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="price" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุราคาผ่อนของสินค้า">
                         </div>
 
@@ -157,7 +157,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">ยอดผ่อนคงเหลือ</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="balance_payment" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="ระบุยอดผ่อนคงเหลือ">
                         </div>
 
@@ -165,7 +165,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">เปอร์เซนต์การชำระปัจจุบัน</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
+                            <input type="text" class="form-control" name="percen_current" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default" placeholder="แสดง % ชำระปัจจุบันของลูกค้า">
                         </div>
 
@@ -173,9 +173,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">การพิจารณา</span>
                             </div>
-                            <input type="text" aria-label="First name" class="form-control"
+                            <input type="text" aria-label="First name" name="percen_consider" class="form-control"
                                 placeholder="แสดง % การพิจารณา">
-                            <input type="text" aria-label="Last name" class="form-control"
+                            <input type="text" aria-label="Last name" name="amount_consider" class="form-control"
                                 placeholder="แสดงจำนวนเงิน">
                         </div>
 
@@ -188,7 +188,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">สถานะการผ่อน</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01">
+                            <select class="custom-select" id="inputGroupSelect01" name="status">
                                 <option selected>เลือกสถานะการผ่อน</option>
                                 <option value="1">ผ่านการพิจารณา</option>
                                 <option value="2">อยู่ระหว่างการพิจารณา</option>

@@ -30,8 +30,12 @@ Auth::routes();
     Route::get('/data_user',function (){
         return view('admin.data_user');
     });
-    Route::get('/accounting',function (){
-        return view('admin.accounting');
+    Route::prefix('accounting')->group(function () {
+        Route::get('/',function (){
+            return view('admin.accounting');
+        });
+
+        Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('accounting.store');
     });
     Route::get('/check_payment',function (){
         return view('admin.check_payment');
