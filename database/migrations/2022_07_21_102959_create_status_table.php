@@ -14,14 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('status', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('s_id');
             $table->string('pass');
             $table->string('pending');
             $table->string('cancel');
+            $table->string('stay');
+            $table->string('check');
             $table->string('pickup');
             $table->string('overdue');
             $table->string('fullpayment');
+            $table->string('other');
+            $table->timestamps();
 
         });
     }

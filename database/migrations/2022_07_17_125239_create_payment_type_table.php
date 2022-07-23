@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payment_type', function (Blueprint $table) {
-            $table->id('p_id');
-            $table->string('name');
+            $table->id('pt_id');
+            $table->string('day');
+            $table->string('except_one_day');
+            $table->string('week');
+            $table->string('month');
+            $table->string('other');
             $table->timestamps();
         });
     }

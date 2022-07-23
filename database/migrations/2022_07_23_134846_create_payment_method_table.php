@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('installment_type', function (Blueprint $table) {
-            $table->id('it_id');
-            $table->string('pay_off');
-            $table->string('full_pay');
-            $table->string('down_pay');
-            $table->string('other');
+        Schema::create('payment_method', function (Blueprint $table) {
+            $table->id('pm_id');
+            $table->string('bank');
+            $table->string('promptpay');
+            $table->string('truemoney');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('installment_type');
+        Schema::dropIfExists('payment_method');
     }
 };

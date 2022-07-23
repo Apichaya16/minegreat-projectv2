@@ -21,8 +21,13 @@ return new class extends Migration
             $table->string('brand');
             $table->string('details');
             $table->integer('type');
+            $table->integer('type_pay');
             $table->integer('discount');
             $table->integer('installment');
+            $table->integer('balance_payment');
+            $table->double('percen_current');
+            $table->double('percen_consider');
+            $table->integer('status');
             $table->timestamps();
         });
     }
