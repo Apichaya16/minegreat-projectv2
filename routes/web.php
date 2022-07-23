@@ -31,9 +31,7 @@ Auth::routes();
         return view('admin.data_user');
     });
     Route::prefix('accounting')->group(function () {
-        Route::get('/',function (){
-            return view('admin.accounting');
-        });
+        Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('accounting.index');
 
         Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('accounting.store');
     });

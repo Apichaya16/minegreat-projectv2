@@ -72,7 +72,7 @@
 
             <!-- Nav Item - Tables -->
         
-                <a class="nav-link" href="{{ url('accounting') }}">
+                <a class="nav-link" href="{{ route('accounting.index') }}">
                     <i class="fas fa-file-invoice text-gray-400"></i>
                     <span>บัญชีลูกค้า</span>
                 </a>
@@ -312,6 +312,7 @@
             <script src="{{ asset('js/user.js') }}"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
+            <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 
             <!-- Page level plugins -->
             {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script> --}}

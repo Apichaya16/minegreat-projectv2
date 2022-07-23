@@ -1,7 +1,7 @@
 @extends('layouts.menu')
 @section('name_page', 'ข้อมูลบัญชี')
 @section('button_page')
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit_user">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addAccModal">
         <i class="fas fa-user-plus fa-sm text-white-50"></i> เพิ่มข้อมูลบัญชีลูกค้า
     </button>
 
@@ -11,47 +11,56 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">ข้อมูลบัญชีลูกค้า</h6>
         </div>
         <div class="card-body">
+            {{-- {{$accounts}} --}}
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>รหัสลูกค้า</th>
+                            <th>สินค้า</th>
+                            <th>แบรนด์</th>
+                            <th>รายละเอียด</th>
+                            <th>ประเภทการผ่อน</th>
+                            <th>ประเภทการส่งยอด</th>
+                            <th>ส่วนลดหรือโปรโมชั่น</th>
+                            <th>จำนวนเงินเปิดบิล(บาท)</th>
+                            <th>ราคาผ่อน</th>
+                            <th>ยอดผ่อนคงเหลือ</th>
+                            <th>% การชำระปัจจุบัน</th>
+                            <th>% การพิจารณา</th>
+                            <th>จำนวนเงิน</th>
+                            <th>สถานะ</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                        </tr>
+                      @foreach ($accounts as $data)
+                          <tr>
+                            <td>{{ $data->user_id}}</td>
+                            <td>{{ $data->product }}</td>
+                            <td>{{ $data->brand }}</td>
+                            <td>{{ $data->details }}</td>
+                            <td>{{ $data->type }}</td>
+                            <td>{{ $data->type_pay }}</td>
+                            <td>{{ $data->discount }}</td>
+                            <td>{{ $data->installment }}</td>
+                            <td>{{ $data->price }}</td> 
+                            <td>{{ $data->balance_payment }}</td>
+                            <td>{{ $data->percen_current }}</td>
+                            <td>{{ $data->percen_consider }}</td>
+                            <td>{{ $data->amount_consider }}</td>
+                            <td>{{ $data->status }}</td>
+                          </tr>
+                      @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="edit_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="addAccModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,8 +71,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('accounting.store')}}" method="POST">
-
+                    <form action="{{route('accounting.store')}}" method="POST" id="addAccForm">
+                        @csrf
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">รหัสลูกค้า</span>
@@ -206,9 +215,24 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" class="btn btn-primary">บันทึก</button>
+                    <button type="button" class="btn btn-primary" id="addAccBtn">บันทึก</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        $('#addAccBtn').on('click', function () {
+            showAlertWithConfirm('error', 'test', 'test')
+            .then(ok=>{
+                if(!ok) return;
+
+                $('#addAccForm').submit();
+            });
+        });
+    });
+</script>
+@endpush
