@@ -115,7 +115,7 @@
                             </select>
                         </div>
 
-                        {{-- <div class="input-group mb-3">
+                        <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">ประเภทการส่งยอดผ่อน</label>
                             </div>
@@ -127,7 +127,7 @@
                                 <option value="4">รายเดือน</option>
                                 <option value="5">อื่นๆ / ไม่ระบุ</option>
                             </select>
-                        </div> --}}
+                        </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
