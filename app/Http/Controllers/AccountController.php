@@ -11,6 +11,7 @@ class AccountController extends Controller
     public function index()
     {
         $accounts = Account::all();
+        $accounts->load('installmentType', 'statusType');
         return view('admin.accounting', compact('accounts'));
     }
 

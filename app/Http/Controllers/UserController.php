@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        $users = Users::all();
+        return view('admin.data_user', compact('users'));
+    }
+
     public function __construct()
     {
         //$this->middleware('auth');
@@ -35,6 +42,8 @@ class UserController extends Controller
         Auth::logout();
         return redirect('login');
     }
+
+    
 
     public function adduser(Request $request)
     {

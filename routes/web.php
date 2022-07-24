@@ -27,9 +27,8 @@ Auth::routes();
     Route::get('/dashboard',function (){
         return view('admin.index');
     });
-    Route::get('/data_user',function (){
-        return view('admin.data_user');
-    });
+    Route::get('/data_user',[App\Http\Controllers\UserController::class, 'index'])->name('data_user.index');
+    
     Route::prefix('accounting')->group(function () {
         Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('accounting.index');
 

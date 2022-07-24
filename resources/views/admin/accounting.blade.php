@@ -1,8 +1,8 @@
 @extends('layouts.menu')
-@section('name_page', 'ข้อมูลบัญชี')
+@section('name_page', 'บัญชีลูกค้า')
 @section('button_page')
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addAccModal">
-        <i class="fas fa-user-plus fa-sm text-white-50"></i> เพิ่มข้อมูลบัญชีลูกค้า
+    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#addAccModal">
+        <i class="fas fa-user-plus fa-sm text-gray-50"></i> เพิ่มข้อมูลบัญชีลูกค้า
     </button>
 
 
@@ -20,40 +20,42 @@
                     <thead>
                         <tr>
                             <th>รหัสลูกค้า</th>
-                            <th>สินค้า</th>
+                            {{-- <th>สินค้า</th>
                             <th>แบรนด์</th>
-                            <th>รายละเอียด</th>
+                            <th>รายละเอียด</th> --}}
                             <th>ประเภทการผ่อน</th>
-                            <th>ประเภทการส่งยอด</th>
+                            {{-- <th>ประเภทการส่งยอด</th>
                             <th>ส่วนลดหรือโปรโมชั่น</th>
                             <th>จำนวนเงินเปิดบิล(บาท)</th>
-                            <th>ราคาผ่อน</th>
+                            <th>ราคาผ่อน</th> --}}
                             <th>ยอดผ่อนคงเหลือ</th>
                             <th>% การชำระปัจจุบัน</th>
-                            <th>% การพิจารณา</th>
-                            <th>จำนวนเงิน</th>
+                            {{-- <th>% การพิจารณา</th>
+                            <th>จำนวนเงิน</th> --}}
                             <th>สถานะ</th>
+                            <th>จัดการข้อมูล</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach ($accounts as $data)
-                          <tr>
-                            <td>{{ $data->user_id}}</td>
-                            <td>{{ $data->product }}</td>
+                        @foreach ($accounts as $data)
+                            <tr>
+                                <td>{{ $data->user_id }}</td>
+                                {{-- <td>{{ $data->product }}</td>
                             <td>{{ $data->brand }}</td>
-                            <td>{{ $data->details }}</td>
-                            <td>{{ $data->type }}</td>
-                            <td>{{ $data->type_pay }}</td>
+                            <td>{{ $data->details }}</td> --}}
+                                <td>{{ $data->installmentType->name }}</td>
+                                {{-- <td>{{ $data->type_pay }}</td>
                             <td>{{ $data->discount }}</td>
                             <td>{{ $data->installment }}</td>
-                            <td>{{ $data->price }}</td> 
-                            <td>{{ $data->balance_payment }}</td>
-                            <td>{{ $data->percen_current }}</td>
-                            <td>{{ $data->percen_consider }}</td>
-                            <td>{{ $data->amount_consider }}</td>
-                            <td>{{ $data->status }}</td>
-                          </tr>
-                      @endforeach
+                            <td>{{ $data->price }}</td> --}}
+                                <td>{{ $data->balance_payment }}</td>
+                                <td>{{ $data->percen_current }}</td>
+                                {{-- <td>{{ $data->percen_consider }}</td>
+                            <td>{{ $data->amount_consider }}</td> --}}
+                                <td>{{ $data->statusType->name }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -71,7 +73,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('accounting.store')}}" method="POST" id="addAccForm">
+                    <form action="{{ route('accounting.store') }}" method="POST" id="addAccForm">
                         @csrf
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -148,10 +150,12 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">จำนวนเงินที่เปิดบิลผ่อน</span>
+                                <span class="input-group-text"
+                                    id="inputGroup-sizing-default">จำนวนเงินที่เปิดบิลผ่อน</span>
                             </div>
-                            <input type="text" class="form-control" name="installment" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default" placeholder="ระบุจำนวนเงินที่ลูกค้าเปิดบิลผ่อน">
+                            <input type="text" class="form-control" name="installment"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                placeholder="ระบุจำนวนเงินที่ลูกค้าเปิดบิลผ่อน">
                         </div>
 
                         <div class="input-group mb-3">
@@ -166,16 +170,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">ยอดผ่อนคงเหลือ</span>
                             </div>
-                            <input type="text" class="form-control" name="balance_payment" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default" placeholder="ระบุยอดผ่อนคงเหลือ">
+                            <input type="text" class="form-control" name="balance_payment"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                placeholder="ระบุยอดผ่อนคงเหลือ">
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">เปอร์เซนต์การชำระปัจจุบัน</span>
+                                <span class="input-group-text"
+                                    id="inputGroup-sizing-default">เปอร์เซนต์การชำระปัจจุบัน</span>
                             </div>
-                            <input type="text" class="form-control" name="percen_current" aria-label="Sizing example input"
-                                aria-describedby="inputGroup-sizing-default" placeholder="แสดง % ชำระปัจจุบันของลูกค้า">
+                            <input type="text" class="form-control" name="percen_current"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                placeholder="แสดง % ชำระปัจจุบันของลูกค้า">
                         </div>
 
                         <div class="input-group mb-3">
@@ -214,8 +221,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" class="btn btn-primary" id="addAccBtn">บันทึก</button>
+                    <button type="button" class="btn btn-outline-danger"data-dismiss="modal">ยกเลิก</button>
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button> --}}
+                    <button type="button" class="btn btn-outline-success"id="addAccBtn">บันทึก</button>
+                    {{-- <button type="button" class="btn btn-primary" id="addAccBtn">บันทึก</button> --}}
                 </div>
             </div>
         </div>
@@ -223,16 +232,18 @@
 @endsection
 
 @push('scripts')
-<script>
-    $(function () {
-        $('#addAccBtn').on('click', function () {
-            showAlertWithConfirm('error', 'test', 'test')
-            .then(ok=>{
-                if(!ok) return;
+    <script>
+        $(function() {
+            $('#addAccBtn').on('click', function() {
+                showAlertWithConfirm('error', 'test', 'test')
+                    .then(ok => {
+                        if (!ok) return;
 
-                $('#addAccForm').submit();
+                        $('#addAccForm').submit();
+                    });
             });
         });
-    });
-</script>
+
+    </script>
 @endpush
+

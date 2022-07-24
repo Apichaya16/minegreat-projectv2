@@ -11,8 +11,12 @@ class  Users extends Model
     protected $table = 'users';
     protected $primaryKey = 'u_id';
     protected $fillable = [
+        'number_customers',
         'first_name',
         'last_name',
+        'age',
+        'tel',
+        'cid',
         'username',
         'password',
     ];
