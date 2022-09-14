@@ -1,5 +1,5 @@
 @extends('layouts.menu')
-@section('name_page', 'ข้อมูลทั่วไป5555')
+@section('name_page', 'ข้อมูลทั่วไป')
 @section('button_page')
     <a type="button" class="btn btn-success" href="{{ url('add_data') }}">
         <i class="fas fa-user-plus fa-sm text-white-50"></i> เพิ่มข้อมูลลูกค้า
@@ -41,7 +41,7 @@
                                 <td>{{ $data->cid }}</td>
                                 <td>{{ $data->username }}</td>
                                 <td>
-                                    <a type="button" class="btn btn-warning" 
+                                    <a type="button" class="btn btn-warning"
                                         href="{{ url('add_data/' . $data->u_id) }}">แก้ไขข้อมูล</a>
 
 
