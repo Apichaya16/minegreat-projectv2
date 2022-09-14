@@ -9,7 +9,7 @@ class InstallmentType extends Model
 {
     use HasFactory;
 
-    // public function Accounts()
+    // public function Accounts() TEST
     // {
     //     return $this->belongsTo('App\Account');
     // }

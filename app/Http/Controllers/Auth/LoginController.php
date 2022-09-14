@@ -41,23 +41,30 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function username()
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard')->withSuccess('Signed in');
-        }
+        return 'username';
     }
+
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $credentials = $request->only('email', 'password');
+    //     if (Auth::attempt($credentials)) {
+    //         // dd(Auth::check());
+    //         return redirect()->route('admin.home');
+    //     }
+    //     return redirect()->route('login')->withSuccess('ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง');
+    // }
 
     public function logout()
     {
         Session::flush();
         Auth::logout();
-        return redirect('login');
+        return redirect()->route('login');
     }
 }
