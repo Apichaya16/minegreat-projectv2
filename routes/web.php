@@ -15,61 +15,85 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes(); 
-Route::group(['middleware'=>'auth'],function () {
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Auth::routes();
 
-// Route::get('/', function () {
-//     return view('login');
-// });
-Route::get('/', function () {
-    return view('admin.index');
-})->name('admin.home'); 
-Route::get('/data_user', [App\Http\Controllers\UserController::class, 'index'])->name('data_user.index');
-
-Route::prefix('accounting')->group(function () {
-    Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('accounting.index');
-    Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('accounting.store');
+Route::get('/theme', function () {
+    return view('customer.home');
 });
 
-Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('accounting.payment');
-Route::get('/check_payment', function () {
-    return view('admin.check_payment');
-});
+Route::group(
+    [
+        'middleware'=>'auth',
+        'prefix' => 'backend'
+    ],
+    function () {
 
-Route::post('/add_payment/{id}', [\App\Http\Controllers\AccountController::class, 'add_payment'])->name('account.add_payment');
-Route::post('/del_payment', [App\Http\Controllers\AccountController::class, 'del_payment'])->name('del.payment');
+        Route::get('/home', function () {
+            return view('admin.index');
+        })->name('admin.home');
+        Route::get('/data_user', [App\Http\Controllers\UserController::class, 'index'])->name('data_user.index');
 
-Route::post('{id?}/add_user', [App\Http\Controllers\UserController::class, 'adduser'])->name('add.user');
+        Route::prefix('accounting')->group(function () {
+            Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('accounting.index');
+            Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('accounting.store');
+        });
 
-Route::get('/register', function () {
-    return view('customer/register');
-});
+        Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('accounting.payment');
+        Route::get('/check_payment', function () {
+            return view('admin.check_payment');
+        });
 
-Route::get('/add_data/{id?}', [App\Http\Controllers\UserController::class, 'form_user'])->name('edit.user');
+        Route::post('/add_payment/{id}', [\App\Http\Controllers\AccountController::class, 'add_payment'])->name('account.add_payment');
+        Route::post('/del_payment', [App\Http\Controllers\AccountController::class, 'del_payment'])->name('del.payment');
 
-// -----customer-----
+        Route::post('{id?}/add_user', [App\Http\Controllers\UserController::class, 'adduser'])->name('add.user');
 
-Route::get('/myaccount', [App\Http\Controllers\MyaccountController::class, 'index'])->name('myaccount.index');
+        Route::get('/register', function () {
+            return view('customer/register');
+        });
+
+        Route::get('/add_data/{id?}', [App\Http\Controllers\UserController::class, 'form_user'])->name('edit.user');
+
+        // -----customer-----
+
+        Route::get('/myaccount', [App\Http\Controllers\MyaccountController::class, 'index'])->name('myaccount.index');
 
 
-// Route::get('/myaccount', function () {
-//     return view('customer.myaccount');
-// });
+        // Route::get('/myaccount', function () {
+        //     return view('customer.myaccount');
+        // });
 
-Route::get('/admincontact', function () {
-    return view('customer.admincontact');
-});
+        Route::get('/admincontact', function () {
+            return view('customer.admincontact');
+        });
 
-// -----customer
+        // -----customer
 
-Route::get('/add_account',  [App\Http\Controllers\AccountController::class, 'add_account']);
-Route::post('update_account/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('update.acc');
-Route::post('del_acc', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('del.acc');
+        Route::get('/add_account',  [App\Http\Controllers\AccountController::class, 'add_account']);
+        Route::post('update_account/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('update.acc');
+        Route::post('del_acc', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('del.acc');
 
-Route::post('del_user', [App\Http\Controllers\UserController::class, 'del_user'])->name('del.user');
-    //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-});
-// 
+        Route::post('del_user', [App\Http\Controllers\UserController::class, 'del_user'])->name('del.user');
+            //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    }
+);
+//
+
+Route::group(
+    [
+        'prefix' => 'customer'
+    ],
+    function () {
+        Route::get('/home', function () {
+            return view('customer.home.index');
+        })->name('customer.home');
+
+        Route::get('/abount', function () {
+            return view('customer.abount.index');
+        })->name('customer.abount');
+
+        Route::get('/contact', function () {
+            return view('customer.contact.index');
+        })->name('customer.contact');
+    }
+);
