@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AccountController extends Controller 
+class AccountController extends Controller
 {
     public function __construct()
     {
@@ -23,9 +23,10 @@ class AccountController extends Controller
         return view('admin.accounting', compact('accounts'));
     }
 
-    public function payment()
+    public function payment(Request $request)
     {
-        $accounts = Account::paginate(20);
+        $filter = $request->get('filter');
+        $accounts = Account::where('status_type', $filter)->get();
         $accounts->load('installmentType', 'statusType', 'user', 'payment');
         foreach ($accounts as $k1 => $v1) {
             $amount = $v1->installment;
@@ -34,7 +35,6 @@ class AccountController extends Controller
                 $amount += $v2->amount;
                 $v2->sum += $amount;
             }
-            // printf($amount);
             $v1->percen_current = ($amount / $v1->amount_after_discount) * 100;
         }
         return view('admin.payment', compact('accounts'));

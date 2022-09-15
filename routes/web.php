@@ -28,31 +28,33 @@ Route::group(
     ],
     function () {
 
-        Route::get('/home', function () {
-            return view('admin.index');
-        })->name('admin.home');
-        Route::get('/data_user', [App\Http\Controllers\UserController::class, 'index'])->name('data_user.index');
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::prefix('user')->group(function () {
+            Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('admin.user.index');
+            Route::get('create', [App\Http\Controllers\UserController::class, 'create'])->name('admin.create.user');
+            Route::post('store', [App\Http\Controllers\UserController::class, 'store'])->name('admin.create.user.store');
+            Route::get('/{userId}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.edit.user');
+            Route::put('/{userId}/update', [App\Http\Controllers\UserController::class, 'update'])->name('admin.update.user');
+            Route::delete('/delete', [App\Http\Controllers\UserController::class, 'detroy'])->name('admin.delete.user');
+        });
 
         Route::prefix('accounting')->group(function () {
-            Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('accounting.index');
-            Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('accounting.store');
+            Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('admin.accounting.index');
+            Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('admin.accounting.store');
+            Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('admin.accounting.payment');
         });
 
-        Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('accounting.payment');
         Route::get('/check_payment', function () {
             return view('admin.check_payment');
-        });
+        })->name('admin.check.payment');
 
         Route::post('/add_payment/{id}', [\App\Http\Controllers\AccountController::class, 'add_payment'])->name('account.add_payment');
         Route::post('/del_payment', [App\Http\Controllers\AccountController::class, 'del_payment'])->name('del.payment');
 
-        Route::post('{id?}/add_user', [App\Http\Controllers\UserController::class, 'adduser'])->name('add.user');
-
         Route::get('/register', function () {
             return view('customer/register');
         });
-
-        Route::get('/add_data/{id?}', [App\Http\Controllers\UserController::class, 'form_user'])->name('edit.user');
 
         // -----customer-----
 
@@ -73,7 +75,6 @@ Route::group(
         Route::post('update_account/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('update.acc');
         Route::post('del_acc', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('del.acc');
 
-        Route::post('del_user', [App\Http\Controllers\UserController::class, 'del_user'])->name('del.user');
             //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     }
 );

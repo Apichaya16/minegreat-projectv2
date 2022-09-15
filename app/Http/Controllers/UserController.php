@@ -9,20 +9,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+
+    }
 
     public function index()
     {
         $users = User::orderBy('number_customers', 'desc')->paginate(20);
-        return view('admin.data_user', compact('users'));
-    }
-
-    public function __construct()
-    {
-    //     $this->middleware('auth');
+        return view('admin.register-customer.index', compact('users'));
     }
 
     public function login(Request $request)
@@ -46,46 +44,30 @@ class UserController extends Controller
     }
 
 
-    public function form_user($id = 0)
+    public function create()
     {
-        if ($id != 0) {
-            $user = Users::where('u_id', $id)->first();
-            return view('admin/add_data', compact('user', 'id'));
-        }
-        return view('admin/add_data');
+        return view('admin.register-customer.create');
     }
 
 
-    public function adduser(Request $request, $id)
+    public function store(Request $request)
     {
+        $msg = [
+            'cid.regex' => 'รูปแบบหมายเลขบัตรประชาชน x-xxxx-xxxxx-xx-x',
+            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น'
+        ];
+        $request->validate([
+            'cid' => 'string|regex:/([1-9]{1})-([1-9]{4})-([1-9]{5})-([1-9]{2})-([1-9]{1})/'
+        ], $msg);
 
-        // $validator = Validator::make($request->all(), [
-        //     'number_customers' => 'required',
-        //     'first_name' => 'required',
-        //     'last_name' => 'required',
-        //     'age' => 'required',
-        //     'tel' => 'required',
-        //     'cid' => 'required',
-        //     'username' => 'required',
-        //     'passwoed' => 'required'
-        // ]);
-        // if ($validator->fails()) {
-        //     return back()->with([
-        //                 'error' => $validator->errors()
-        //             ]);
-        // }
         DB::beginTransaction();
-        if ($id != 0) {
-            $user = Users::where('u_id', $id)->first();
-        } else {
-            $check = User::where('number_customers', $request->number_customers)->count();
-            if ($check > 0) {
-                return back();
-            }
-            $user = new User;
+        $check = User::where('number_customers', $request->number_customers)->count();
+        if ($check > 0) {
+            return back();
         }
+        $user = new User;
         $user->number_customers = $request->input('number_customers');
-        $user->first_name = $request->input('first_name');
+        $user->name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->age = $request->input('age');
         $user->tel = $request->input('tel');
@@ -96,10 +78,40 @@ class UserController extends Controller
         $user->save();
         DB::commit();
 
-        return redirect()->route('data_user.index')->with(['success' => true, 'data' => $request->all()]);
+        return redirect()->route('admin.user.index');
     }
 
-    public function del_user(Request $request)
+    public function edit($userId)
+    {
+        $user = User::where('u_id', $userId)->first();
+        return view('admin.register-customer.update', compact('user'));
+    }
+
+    public function update(Request $request, $userId)
+    {
+        $msg = [
+            'cid.regex' => 'รูปแบบหมายเลขบัตรประชาชน x-xxxx-xxxxx-xx-x',
+            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น'
+        ];
+        $request->validate([
+            'cid' => 'string|regex:/([1-9]{1})-([1-9]{4})-([1-9]{5})-([1-9]{2})-([1-9]{1})/'
+        ], $msg);
+
+        DB::beginTransaction();
+        $user = User::where('u_id', $userId)->first();
+        $user->number_customers = $request->input('number_customers');
+        $user->name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->age = $request->input('age');
+        $user->tel = $request->input('tel');
+        $user->cid = $request->input('cid');
+        $user->save();
+        DB::commit();
+
+        return redirect()->route('admin.user.index');
+    }
+
+    public function detroy(Request $request)
     {
         DB::beginTransaction();
         User::where('u_id', $request->id)->delete();
