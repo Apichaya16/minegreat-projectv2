@@ -14,3 +14,11 @@ function showAlertWithConfirm(type, title, msg) {
         }
     });
 }
+function showLoading(title = 'Loading...') {
+    Swal.fire({
+        title: title,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    })
+}
