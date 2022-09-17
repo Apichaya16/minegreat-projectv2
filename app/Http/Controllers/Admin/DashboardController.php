@@ -19,6 +19,16 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $accounts = Account::all();
+        $accounts->load('installmentType');
+        $installmentTypes = [];
+        if ($accounts->count()) {
+            for ($i=0; $i < $accounts->count(); $i++) {
+                array_push($installmentTypes, $accounts[$i]->installmentType);
+            }
+        } else {
+            $installmentTypes = collect($installmentTypes);
+        }
+        return view('admin.dashboard', compact('accounts', 'installmentTypes'));
     }
 }
