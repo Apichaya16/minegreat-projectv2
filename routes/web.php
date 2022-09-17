@@ -43,6 +43,10 @@ Route::group(
             Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('admin.accounting.index');
             Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('admin.accounting.store');
             Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('admin.accounting.payment');
+
+            Route::get('/create',  [App\Http\Controllers\AccountController::class, 'add_account'])->name('admin.create.accounting');
+            Route::post('update/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('admin.update.accounting');
+            Route::post('delete', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('admin.delete.accounting');
         });
 
         Route::get('/check_payment', function () {
@@ -68,14 +72,6 @@ Route::group(
         Route::get('/admincontact', function () {
             return view('customer.admincontact');
         });
-
-        // -----customer
-
-        Route::get('/add_account',  [App\Http\Controllers\AccountController::class, 'add_account']);
-        Route::post('update_account/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('update.acc');
-        Route::post('del_acc', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('del.acc');
-
-            //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     }
 );
 //

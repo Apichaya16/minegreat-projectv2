@@ -24,7 +24,7 @@ class Account extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\Users', 'user_id', 'u_id');
+        return $this->belongsTo('App\Models\Users', 'user_id', 'number_customers');
     }
 
     public function payment()

@@ -29,19 +29,19 @@
         </a>
     </li>
 
-    <li class="nav-item {{ Route::is('admin.accounting.index') ? 'active' : '' }}">
+    <li class="nav-item {{ (request()->is('backend/accounting*')) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.accounting.index') }}">
             <i class="fas fa-file-invoice text-gray-400"></i>
             <span>บัญชีการผ่อน</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" href="{{ url('payment') }}">
             <i class="fas fa-coins text-gray-400"></i>
             <span>การผ่อนชำระ</span>
         </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
         <a class="nav-link {{ Route::is('admin.accounting.payment*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#status"
@@ -63,12 +63,12 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" href="{{ url('myaccount') }}">
             <i class="fas fa-user-alt text-gray-400"></i>
             <span>บัญชีการผ่อนของฉัน</span>
         </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
         <a class="nav-link" href="#">

@@ -34,7 +34,7 @@
                                 id="first_name"
                                 name="first_name"
                                 placeholder="ระบุชื่อลูกค้า"
-                                value="{{ $user->name }}"
+                                value="{{ $user->first_name }}"
                                 required
                             >
                         </div>

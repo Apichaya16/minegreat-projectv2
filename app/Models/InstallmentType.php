@@ -9,6 +9,9 @@ class InstallmentType extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = "it_id";
+    protected $keyType = "string";
+
     // public function Accounts() TEST
     // {
     //     return $this->belongsTo('App\Account');

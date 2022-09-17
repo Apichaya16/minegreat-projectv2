@@ -17,7 +17,8 @@
                             id="number_customers"
                             name="number_customers"
                             placeholder="ระบุรหัสลูกค้า"
-                            value="{{ old('number_customers') }}"
+                            value="{{ $nextCode }}"
+                            readonly
                             required
                         >
                     </div>
@@ -93,7 +94,7 @@
                         >
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="text-danger">*</label><label class="form-label" for="username">ชื่อผู้ใช้งาน</label>
                         <input
                             type="text"
@@ -104,7 +105,7 @@
                             value="{{ old('username') }}"
                             required
                         >
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label class="text-danger">*</label><label class="form-label" for="password">รหัสผ่าน</label>

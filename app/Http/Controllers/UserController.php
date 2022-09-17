@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Utils\CodeUtil;
 use App\Models\User;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::orderBy('number_customers', 'desc')->paginate(20);
+        $users = User::where('role_id', '>', 100)->get();
         return view('admin.register-customer.index', compact('users'));
     }
 
@@ -46,7 +47,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.register-customer.create');
+        $nextCode = CodeUtil::getLastCode('account');
+        return view('admin.register-customer.create', compact('nextCode'));
     }
 
 
@@ -61,13 +63,9 @@ class UserController extends Controller
         ], $msg);
 
         DB::beginTransaction();
-        $check = User::where('number_customers', $request->number_customers)->count();
-        if ($check > 0) {
-            return back();
-        }
         $user = new User;
-        $user->number_customers = $request->input('number_customers');
-        $user->name = $request->input('first_name');
+        $user->number_customers = CodeUtil::generateCode('account');
+        $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->age = $request->input('age');
         $user->tel = $request->input('tel');
@@ -100,7 +98,7 @@ class UserController extends Controller
         DB::beginTransaction();
         $user = User::where('u_id', $userId)->first();
         $user->number_customers = $request->input('number_customers');
-        $user->name = $request->input('first_name');
+        $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->age = $request->input('age');
         $user->tel = $request->input('tel');

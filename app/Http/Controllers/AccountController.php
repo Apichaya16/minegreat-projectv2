@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\InstallmentType;
 use App\Models\Payment;
+use App\Models\PaymentType;
+use App\Models\TypeStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +23,7 @@ class AccountController extends Controller
     {
         $accounts = Account::paginate(20);
         $accounts->load('installmentType', 'statusType', 'user');
-        return view('admin.accounting', compact('accounts'));
+        return view('admin.accounting.accounting', compact('accounts'));
     }
 
     public function payment(Request $request)
@@ -94,8 +97,17 @@ class AccountController extends Controller
 
     public  function add_account()
     {
-        $data = User::all();
-        return view('admin/add_account', compact('data'));
+        $accounts = Account::all();
+        if (isset($accounts)) {
+            $users = User::where('role_id', '>', 100)->get();
+        }else {
+            $users = User::whereNotIn('number_customers', [$accounts->pluck('user_id')])->get();
+        }
+
+        $typeStatus = TypeStatus::all();
+        $installmentType = InstallmentType::all();
+        $paymentTypes = PaymentType::all();
+        return view('admin.accounting.add_account', compact('users', 'typeStatus', 'installmentType', 'paymentTypes'));
     }
 
     public function del_acc(Request $request)

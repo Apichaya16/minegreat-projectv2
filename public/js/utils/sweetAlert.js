@@ -4,8 +4,8 @@ function showAlertWithConfirm(type, title, msg) {
             text: msg,
             icon: type,
             confirmButtonText: 'ตกลง',
-            cancelButtonText: 'ยกเลิก',
-            showCancelButton: true,
+            denyButtonText: 'ยกเลิก',
+            showDenyButton: true,
     }).then(result => {
         if (result.isConfirmed) {
             return true;
