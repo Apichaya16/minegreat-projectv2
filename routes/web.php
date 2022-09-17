@@ -23,7 +23,7 @@ Route::get('/theme', function () {
 
 Route::group(
     [
-        'middleware'=>'auth',
+        'middleware'=> ['auth', 'check_admin'],
         'prefix' => 'backend'
     ],
     function () {
@@ -41,12 +41,12 @@ Route::group(
 
         Route::prefix('accounting')->group(function () {
             Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('admin.accounting.index');
-            Route::post('/store', [App\Http\Controllers\AccountController::class, 'store'])->name('admin.accounting.store');
-            Route::get('/payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('admin.accounting.payment');
+            Route::post('store', [App\Http\Controllers\AccountController::class, 'store'])->name('admin.accounting.store');
+            Route::get('payment',  [App\Http\Controllers\AccountController::class, 'payment'])->name('admin.accounting.payment');
 
-            Route::get('/create',  [App\Http\Controllers\AccountController::class, 'add_account'])->name('admin.create.accounting');
-            Route::post('update/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('admin.update.accounting');
-            Route::post('delete', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('admin.delete.accounting');
+            Route::get('create',  [App\Http\Controllers\AccountController::class, 'add_account'])->name('admin.create.accounting');
+            Route::put('update/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('admin.update.accounting');
+            Route::delete('delete/{pcId}', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('admin.delete.accounting');
         });
 
         Route::get('/check_payment', function () {

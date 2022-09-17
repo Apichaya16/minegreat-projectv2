@@ -24,11 +24,16 @@ class Account extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\Users', 'user_id', 'number_customers');
+        return $this->belongsTo('App\Models\Users', 'user_id', 'u_id');
     }
 
     public function payment()
     {
         return $this->hasMany('App\Models\Payment', "account_id");//, 'pc_id', 'account_id'
+    }
+
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class, 'type_pay', 'id');
     }
 }

@@ -21,9 +21,13 @@ class AccountController extends Controller
 
     public function index()
     {
-        $accounts = Account::paginate(20);
-        $accounts->load('installmentType', 'statusType', 'user');
-        return view('admin.accounting.accounting', compact('accounts'));
+        $accounts = Account::all();
+        $accounts->load('installmentType', 'statusType', 'user', 'paymentType');
+
+        $typeStatus = TypeStatus::all();
+        $installmentTypes = InstallmentType::all();
+        $paymentTypes = PaymentType::all();
+        return view('admin.accounting.accounting', compact('accounts', 'typeStatus', 'installmentTypes', 'paymentTypes'));
     }
 
     public function payment(Request $request)
@@ -60,48 +64,39 @@ class AccountController extends Controller
         $acc->balance_payment = $request->balance_payment;
         $acc->percen_current = $request->percen_current;
         $acc->percen_consider = $request->percen_consider;
-        $acc->amount_consider = $request->amount_consider;
+        $acc->amount_consider = $request->price;
         $acc->status_type = $request->status_type;
         $acc->detail_promotion = $request->detail_promotion;
         $acc->amount_after_discount = $request->amount_after_discount;
         $acc->save();
         DB::commit();
 
-        return back();
+        return redirect()->route('admin.accounting.index');
     }
 
     public function update_account(Request $request, $pcId)
     {
-        DB::beginTransaction();
-        $acc = Account::where('pc_id', $pcId)->first();
-        $acc->product = $request->product;
-        $acc->brand = $request->brand;
-        $acc->details = $request->details;
-        // $acc->type = $request->type;
-        // $acc->type_pay = $request->type_pay;
-        // $acc->status_type = $request->status_type;
-        $acc->discount = $request->discount;
-        $acc->installment = $request->installment;
-        $acc->product = $request->product;
-        $acc->price = $request->price;
-        $acc->balance_payment = $request->balance_payment;
-        $acc->percen_current = $request->percen_current;
-        $acc->percen_consider = $request->percen_consider;
-        $acc->amount_consider = $request->amount_consider;
-        $acc->detail_promotion = $request->detail_promotion;
-        $acc->save();
-        DB::commit();
+        try {
+            DB::beginTransaction();
+            Account::where('pc_id', $pcId)->update($request->all());
+            DB::commit();
 
-        return response()->json(['status' => true]);
+            $html = $this->renderTable();
+            return response()->json(['status' => true, 'html' => $html]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json(['status' => false, 'html' => null], $th->getCode());
+        }
     }
 
     public  function add_account()
     {
         $accounts = Account::all();
-        if (isset($accounts)) {
-            $users = User::where('role_id', '>', 100)->get();
+        if ($accounts->count()) {
+            $users = User::where('role_id', '>', 100)->whereNotIn('u_id', [$accounts->pluck('user_id')])->get();
         }else {
-            $users = User::whereNotIn('number_customers', [$accounts->pluck('user_id')])->get();
+            $users = User::where('role_id', '>', 100)->get();
         }
 
         $typeStatus = TypeStatus::all();
@@ -110,13 +105,21 @@ class AccountController extends Controller
         return view('admin.accounting.add_account', compact('users', 'typeStatus', 'installmentType', 'paymentTypes'));
     }
 
-    public function del_acc(Request $request)
+    public function del_acc($pcId)
     {
-        DB::beginTransaction();
-        Account::where('pc_id', $request->id)->delete();
-        DB::commit();
+        try {
+            DB::beginTransaction();
+            Account::where('pc_id', $pcId)->delete();
+            DB::commit();
 
-        return response()->json(['status' => true]);
+            $html = $this->renderTable();
+
+            return response()->json(['status' => true, 'html' => $html]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json(['status' => false, 'html' => null], $th->getCode());
+        }
     }
 
     public function add_payment(Request $request, $id)
@@ -145,5 +148,17 @@ class AccountController extends Controller
         DB::commit();
 
         return response()->json(['status' => true]);
+    }
+
+    protected function renderTable()
+    {
+        $accounts = Account::all();
+        $accounts->load('installmentType', 'statusType', 'user', 'paymentType');
+
+        $typeStatus = TypeStatus::all();
+        $installmentTypes = InstallmentType::all();
+        $paymentTypes = PaymentType::all();
+        $html = view('admin.accounting.table.accounting-table', compact('accounts', 'typeStatus', 'installmentTypes', 'paymentTypes'))->render();
+        return $html;
     }
 }

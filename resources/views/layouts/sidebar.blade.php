@@ -89,10 +89,18 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('accounting') }}">
+        <a
+            class="nav-link"
+            href="#"
+            onclick="document.getElementById('logoutForm').submit()"
+        >
             <i class="fas fa-sign-out-alt fa-sm fa-fw text-gray-400"></i>
             <span>ออกจากระบบ</span>
         </a>
+
+        <form action="{{ route('logout') }}" method="post" id="logoutForm" >
+            @csrf
+        </form>
     </li>
     <hr class="sidebar-divider d-none d-md-block">
 
