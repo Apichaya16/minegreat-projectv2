@@ -46,20 +46,23 @@ class LoginController extends Controller
         return 'username';
     }
 
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required',
-    //         'password' => 'required',
-    //     ]);
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
 
-    //     $credentials = $request->only('email', 'password');
-    //     if (Auth::attempt($credentials)) {
-    //         // dd(Auth::check());
-    //         return redirect()->route('admin.home');
-    //     }
-    //     return redirect()->route('login')->withSuccess('ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง');
-    // }
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            // dd(Auth::check());
+            if (auth()->user()->hasAdmin()) {
+                return redirect()->route('admin.dashboard');
+            }
+            return redirect()->route('customer.home');
+        }
+        return redirect()->route('login');
+    }
 
     public function logout()
     {

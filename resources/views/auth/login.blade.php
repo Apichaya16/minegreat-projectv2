@@ -41,29 +41,34 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" action="/login" method="POST"> 
-                                        @csrf 
+                                    <form class="user needs-validation" action="{{ route('login') }}" method="POST"
+                                        novalidate>
+                                        @csrf
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="exampleInputEmail" name="username" aria-describedby="emailHelp"
-                                                placeholder="Username">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
-                                        </div>
-                                        {{-- <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                            <input type="text" class="form-control form-control-user" name="username"
+                                                placeholder="Username" required>
+
+                                            @error('username')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
                                             </div>
-                                        </div> --}}
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="password" name="password"
+                                                class="form-control form-control-user" placeholder="Password" required>
+
+                                            @error('password')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
-                                        
-                                        
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -93,6 +98,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+    <script src="{{ asset('js/utils/validate.js') }}"></script>
 
 </body>
 

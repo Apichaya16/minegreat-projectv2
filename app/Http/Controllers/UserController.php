@@ -63,15 +63,16 @@ class UserController extends Controller
         ], $msg);
 
         DB::beginTransaction();
+        $code = CodeUtil::generateCode('account');
         $user = new User;
-        $user->number_customers = CodeUtil::generateCode('account');
+        $user->number_customers = $code;
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->age = $request->input('age');
         $user->tel = $request->input('tel');
         $user->cid = $request->input('cid');
-        $user->username = $request->input('username');
-        $user->email = $request->input('username');
+        $user->username = $code;
+        $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
         DB::commit();
