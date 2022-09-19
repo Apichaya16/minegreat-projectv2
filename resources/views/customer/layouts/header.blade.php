@@ -28,10 +28,10 @@
                                 <div class="header-icons">
                                     {{-- <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a> --}}
                                     <a
-                                        href="#"
-                                        onclick="document.getElementById('logoutForm').submit()"
+                                        href="{{ route('customer.login') }}"
+                                        {{-- onclick="document.getElementById('logoutForm').submit()" --}}
                                     >
-                                        ออกจากระบบ
+                                        เข้าสู่ระบบ
                                     </a>
                                     <a class="mobile-hide search-bar-icon" href="#">
                                         <i class="fas fa-search"></i>

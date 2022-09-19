@@ -161,7 +161,7 @@
         <div class="card-body">
             <h4 class="small font-weight-bold">
                 ผ่อนไปใช้ไป
-                <span class="float-right">{{ $installmentTypes->count() ? '' : '0' }}</span>
+                {{-- <span class="float-right">{{ count($installmentTypes) ? '' : '0' }}</span> --}}
             </h4>
             <div class="progress mb-4">
                 <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"

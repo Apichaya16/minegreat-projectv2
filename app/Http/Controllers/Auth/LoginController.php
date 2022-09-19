@@ -41,6 +41,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function showLoginForm()
+    {
+        return abort(404);
+    }
+
     public function username()
     {
         return 'username';
@@ -61,13 +66,13 @@ class LoginController extends Controller
             }
             return redirect()->route('customer.home');
         }
-        return redirect()->route('login');
+        return back();
     }
 
     public function logout()
     {
         Session::flush();
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('customer.home');
     }
 }

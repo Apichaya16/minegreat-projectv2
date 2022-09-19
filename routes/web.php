@@ -18,8 +18,16 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/theme', function () {
-    return view('customer.home');
+    return view('index');
 });
+
+Route::get('/backend/auth/login', function () {
+    return view('auth.login');
+})->name('admin.login');
+
+Route::get('/customer/auth/login', function () {
+    return view('auth.customer-login');
+})->name('customer.login');
 
 Route::group(
     [
@@ -34,9 +42,9 @@ Route::group(
             Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('admin.user.index');
             Route::get('create', [App\Http\Controllers\UserController::class, 'create'])->name('admin.create.user');
             Route::post('store', [App\Http\Controllers\UserController::class, 'store'])->name('admin.create.user.store');
-            Route::get('/{userId}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.edit.user');
-            Route::put('/{userId}/update', [App\Http\Controllers\UserController::class, 'update'])->name('admin.update.user');
-            Route::delete('/delete', [App\Http\Controllers\UserController::class, 'detroy'])->name('admin.delete.user');
+            // Route::get('/{userId}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.edit.user');
+            Route::put('update/{userId}', [App\Http\Controllers\UserController::class, 'update'])->name('admin.update.user');
+            Route::delete('delete/{userId}', [App\Http\Controllers\UserController::class, 'detroy'])->name('admin.delete.user');
         });
 
         Route::prefix('accounting')->group(function () {
@@ -76,14 +84,15 @@ Route::group(
 );
 //
 
+Route::get('/', function () {
+    return view('customer.home.index');
+})->name('customer.home');
+
 Route::group(
     [
         'prefix' => 'customer'
     ],
     function () {
-        Route::get('/home', function () {
-            return view('customer.home.index');
-        })->name('customer.home');
 
         Route::get('/abount', function () {
             return view('customer.abount.index');
@@ -92,5 +101,6 @@ Route::group(
         Route::get('/contact', function () {
             return view('customer.contact.index');
         })->name('customer.contact');
+
     }
 );

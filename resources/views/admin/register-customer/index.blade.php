@@ -14,41 +14,9 @@
         <h6 class="m-0 font-weight-bold text-primary">ข้อมูลทั่วไปลูกค้า</h6>
     </div>
     <div class="card-body">
-        <table class="table table-striped table-hover table-responsive-md user-datatable" width="100%" cellspacing="0">
-            <thead class="thead-dark">
-                <tr>
-                    <th>รหัสลูกค้า</th>
-                    <th>ชื่อลูกค้า</th>
-                    <th>นามสกุล</th>
-                    <th>อายุ</th>
-                    <th>เบอร์โทร</th>
-                    <th>เลขบัตรประชาชน</th>
-                    <th>จัดการข้อมูล</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $data)
-                <tr>
-                    <td>{{ $data->number_customers }}</td>
-                    <td>{{ $data->first_name }}</td>
-                    <td>{{ $data->last_name }}</td>
-                    <td>{{ $data->age }}</td>
-                    <td>{{ $data->tel }}</td>
-                    <td>{{ $data->cid }}</td>
-                    <td>
-                        <a class="btn btn-warning btn-sm"
-                            href="{{ route('admin.edit.user', ['userId' => $data->u_id]) }}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-                        <button type="button" class="btn btn-danger btn-sm del" data-id="{{ $data->u_id }}">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div id="container-table">
+            @include('admin.register-customer.table.user-table')
+        </div>
     </div>
 </div>
 @endsection
@@ -69,6 +37,12 @@
     $(function () {
             setupDatatable();
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
             $('.submitBtn').on('click', function() {
                 Swal.fire({
                     title: 'ยืนยันการบันทึกข้อมูล',
@@ -81,36 +55,96 @@
                 });
             });
 
-            $('.del').click(function(e) {
-                var id = $(this).data('id');
+            $(document).on('click', '.btn-update', function () {
+                let _this = $(this);
+                const form = _this.parent().parent().find('.form-update-user');
+                if (form[0].checkValidity() === false) {
+                    form[0].classList.add('was-validated');
+                    return
+                }
                 Swal.fire({
-                    text: 'ยืนยันการลบข้อมูล?',
                     icon: 'warning',
+                    title: 'ยืนยันการแก้ไขข้อมูล?',
+                    text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
                     showDenyButton: true,
                     confirmButtonText: 'ยืนยัน',
                     denyButtonText: `ยกเลิก`,
-                }).then((result) => {
+                }).then(async (result) => {
+                    if (!result.isConfirmed) return;
+
+                    showLoading();
+                    const u_id = $(this).data('id');
+                    await $.ajax({
+                        type: "put",
+                        url: "{{ route('admin.update.user', '') }}/" + u_id,
+                        data: form.serialize(),
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.status) {
+                                $("div.modal-backdrop").remove();
+                                $('#container-table').html(response.html);
+                                setupDatatable();
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'แก้ไขข้อมูลสำเร็จ'
+                                });
+                            }
+                        },
+                        error: function (resps) {
+                            let msg = resps.responseJSON.message
+                            if (!msg || msg === '') {
+                                msg = resps.statusText
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'พบข้อผิดพลาด',
+                                text: msg
+                            });
+                        }
+                    });
+                });
+            });
+
+            $('.del').click(function(e) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยืนยันการลบข้อมูล?',
+                    text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
+                    showDenyButton: true,
+                    confirmButtonText: 'ยืนยัน',
+                    denyButtonText: `ยกเลิก`,
+                }).then(async (result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        $.ajax({
+                        showLoading();
+
+                        let id = $(this).data('id');
+                        await $.ajax({
                             type: "delete",
-                            url: "{{ route('admin.delete.user') }}",
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                id: id
-                            },
-                            dataType: "json",
+                            url: "{{ route('admin.delete.user', '') }}/" + id,
                             success: function(response) {
                                 if (response.status) {
+                                    $("div.modal-backdrop").remove();
+                                    $('#container-table').html(response.html);
+                                    setupDatatable();
+
                                     Swal.fire({
                                         icon: 'success',
-                                        title: 'ลบข้อมูลสำเร็จ',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then(() => {
-                                        location.reload();
-                                    })
+                                        title: 'ลบข้อมูลสำเร็จ'
+                                    });
                                 }
+                            },
+                            error: function (resps) {
+                                let msg = resps.responseJSON.message
+                                if (!msg || msg === '') {
+                                    msg = resps.statusText
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'พบข้อผิดพลาด',
+                                    text: msg
+                                });
                             }
                         });
                     }
