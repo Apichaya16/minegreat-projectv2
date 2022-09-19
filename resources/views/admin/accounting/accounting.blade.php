@@ -1,15 +1,15 @@
 @extends('layouts.menu')
-@section('name_page', 'บัญชีลูกค้า')
+@section('name_page', 'รายละเอียดการผ่อน')
 @section('button_page')
 <a type="button" class="btn btn-success" href="{{ route('admin.create.accounting') }}">
-    <i class="fas fa-user-plus fa-sm text-gray-50"></i> เพิ่มรายการบัญชี
+    <i class="fas fa-user-plus fa-sm text-gray-50"></i> เพิ่มข้อมูลการผ่อน
 </a>
 @endsection
 
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">ข้อมูลบัญชีลูกค้า</h6>
+        <h6 class="m-0 font-weight-bold text-primary">รายละเอียดการผ่อน</h6>
     </div>
     <div class="card-body">
         <div id="container-table">

@@ -25,14 +25,14 @@
     <li class="nav-item {{ (request()->is('backend/user*')) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.user.index') }}">
             <i class="fas fa-user-alt text-gray-400"></i>
-            <span>สมัครบัญชีลูกค้า</span>
+            <span>ลงทะเบียนลูกค้า</span>
         </a>
     </li>
 
     <li class="nav-item {{ (request()->is('backend/accounting*')) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.accounting.index') }}">
             <i class="fas fa-file-invoice text-gray-400"></i>
-            <span>บัญชีการผ่อน</span>
+            <span>ข้อมูลการผ่อน</span>
         </a>
     </li>
 

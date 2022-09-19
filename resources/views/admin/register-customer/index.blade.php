@@ -1,8 +1,8 @@
 @extends('layouts.menu')
-@section('name_page', 'ข้อมูลทั่วไป')
+@section('name_page', 'ข้อมูลการลงทะเบียนลูกค้า')
 @section('button_page')
 <a type="button" class="btn btn-success" href="{{ route('admin.create.user') }}">
-    <i class="fas fa-user-plus fa-sm text-white-50"></i> เพิ่มข้อมูลลูกค้า
+    <i class="fas fa-user-plus fa-sm text-white-50"></i> ลงทะเบียน
 </a>
 
 
@@ -11,7 +11,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">ข้อมูลทั่วไปลูกค้า</h6>
+        <h6 class="m-0 font-weight-bold text-primary">ข้อมูลการลงทะเบียนลูกค้า</h6>
     </div>
     <div class="card-body">
         <div id="container-table">

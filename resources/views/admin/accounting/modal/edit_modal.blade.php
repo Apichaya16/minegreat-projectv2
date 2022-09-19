@@ -13,28 +13,28 @@
                         <h5 class="text-left badge badge-pill badge-primary custom-badge">สินค้า</h5>
                         <div class="row mb-4">
                             <div class="col">
-                                <label for="exampleInputPassword1">user</label>
+                                <label for="exampleInputPassword1">รหัสลูกค้า</label>
                                 <input type="text" class="form-control"
                                     value="{{ $data->user->number_customers }}" readonly>
                             </div>
                             <div class="col">
-                                <label for="exampleInputPassword1">price</label>
+                                <label for="exampleInputPassword1">ราคาผ่อน</label>
                                 <input type="text" class="form-control" name="price"
                                     value="{{ $data->price }}" readonly>
                             </div>
                             <div class="col">
-                                <label for="exampleInputPassword1">product</label>
+                                <label for="exampleInputPassword1">ชื่อสินค้า</label>
                                 <input type="text" class="form-control" name="product" value="{{ $data->product }}" required>
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col">
-                                <label for="exampleInputPassword1">brand</label>
+                                <label for="exampleInputPassword1">แบรนด์สินค้า</label>
                                 <input type="text" class="form-control" name="brand" value="{{ $data->brand }}" required>
                             </div>
                             <div class="col">
-                                <label for="exampleInputPassword1">details</label>
+                                <label for="exampleInputPassword1">รายละเอียดสินค้า</label>
                                 <input type="text" class="form-control" name="details" value="{{ $data->details }}" required>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                         <h5 class="text-left badge badge-pill badge-primary custom-badge">รูปแบบการผ่อน / สถานะ</h5>
                         <div class="row mb-4">
                             <div class="col">
-                                <label>installment</label>
+                                <label>จำนวนเงินที่เปิดบิลผ่อน</label>
                                 <select name="type" class="form-control" required>
                                     @foreach ($installmentTypes as $it)
                                     <option value="{{ $it->it_id }}" {{ ($it->it_id == $data->type) ? 'selected' : '' }}>{{
@@ -55,7 +55,7 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label>type_pay</label>
+                                <label>ประเภทการชำระ</label>
                                 <select name="type_pay" class="form-control" required>
                                     @foreach ($paymentTypes as $pt)
                                     <option value="{{ $pt->id }}" {{ ($pt->id == $data->type_pay) ? 'selected' : '' }}>{{
@@ -64,7 +64,7 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label>status_type</label>
+                                <label>สถานะการผ่อน</label>
                                 <select name="status_type" class="form-control" required>
                                     @foreach ($typeStatus as $type)
                                     <option value="{{ $type->s_id }}" {{ ($type->s_id == $data->status_type) ? 'selected' :
@@ -81,12 +81,12 @@
                         <h5 class="text-left badge badge-pill badge-primary custom-badge">การพิจารณา</h5>
                         <div class="row mb-4">
                             <div class="col">
-                                <label>discount</label>
+                                <label>ส่วนลด</label>
                                 <input type="text" class="form-control" name="discount" value="{{ $data->discount }}"
                                     readonly>
                             </div>
                             <div class="col">
-                                <label>detail_promotion</label>
+                                <label>รายละเอียดโปรโมชั่น</label>
                                 <input type="text" class="form-control" name="detail_promotion"
                                     value="{{ $data->detail_promotion }}" readonly>
                             </div>
@@ -94,12 +94,12 @@
 
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                <label>balance_payment</label>
+                                <label>ราคาผ่อนหลังจากหักส่วนลด</label>
                                 <input type="text" class="form-control" name="balance_payment"
                                     value="{{ $data->balance_payment }}" readonly>
                             </div>
                             <div class="col-md-6">
-                                <label>percen_current</label>
+                                <label>เปอร์เซ็นการชำระปัจจุบัน</label>
                                 <input type="text" class="form-control" name="percen_current"
                                     value="{{ $data->percen_current }}" readonly>
                             </div>
@@ -107,12 +107,12 @@
 
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                <label>percen_consider</label>
+                                <label>เปอร์เซ็นการพิจารณา</label>
                                 <input type="text" class="form-control" name="percen_consider"
                                     value="{{ $data->percen_consider }}" readonly>
                             </div>
                             <div class="col-md-6">
-                                <label>amount_consider</label>
+                                <label>จำนวนเงินเมื่อถึง % พิจารณา</label>
                                 <input type="text" class="form-control" name="amount_consider"
                                     value="{{ $data->amount_consider }}" readonly>
                             </div>

@@ -1,5 +1,5 @@
 @extends('layouts.menu')
-@section('name_page', 'เพิ่มข้อมูล')
+@section('name_page', 'กรอกข้อมูลลูกค้า')
 
 
 @section('content')
