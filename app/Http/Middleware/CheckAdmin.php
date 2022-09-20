@@ -20,7 +20,7 @@ class CheckAdmin
             return $next($request);
         }
 
-        return redirect()->route('login');
+        return redirect()->route('admin.dashboard');
         // $status = new AlertMsg("danger", "ขออภัย", "สำหรับ admin เท่านั้น");
         // return redirect()->route('user.home')->with('status', $status);
     }

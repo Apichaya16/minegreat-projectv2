@@ -28,7 +28,6 @@
 
     <section class="login-block vh-100 d-flex align-items-center">
         <div class="container">
-            {{ $errors }}
             <div class="row">
                 <div class="col-md-4 login-sec">
                     <h2 class="text-center">Login Now</h2>
@@ -36,7 +35,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="text-uppercase">Username</label>
-                            <input type="text" class="form-control @error('username') 'is-invalid' @enderror" name="username" required>
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required>
 
                             @error('username')
                                 <div class="invalid-feedback">
@@ -46,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                            <input type="password" class="form-control @error('password') 'is-invalid' @enderror" name="password" required>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                             @error('password')
                                 <div class="invalid-feedback">
@@ -57,10 +56,10 @@
 
 
                         <div class="form-check">
-                            <label class="form-check-label">
+                            {{-- <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input">
                                 <small>Remember Me</small>
-                            </label>
+                            </label> --}}
                             <button type="submit" class="btn btn-login float-right">Login</button>
                         </div>
 

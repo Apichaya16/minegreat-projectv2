@@ -24,15 +24,31 @@
                             <li class="{{ Route::is('customer.contact') ? 'current-list-item' : '' }}">
                                 <a href="{{ route('customer.contact') }}">ติดต่อเรา</a>
                             </li>
+                            @auth
+                                @if (auth()->user()->hasAdmin())
+                                    <li class="{{ Route::is('admin.dashboard') ? 'current-list-item' : '' }}">
+                                        <a href="{{ route('admin.dashboard') }}">ผู้ดูแลระบบ</a>
+                                    </li>
+                                @endif
+                            @endauth
                             <li>
                                 <div class="header-icons">
                                     {{-- <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a> --}}
-                                    <a
-                                        href="{{ route('customer.login') }}"
-                                        {{-- onclick="document.getElementById('logoutForm').submit()" --}}
-                                    >
-                                        เข้าสู่ระบบ
-                                    </a>
+                                    @auth
+                                        <a
+                                            href="#"
+                                            onclick="document.getElementById('logoutForm').submit()"
+                                        >
+                                            ออกจากระบบ
+                                        </a>
+                                    @endauth
+                                    @guest
+                                        <a
+                                            href="{{ route('customer.login') }}"
+                                        >
+                                            เข้าสู่ระบบ
+                                        </a>
+                                    @endguest
                                     <a class="mobile-hide search-bar-icon" href="#">
                                         <i class="fas fa-search"></i>
                                     </a>
