@@ -18,7 +18,7 @@
             <td>{{ $user->last_name }}</td>
             <td>{{ $user->age }}</td>
             <td>{{ $user->tel }}</td>
-            <td>{{ $user->cid }}</td>
+            <td>{{ substr_replace($user->cid, 'XXXXX-XX-', 7, -1) }}</td>
             <td>
                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                     data-target="#editModal-{{ $i }}">
