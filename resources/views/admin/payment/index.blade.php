@@ -51,6 +51,7 @@
             });
         }
         function openEditModal(id) {
+            $('.modal-title').text('แก้ไขรายละเอียดการผ่อน');
             const url = "{{ route('admin.getPaymentById.accounting', '') }}/" + id
             $.get(url,
                 function (resps, textStatus, jqXHR) {
@@ -70,6 +71,7 @@
             );
         }
         function openModal(id) {
+            $('.modal-title').text('เพิ่มรายละเอียดการผ่อน');
             const form = $('.form-create-payment');
             form[0].reset();
             $('#pc_id').val(id);
