@@ -65,6 +65,14 @@ Route::group(
         Route::post('/add_payment/{id}', [\App\Http\Controllers\AccountController::class, 'add_payment'])->name('account.add_payment');
         Route::post('/del_payment', [App\Http\Controllers\AccountController::class, 'del_payment'])->name('del.payment');
 
+        Route::prefix('setting')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.setting.index');
+            Route::get('/getInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getInstallmentById'])->name('admin.setting.getInstallmentById');
+            Route::post('/createInstallment', [App\Http\Controllers\Admin\SettingController::class, 'createInstallment'])->name('admin.setting.createInstallment');
+            Route::put('/updateInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateInstallmentById'])->name('admin.setting.updateInstallmentById');
+            Route::delete('/deleteInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteInstallmentById'])->name('admin.setting.deleteInstallmentById');
+        });
+
         Route::get('/register', function () {
             return view('customer/register');
         });

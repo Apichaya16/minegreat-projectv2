@@ -159,36 +159,16 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <div class="card-body">
-            <h4 class="small font-weight-bold">
-                ผ่อนไปใช้ไป
-                {{-- <span class="float-right">{{ count($installmentTypes) ? '' : '0' }}</span> --}}
-            </h4>
-            <div class="progress mb-4">
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <h4 class="small font-weight-bold">ผ่อนครบรับของ<span class="float-right">15 People</span></h4>
-            <div class="progress mb-4">
-                <div class="progress-bar bg-warning" role="progressbar" style="width: 15%" aria-valuenow="15"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <h4 class="small font-weight-bold">วางดาวน์<span class="float-right">2 People</span></h4>
-            <div class="progress mb-4">
-                <div class="progress-bar" role="progressbar" style="width: 2%" aria-valuenow="2" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-            <h4 class="small font-weight-bold">อื่นๆ / ไม่ระบุ<span class="float-right">10 People</span></h4>
-            <div class="progress mb-4">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            {{-- <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-            <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div> --}}
-
-
+            @foreach ($installmentTypes as $item)
+                <h4 class="small font-weight-bold">
+                    {{ $item->name }}
+                    <span class="float-right">{{ $accounts->where('type_pay', $item->it_id)->count() }}</span>
+                </h4>
+                <div class="progress mb-4">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            @endforeach
         </div>
 
         <div class="card-body">

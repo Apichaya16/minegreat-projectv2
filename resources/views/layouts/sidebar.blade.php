@@ -80,10 +80,23 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('accounting') }}">
+        {{-- <a class="nav-link {{ Route::is('admin.setting.index*') ? '' : 'collapsed' }}" href="#">
+            <i class="fas fa-cogs fa-sm fa-fw text-gray-400"></i>
+            <span>การตั้งค่า</span>
+        </a> --}}
+        <a class="nav-link {{ Route::is('admin.setting.index*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#setting"
+            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-cogs fa-sm fa-fw text-gray-400"></i>
             <span>การตั้งค่า</span>
         </a>
+        <div id="setting" class="collapse {{ Route::is('admin.setting.index*') ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::get('page') == 'installment' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'installment']) }}">ประเภทการผ่อน</a>
+                <a class="collapse-item {{ Request::get('page') == 'payment' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'payment']) }}">ประเภทการชำระ</a>
+                {{-- <a class="collapse-item {{ Request::get('page') == '3' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '3']) }}">ยกเลิกการผ่อน</a>
+                <a class="collapse-item {{ Request::get('page') == '4' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '4']) }}">พักการผ่อน</a> --}}
+            </div>
+        </div>
     </li>
 
     <hr class="sidebar-divider my-0">
