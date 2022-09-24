@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="editModal-{{ $i }}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,7 +19,6 @@
                                 id="number_customers"
                                 name="number_customers"
                                 placeholder="ระบุรหัสลูกค้า"
-                                value="{{ $user->number_customers }}"
                                 readonly
                                 required
                             >
@@ -34,7 +33,6 @@
                                     id="first_name"
                                     name="first_name"
                                     placeholder="ระบุชื่อลูกค้า"
-                                    value="{{ $user->first_name }}"
                                     required
                                 >
                             </div>
@@ -46,7 +44,6 @@
                                     id="last_name"
                                     name="last_name"
                                     placeholder="ระบุนามสกุลลูกค้า"
-                                    value="{{ $user->last_name }}"
                                     required
                                 >
                             </div>
@@ -60,7 +57,6 @@
                                 id="cid"
                                 name="cid"
                                 placeholder="x-xxxx-xxxxx-xx-x"
-                                value="{{ $user->cid }}"
                                 required
                             >
 
@@ -79,7 +75,6 @@
                                 id="age"
                                 name="age"
                                 placeholder="อายุลูกค้า"
-                                value="{{ $user->age }}"
                             >
                         </div>
 
@@ -91,7 +86,6 @@
                                 id="tel"
                                 name="tel"
                                 placeholder="เบอร์โทรลูกค้า"
-                                value="{{ $user->tel }}"
                                 required
                             >
                         </div>
@@ -100,7 +94,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-primary btn-update" data-id="{{ $user->u_id }}">บันทึก</button>
+                <button type="button" class="btn btn-primary btn-update">บันทึก</button>
             </div>
         </div>
     </div>

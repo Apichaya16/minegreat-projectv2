@@ -44,6 +44,12 @@ class UserController extends Controller
         return redirect('login');
     }
 
+    public function getUserById($userId)
+    {
+        $user = User::find($userId);
+        return response()->json(['status' => true, 'data' => $user]);
+    }
+
 
     public function create()
     {

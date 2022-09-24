@@ -43,6 +43,7 @@ Route::group(
             Route::get('create', [App\Http\Controllers\UserController::class, 'create'])->name('admin.create.user');
             Route::post('store', [App\Http\Controllers\UserController::class, 'store'])->name('admin.create.user.store');
             // Route::get('/{userId}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.edit.user');
+            Route::get('/getUserById/{userId}', [App\Http\Controllers\UserController::class, 'getUserById'])->name('admin.detail.user');
             Route::put('update/{userId}', [App\Http\Controllers\UserController::class, 'update'])->name('admin.update.user');
             Route::delete('delete/{userId}', [App\Http\Controllers\UserController::class, 'detroy'])->name('admin.delete.user');
         });

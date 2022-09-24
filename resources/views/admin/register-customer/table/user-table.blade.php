@@ -20,16 +20,13 @@
             <td>{{ $user->tel }}</td>
             <td>{{ substr_replace($user->cid, 'XXXXX-XX-', 7, -1) }}</td>
             <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                    data-target="#editModal-{{ $i }}">
+                <button type="button" class="btn btn-warning btn-sm" onclick="openEditModal({{ $user->u_id }});">
                     <i class="fas fa-edit"></i>
                 </button>
 
                 <button type="button" class="btn btn-danger btn-sm del" data-id="{{ $user->u_id }}">
                     <i class="fas fa-trash-alt"></i>
                 </button>
-
-                @include('admin.register-customer.modal.edit_modal')
             </td>
         </tr>
         @endforeach

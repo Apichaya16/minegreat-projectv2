@@ -19,6 +19,7 @@
         </div>
     </div>
 </div>
+@include('admin.register-customer.modal.edit_modal')
 @endsection
 
 @push('css')
@@ -81,7 +82,7 @@
                         dataType: "json",
                         success: function(response) {
                             if (response.status) {
-                                $("div.modal-backdrop").remove();
+                                $('#editModal').modal('hide');
                                 $('#container-table').html(response.html);
                                 setupDatatable();
 
@@ -125,7 +126,7 @@
                             url: "{{ route('admin.delete.user', '') }}/" + id,
                             success: function(response) {
                                 if (response.status) {
-                                    $("div.modal-backdrop").remove();
+                                    $('#editModal').modal('hide');
                                     $('#container-table').html(response.html);
                                     setupDatatable();
 
@@ -160,6 +161,23 @@
                     {className: "text-center", orderable: false, targets: [6]},
                 ]
             });
+        }
+        function openEditModal(id) {
+            const url = "{{ route('admin.detail.user', '') }}/" + id
+            $.get(url,
+                function (resps, textStatus, jqXHR) {
+                    const {data} = resps;
+                    console.log(data);
+                    $('#number_customers').val(data.number_customers);
+                    $('#first_name').val(data.first_name);
+                    $('#last_name').val(data.last_name);
+                    $('#cid').val(data.cid);
+                    $('#age').val(data.age);
+                    $('#tel').val(data.tel);
+                    $('.btn-update').data('id', data.u_id);
+                    $('#editModal').modal('show');
+                },
+            );
         }
 </script>
 @endpush
