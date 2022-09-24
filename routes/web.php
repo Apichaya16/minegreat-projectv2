@@ -56,14 +56,18 @@ Route::group(
             Route::get('create',  [App\Http\Controllers\AccountController::class, 'add_account'])->name('admin.create.accounting');
             Route::put('update/{pcId}', [App\Http\Controllers\AccountController::class, 'update_account'])->name('admin.update.accounting');
             Route::delete('delete/{pcId}', [App\Http\Controllers\AccountController::class, 'del_acc'])->name('admin.delete.accounting');
+
+            Route::prefix('payment')->group(function () {
+                Route::get('/getPaymentById/{pId}', [\App\Http\Controllers\Admin\PaymentController::class, 'getPaymentById'])->name('admin.getPaymentById.accounting');
+                Route::post('/create_payment', [\App\Http\Controllers\Admin\PaymentController::class, 'create_payment'])->name('admin.create_payment.accounting');
+                Route::put('/update_payment/{pId}', [\App\Http\Controllers\Admin\PaymentController::class, 'update_payment'])->name('admin.update_payment.accounting');
+                Route::delete('/delete_payment/{pId}', [App\Http\Controllers\Admin\PaymentController::class, 'delete_payment'])->name('admin.delete_payment.accounting');
+            });
         });
 
-        Route::get('/check_payment', function () {
-            return view('admin.check_payment');
-        })->name('admin.check.payment');
-
-        Route::post('/add_payment/{id}', [\App\Http\Controllers\AccountController::class, 'add_payment'])->name('account.add_payment');
-        Route::post('/del_payment', [App\Http\Controllers\AccountController::class, 'del_payment'])->name('del.payment');
+        // Route::get('/check_payment', function () {
+        //     return view('admin.check_payment');
+        // })->name('admin.check.payment');
 
         Route::prefix('setting')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.setting.index');

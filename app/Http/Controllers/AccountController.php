@@ -44,7 +44,7 @@ class AccountController extends Controller
             }
             $v1->percen_current = ($amount / $v1->amount_after_discount) * 100;
         }
-        return view('admin.payment', compact('accounts'));
+        return view('admin.payment.index', compact('accounts'));
     }
 
     public function store(Request $request)
@@ -122,23 +122,26 @@ class AccountController extends Controller
         }
     }
 
-    public function add_payment(Request $request, $id)
+    public function create_payment(Request $request)
     {
-        DB::beginTransaction();
-        if ($id == 0) {
+        try {
+            DB::beginTransaction();
+            $filter = $request->get('filter');
             $pay = new Payment;
             $pay->account_id = $request->pc_id;
-        } else {
-            $pay = Payment::where('p_id', $id)->first();
-        }
-        $pay->amount = $request->amount;
-        $pay->date_payment = $request->date_payment . ' ' . $request->time_payment . ':00';
-        $pay->order_number = $request->order_number;
-        // $pay->create_on = date('Y-m-d H:i:s');
-        $pay->save();
-        DB::commit();
+            $pay->amount = $request->amount;
+            $pay->date_payment = $request->date_payment . ' ' . $request->time_payment . ':00';
+            $pay->order_number = $request->order_number;
+            $pay->save();
+            DB::commit();
 
-        return response()->json(['status' => true]);
+            $html = $this->renderPaymentTable($filter);
+
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => 'error', 'html' => null], $th->getCode());
+        }
     }
 
     public function del_payment(Request $request)
