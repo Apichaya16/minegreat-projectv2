@@ -69,7 +69,7 @@
         $('.btn-submit').on('click', function () {
             const id = $(this).data('id');
             if (id) {
-                onUpdate(id, form);
+                onUpdate(id);
             }else {
                 onCreate();
             }

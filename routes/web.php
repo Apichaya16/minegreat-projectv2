@@ -67,10 +67,19 @@ Route::group(
 
         Route::prefix('setting')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.setting.index');
-            Route::get('/getInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getInstallmentById'])->name('admin.setting.getInstallmentById');
-            Route::post('/createInstallment', [App\Http\Controllers\Admin\SettingController::class, 'createInstallment'])->name('admin.setting.createInstallment');
-            Route::put('/updateInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateInstallmentById'])->name('admin.setting.updateInstallmentById');
-            Route::delete('/deleteInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteInstallmentById'])->name('admin.setting.deleteInstallmentById');
+
+            Route::prefix('installment')->group(function () {
+                Route::get('/getInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getInstallmentById'])->name('admin.setting.getInstallmentById');
+                Route::post('/createInstallment', [App\Http\Controllers\Admin\SettingController::class, 'createInstallment'])->name('admin.setting.createInstallment');
+                Route::put('/updateInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateInstallmentById'])->name('admin.setting.updateInstallmentById');
+                Route::delete('/deleteInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteInstallmentById'])->name('admin.setting.deleteInstallmentById');
+            });
+            Route::prefix('payment')->group(function () {
+                Route::get('/getPaymentTypeById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getPaymentTypeById'])->name('admin.setting.getPaymentTypeById');
+                Route::post('/createPaymentType', [App\Http\Controllers\Admin\SettingController::class, 'createPaymentType'])->name('admin.setting.createPaymentType');
+                Route::put('/updatePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updatePaymentById'])->name('admin.setting.updatePaymentById');
+                Route::delete('/deletePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deletePaymentById'])->name('admin.setting.deletePaymentById');
+            });
         });
 
         Route::get('/register', function () {
