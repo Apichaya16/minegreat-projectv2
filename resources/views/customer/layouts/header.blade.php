@@ -48,7 +48,7 @@
                                             </a>
                                             @endguest
                                             @auth
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ route('customer.payment') }}">
                                                 <i class="fas fa-calendar-check"></i> การผ่อนชำระ
                                             </a>
                                             <a class="dropdown-item" href="#">

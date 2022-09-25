@@ -5,7 +5,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="footer-box about-widget">
                     <h2 class="widget-title">ADDRESS</h2>
-                    <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+                    <p>หมู่บ้านตวงทอง เลขที่ 59 หมู่ 4 ทางหลวงแผ่นดินหมายเลข. 3056 ตำบล ตลิ่งชัน อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13160</p>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12">

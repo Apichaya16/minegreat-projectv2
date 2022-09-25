@@ -124,5 +124,9 @@ Route::group(
             return view('customer.contact.index');
         })->name('customer.contact');
 
+        Route::get('/payment', function () {
+            return view('customer.payment.index');
+        })->name('customer.payment');
+
     }
 );
