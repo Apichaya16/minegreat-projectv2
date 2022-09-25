@@ -7,7 +7,7 @@
                     <!-- logo -->
                     <div class="site-logo">
                         <a href="{{ route('customer.home') }}">
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="">
+                            <img src="{{ asset('assets/img/logo.png') }}" alt="" width="80px">
                         </a>
                     </div>
                     <!-- logo -->
@@ -15,18 +15,23 @@
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
-                            <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }}">
+                            <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.home') }}">หน้าแรก</a>
                             </li>
-                            <li class="{{ Route::is('customer.abount') ? 'current-list-item' : '' }}">
+                            {{-- @auth
+                                <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
+                                    <a href="{{ route('customer.home') }}">การผ่อนชำระ</a>
+                                </li>
+                            @endauth --}}
+                            <li class="{{ Route::is('customer.abount') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.abount') }}">เกี่ยวกับเรา</a>
                             </li>
-                            <li class="{{ Route::is('customer.contact') ? 'current-list-item' : '' }}">
+                            <li class="{{ Route::is('customer.contact') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.contact') }}">ติดต่อเรา</a>
                             </li>
                             @auth
                                 @if (auth()->user()->hasAdmin())
-                                    <li class="{{ Route::is('admin.dashboard') ? 'current-list-item' : '' }}">
+                                    <li class="{{ Route::is('admin.dashboard') ? 'current-list-item' : '' }} h5">
                                         <a href="{{ route('admin.dashboard') }}">ผู้ดูแลระบบ</a>
                                     </li>
                                 @endif
@@ -34,21 +39,26 @@
                             <li>
                                 <div class="header-icons">
                                     {{-- <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a> --}}
-                                    @auth
+                                    <a class="mobile-hide" href="{{ route('customer.login') }}">
+                                        <i class="fas fa-user-circle fa-lg"></i>
+                                    </a>
+                                    {{-- @auth
                                         <a
+                                            class="h5"
                                             href="#"
                                             onclick="document.getElementById('logoutForm').submit()"
                                         >
                                             ออกจากระบบ
                                         </a>
-                                    @endauth
-                                    @guest
+                                    @endauth --}}
+                                    {{-- @guest
                                         <a
+                                            class="h5"
                                             href="{{ route('customer.login') }}"
                                         >
                                             เข้าสู่ระบบ
                                         </a>
-                                    @endguest
+                                    @endguest --}}
                                     <a class="mobile-hide search-bar-icon" href="#">
                                         <i class="fas fa-search"></i>
                                     </a>

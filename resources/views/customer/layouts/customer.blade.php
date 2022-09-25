@@ -10,6 +10,7 @@
 
 	<!-- title -->
 	<title>Minegreat</title>
+    <link rel="icon" href="{!! asset('assets/img/logo.png') !!}"/>
 
 	<!-- favicon -->
 	{{-- <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"> --}}
@@ -36,9 +37,34 @@
     @stack('css')
 
     <style>
-        .sticky-wrapper {
-            position: relative !important;
-            background-color: #051922;
+        .top-header-area {
+            position: absolute;
+            z-index: 999;
+            width: 100%;
+            padding: 0;
+        }
+        .hero-bg {
+            background-image: url('/assets/img/baner/baner.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-area:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            content: "";
+            background-color: #07212e;
+            z-index: -1;
+            opacity: 0;
+        }
+        .mean-container .mean-nav {
+            float: left;
+            width: 100%;
+            background: #0c1923;
+            margin-top: 90px;
         }
     </style>
 
@@ -54,6 +80,9 @@
     <!--PreLoader Ends-->
 
     @include('customer.layouts.header')
+
+    @yield('top-bg')
+
     @include('customer.layouts.search')
 
     <div class="container py-4">
@@ -84,6 +113,8 @@
 	<script src="{{ asset('assets/js/sticker.js') }}"></script>
 	<!-- main js -->
 	<script src="{{ asset('assets/js/main.js') }}"></script>
+
+    @stack('scripts')
 
 </body>
 </html>

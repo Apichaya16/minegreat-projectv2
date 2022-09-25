@@ -66,7 +66,7 @@ class LoginController extends Controller
             }
             return redirect()->route('customer.home');
         }
-        return back()->withErrors(['username'=>'Username or password incorrect']);
+        return back()->withErrors(['username'=>'Username or password incorrect'])->withInput();
     }
 
     public function logout()

@@ -1,11 +1,8 @@
 <div class="abt-section mb-150">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-12">
-                <div class="abt-bg">
-                    <a href="https://www.youtube.com/watch?v=DBLlFWYcIGQ" class="video-play-btn popup-youtube"><i
-                            class="fas fa-play"></i></a>
-                </div>
+            <div class="col-lg-6 col-md-12 text-center" data-aos="zoom-in">
+                <img src="{{ asset('assets/img/dbd/dbd.png') }}" alt="" height="480px">
             </div>
             <div class="col-lg-6 col-md-12">
                 <div class="abt-text">

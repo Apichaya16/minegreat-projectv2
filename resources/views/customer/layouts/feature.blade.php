@@ -1,7 +1,6 @@
 <!-- features list section -->
 <div class="list-section pt-80 pb-80">
-    <div class="container">
-
+    <div class="container" data-aos="fade-up">
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 <div class="list-box d-flex align-items-center">

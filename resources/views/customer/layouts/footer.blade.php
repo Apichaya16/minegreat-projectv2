@@ -2,23 +2,29 @@
 <div class="footer-area">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-12">
                 <div class="footer-box about-widget">
-                    <h2 class="widget-title">About us</h2>
+                    <h2 class="widget-title">ADDRESS</h2>
                     <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-12">
                 <div class="footer-box get-in-touch">
-                    <h2 class="widget-title">Get in Touch</h2>
+                    <h2 class="widget-title">CONTACT AS</h2>
                     <ul>
-                        <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-                        <li>support@fruitkha.com</li>
-                        <li>+00 111 222 3333</li>
+                        <li>
+                            <i class="fas fa-mobile-alt"></i> : 094-654-983-6
+                        </li>
+                        <li>
+                            <i class="fab fa-facebook"></i> : อภิ ไมน์เกรท จำหน่าย รับผ่อน มือถือและอุปกรณ์เสริม ผ่อนไปใช้ไป
+                        </li>
+                        <li>
+                            <i class="fab fa-line"></i> : @237mtcph
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="footer-box pages">
                     <h2 class="widget-title">Pages</h2>
                     <ul>
@@ -39,7 +45,7 @@
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
