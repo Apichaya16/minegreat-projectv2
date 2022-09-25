@@ -18,6 +18,13 @@
                             <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.home') }}">หน้าแรก</a>
                             </li>
+                            @auth
+                                @if (!auth()->user()->hasAdmin())
+                                    <li class="{{ Route::is('customer.payment') ? 'current-list-item' : '' }} h5">
+                                        <a href="{{ route('customer.payment') }}">การผ่อนชำระ</a>
+                                    </li>
+                                @endif
+                            @endauth
                             <li class="{{ Route::is('customer.abount') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.abount') }}">เกี่ยวกับเรา</a>
                             </li>
@@ -48,9 +55,6 @@
                                             </a>
                                             @endguest
                                             @auth
-                                            <a class="dropdown-item" href="{{ route('customer.payment') }}">
-                                                <i class="fas fa-calendar-check"></i> การผ่อนชำระ
-                                            </a>
                                             <a class="dropdown-item" href="#">
                                                 <i class="fas fa-id-card"></i> โปรไฟล์
                                             </a>

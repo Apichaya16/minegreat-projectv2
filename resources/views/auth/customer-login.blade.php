@@ -70,23 +70,22 @@
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
                         </ol>
                         <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item active">
-                                <img class="d-block img-fluid"
-                                    src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
-                                <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-item active d-flex justify-content-center">
+                                <img class="d-block img-fluid" src="{{ asset('assets/img/logo.png') }}" alt="logo" width="480px">
+                                {{-- <div class="carousel-caption d-none d-md-block">
                                     <div class="banner-text">
                                         <h2>This is Heaven</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                                             quis nostrud exercitation</p>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
-                            <div class="carousel-item">
+                            {{-- <div class="carousel-item">
                                 <img class="d-block img-fluid"
                                     src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg"
                                     alt="First slide">
@@ -111,7 +110,7 @@
                                             quis nostrud exercitation</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>
