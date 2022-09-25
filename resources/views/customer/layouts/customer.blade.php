@@ -10,13 +10,14 @@
 
 	<!-- title -->
 	<title>Minegreat</title>
-    <link rel="icon" href="{!! asset('assets/img/logo.png') !!}"/>
-
 	<!-- favicon -->
-	{{-- <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"> --}}
+	<link rel="shortcut icon" type="image/png" href="{!! asset('assets/img/logo.png') !!}">
 	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700&display=swap" rel="stylesheet">
+	{{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet"> --}}
 	<!-- fontawesome -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 	<!-- bootstrap -->
@@ -33,40 +34,10 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 	<!-- responsive -->
 	<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    {{-- custom --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
     @stack('css')
-
-    <style>
-        .top-header-area {
-            position: absolute;
-            z-index: 999;
-            width: 100%;
-            padding: 0;
-        }
-        .hero-bg {
-            background-image: url('/assets/img/baner/baner.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        .hero-area:after {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            content: "";
-            background-color: #07212e;
-            z-index: -1;
-            opacity: 0;
-        }
-        .mean-container .mean-nav {
-            float: left;
-            width: 100%;
-            background: #0c1923;
-            margin-top: 90px;
-        }
-    </style>
 
 </head>
 <body>
@@ -95,6 +66,7 @@
 	<!-- jquery -->
 	<script src="{{ asset('assets/js/jquery-1.11.3.min.js') }}"></script>
     {{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<!-- bootstrap -->
 	<script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 	<!-- count down -->
@@ -113,6 +85,16 @@
 	<script src="{{ asset('assets/js/sticker.js') }}"></script>
 	<!-- main js -->
 	<script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <script>
+        $(function () {
+            getYearNow();
+        });
+        function getYearNow() {
+            let now = new Date().getFullYear();
+            $('#copyright').text(now);
+        }
+    </script>
 
     @stack('scripts')
 

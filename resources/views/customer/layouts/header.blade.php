@@ -7,7 +7,7 @@
                     <!-- logo -->
                     <div class="site-logo">
                         <a href="{{ route('customer.home') }}">
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="" width="80px">
+                            <img src="{{ asset('assets/img/logo.png') }}" alt="" width="60px">
                         </a>
                     </div>
                     <!-- logo -->
@@ -18,11 +18,6 @@
                             <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.home') }}">หน้าแรก</a>
                             </li>
-                            {{-- @auth
-                                <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
-                                    <a href="{{ route('customer.home') }}">การผ่อนชำระ</a>
-                                </li>
-                            @endauth --}}
                             <li class="{{ Route::is('customer.abount') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.abount') }}">เกี่ยวกับเรา</a>
                             </li>
@@ -39,41 +34,41 @@
                             <li>
                                 <div class="header-icons">
                                     {{-- <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a> --}}
-                                    <a class="mobile-hide" href="{{ route('customer.login') }}">
-                                        <i class="fas fa-user-circle fa-lg"></i>
-                                    </a>
-                                    {{-- @auth
-                                        <a
-                                            class="h5"
-                                            href="#"
-                                            onclick="document.getElementById('logoutForm').submit()"
-                                        >
-                                            ออกจากระบบ
+                                    <div class="dropdown">
+                                        <a class="mobile-hide dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                            <i class="fas fa-user-circle fa-lg"></i>
                                         </a>
-                                    @endauth --}}
-                                    {{-- @guest
-                                        <a
-                                            class="h5"
-                                            href="{{ route('customer.login') }}"
-                                        >
-                                            เข้าสู่ระบบ
-                                        </a>
-                                    @endguest --}}
-                                    <a class="mobile-hide search-bar-icon" href="#">
-                                        <i class="fas fa-search"></i>
-                                    </a>
+                                        <div class="dropdown-menu shadow shadow-md">
+                                            @guest
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('customer.login') }}"
+                                            >
+                                                <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+                                            </a>
+                                            @endguest
+                                            @auth
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-calendar-check"></i> การผ่อนชำระ
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-id-card"></i> โปรไฟล์
+                                            </a>
+                                            <a class="dropdown-item" href="#" onclick="document.getElementById('logoutForm').submit()">
+                                                <i class="fas fa-sign-out-alt"></i> ออกจากระบบ
+                                            </a>
 
-                                    <form action="{{ route('logout') }}" method="post" id="logoutForm" >
-                                        @csrf
-                                    </form>
+                                            <form action="{{ route('logout') }}" method="post" id="logoutForm" >
+                                                @csrf
+                                            </form>
+                                            @endauth
+                                        </div>
+                                    </div>
+                                    {{-- <a class="mobile-hide search-bar-icon" href="#">
+                                        <i class="fas fa-search"></i>
+                                    </a> --}}
                                 </div>
                             </li>
-                            {{-- <li><a href="news.html">News</a>
-                                <ul class="sub-menu">
-                                    <li><a href="news.html">News</a></li>
-                                    <li><a href="single-news.html">Single News</a></li>
-                                </ul>
-                            </li> --}}
                         </ul>
                     </nav>
                     <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>

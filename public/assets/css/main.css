@@ -1,4 +1,11 @@
-/*Template Name: Fruitkha - Responsive Bootstrap4 Shop TemplateTemplate URI: Description: Bootstrap template for fruits or any other kind of shopAuthor: Imran HossainAuthor URI: https://imransdesign.com/Version: 1.0*/
+/*
+Template Name: Fruitkha - Responsive Bootstrap4 Shop Template
+Template URI:
+Description: Bootstrap template for fruits or any other kind of shop
+Author: Imran Hossain
+Author URI: https://imransdesign.com/
+Version: 1.0
+*/
 /* -----------------------------------------------------------------------------
 
 # Base - Genral & Typography
@@ -12,7 +19,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif;
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.1px;
@@ -44,7 +51,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Poppins", sans-serif;
+  font-family: "Noto Sans Thai", sans-serif;
   font-weight: 700;
   margin: 0 0 1.25rem 0;
   color: #051922;
@@ -138,7 +145,7 @@ h6, .h6 {
 }
 
 p {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Noto Sans Thai", sans-serif;
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.1px;
@@ -403,7 +410,7 @@ p:last-child {
 }
 
 a.boxed-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif;
   display: inline-block;
   background-color: #F28123;
   color: #fff;
@@ -411,7 +418,7 @@ a.boxed-btn {
 }
 
 a.bordered-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif;
   display: inline-block;
   color: #fff;
   border: 2px solid #F28123;
@@ -2416,7 +2423,7 @@ ul.social-link-team li a {
 }
 
 p.product-price {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif;
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 15px;
@@ -2430,7 +2437,7 @@ p.product-price span {
 }
 
 a.cart-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif;
   display: inline-block;
   background-color: #F28123;
   color: #fff;
