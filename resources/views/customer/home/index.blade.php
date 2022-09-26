@@ -72,19 +72,19 @@
     <hr>
 
     <div data-aos="fade-up">
-        <h4>แบรนชั้นนำทั่วโลก</h4>
+        <h4>แบรนด์มือถือ</h4>
         <div class="row">
             <div class="col-3 text-center">
-                <img src="https://www.siamphone.com/spec/acer/images/logo/thumb_logo_acer.png" alt="">
+                <img src="https://www.siamphone.com/spec/apple/images/logo/thumb_logo_apple.png" alt="">
+            </div>
+            <div class="col-3 text-center">
+                <img src="https://seeklogo.com/images/V/vivo-logo-9FBC12B0F9-seeklogo.com.png" alt="">
             </div>
             <div class="col-3 text-center">
                 <img src="https://www.siamphone.com/spec/samsung/images/logo/thumb_logo_samsung.png" alt="">
             </div>
             <div class="col-3 text-center">
-                <img src="https://www.siamphone.com/spec/apple/images/logo/thumb_logo_apple.png" alt="">
-            </div>
-            <div class="col-3 text-center">
-                <img src="https://www.siamphone.com/spec/nokia/images/logo/thumb_logo_nokia.png" alt="">
+                <img src="https://www.siamphone.com/spec/oppo/images/logo/logo_oppo.jpg" alt="">
             </div>
         </div>
     </div>
