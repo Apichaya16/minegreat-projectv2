@@ -9,7 +9,7 @@
         <img src="{{ asset('assets/img/dbd/dbd_cert.png') }}" alt="dbd cert" class="shadow shadow-md" width="300px">
     </div>
     <div class="text-center mt-4">
-        <button type="button" class="btn btn-primary px-5">DBD WEB</button>
+        <a href="https://www.trustmarkthai.com/callbackData/popup.php?data=71-17-5-1da416843b575c1784141337e4bde87a3f258657b73" type="button" class="btn btn-primary px-5">DBD WEB</a>
     </div>
 </div>
 @endsection

@@ -14,6 +14,9 @@
                     <i class="fab fa-facebook"></i> : อภิ ไมน์เกรท จำหน่าย รับผ่อน มือถือและอุปกรณ์เสริม ผ่อนไปใช้ไป
                 </li>
                 <li>
+                    <i class="fa fa-envelope""> : apiminegreat@gmail.com</i>
+                </li>
+                <li>
                     <i class="fab fa-line"></i> : @237mtcph
                 </li>
             </ul>

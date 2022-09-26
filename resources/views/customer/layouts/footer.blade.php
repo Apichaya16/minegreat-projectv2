@@ -5,7 +5,8 @@
             <div class="col-lg-6 col-md-12">
                 <div class="footer-box about-widget">
                     <h2 class="widget-title">ADDRESS</h2>
-                    <p>หมู่บ้านตวงทอง เลขที่ 59 หมู่ 4 ทางหลวงแผ่นดินหมายเลข. 3056 ตำบล ตลิ่งชัน อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13160</p>
+                    <p>หมู่บ้านตวงทอง เลขที่ 59 หมู่ 4 ทางหลวงแผ่นดินหมายเลข. 3056
+                   <br> ตำบล ตลิ่งชัน อำเภอบางปะอิน จังหวัดพระนครศรีอยุธยา 13160</p>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12">
@@ -13,10 +14,13 @@
                     <h2 class="widget-title">CONTACT AS</h2>
                     <ul>
                         <li>
-                            <i class="fas fa-mobile-alt"></i> : 094-654-983-6
+                            <i class="fas fa-mobile-alt"></i> : 062-879-144-7
                         </li>
                         <li>
                             <i class="fab fa-facebook"></i> : อภิ ไมน์เกรท จำหน่าย รับผ่อน มือถือและอุปกรณ์เสริม ผ่อนไปใช้ไป
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope""> : apiminegreat@gmail.com</i>
                         </li>
                         <li>
                             <i class="fab fa-line"></i> : @237mtcph
