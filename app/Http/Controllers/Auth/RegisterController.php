@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Utils\CodeUtil;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -50,9 +51,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'first_name' => ['required', 'string', 'max:200'],
+            'last_name' => ['required', 'string', 'max:200'],
+            'tel' => ['required', 'string', 'max:16'],
+            'email' => ['required', 'string', 'email', 'max:200', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'line_id' => ['string', 'max:100'],
         ]);
     }
 
@@ -64,16 +68,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $customer_number = CodeUtil::generateCode('account');
         return User::create([
-            'name' => $data['name'],
+            'username' => $customer_number,
+            'number_customers' => $customer_number,
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'tel' => $data['tel'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'line_id' => $data['line_id'],
         ]);
-    }
-
-    public function customerRegister()
-    {
-        $users = User::all();
-        return view('customer.register', compact('users'));
     }
 }

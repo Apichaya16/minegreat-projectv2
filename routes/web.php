@@ -25,14 +25,6 @@ Route::get('/backend/auth/login', function () {
     return view('auth.login');
 })->name('admin.login');
 
-Route::get('/customer/auth/login', function () {
-    return view('auth.customer-login');
-})->name('customer.login');
-
-Route::get('/customer/auth/register', function () {
-    return view('customer.register');
-})->name('customer.register');
-
 Route::group(
     [
         'middleware'=> ['auth', 'check_admin'],
@@ -122,6 +114,16 @@ Route::group(
     ],
     function () {
 
+        Route::prefix('auth')->group(function () {
+            Route::get('/login', function () {
+                return view('auth.customer-login');
+            })->name('customer.login');
+
+            Route::get('/register', function () {
+                return view('auth.customer-register');
+            })->name('customer.register');
+        });
+
         Route::get('/abount', function () {
             return view('customer.abount.index');
         })->name('customer.abount');
@@ -130,9 +132,11 @@ Route::group(
             return view('customer.contact.index');
         })->name('customer.contact');
 
-        Route::get('/payment', function () {
-            return view('customer.payment.index');
-        })->name('customer.payment');
+        Route::middleware('auth')->group(function () {
+            Route::get('/payment', function () {
+                return view('customer.payment.index');
+            })->name('customer.payment');
+        });
 
     }
 );

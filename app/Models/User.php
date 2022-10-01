@@ -31,6 +31,7 @@ class User extends Authenticatable {
         'age',
         'tel',
         'cid',
+        'line_id',
         'username',
         'email',
         'password',
