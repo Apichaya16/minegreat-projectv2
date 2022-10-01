@@ -25,21 +25,6 @@ Route::get('/backend/auth/login', function () {
     return view('auth.login');
 })->name('admin.login');
 
-<<<<<<< HEAD
-Route::get('/customer/auth/login', function () {
-    return view('auth.customer-login');
-})->name('customer.login');
-
-Route::get('/customer/auth/register', function () {
-    return view('customer.register');
-})->name('customer.register');
-
-Route::get('/customer/payment', function () {
-    return view('customer.payment');
-})->name('customer.payment');
-
-=======
->>>>>>> d4f5c99c32d4956c97ff0166a5ddb4a34c4eb51c
 Route::group(
     [
         'middleware'=> ['auth', 'check_admin'],
