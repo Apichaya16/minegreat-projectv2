@@ -33,6 +33,10 @@ Route::get('/customer/auth/register', function () {
     return view('customer.register');
 })->name('customer.register');
 
+Route::get('/customer/payment', function () {
+    return view('customer.payment');
+})->name('customer.payment');
+
 Route::group(
     [
         'middleware'=> ['auth', 'check_admin'],
