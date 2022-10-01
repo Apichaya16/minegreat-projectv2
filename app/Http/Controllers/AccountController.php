@@ -94,7 +94,7 @@ class AccountController extends Controller
     {
         $accounts = Account::all();
         if ($accounts->count()) {
-            $users = User::where('role_id', '>', 100)->whereNotIn('u_id', [$accounts->pluck('user_id')])->get();
+            $users = User::where('role_id', '>', 100)->whereNotIn('u_id', $accounts->pluck('user_id')->toArray())->get();
         }else {
             $users = User::where('role_id', '>', 100)->get();
         }
