@@ -29,6 +29,10 @@ Route::get('/customer/auth/login', function () {
     return view('auth.customer-login');
 })->name('customer.login');
 
+Route::get('/customer/auth/register', function () {
+    return view('customer.register');
+})->name('customer.register');
+
 Route::group(
     [
         'middleware'=> ['auth', 'check_admin'],
@@ -94,6 +98,8 @@ Route::group(
 
         Route::get('/myaccount', [App\Http\Controllers\MyaccountController::class, 'index'])->name('myaccount.index');
 
+        //RegisterCustomer
+        // Route::get('/customer/register', [App\Http\Controllers\Auth\RegisterController::class, 'customerRegister'])->name('customer.register');
 
         // Route::get('/myaccount', function () {
         //     return view('customer.myaccount');

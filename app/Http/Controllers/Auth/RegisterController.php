@@ -70,4 +70,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    public function customerRegister()
+    {
+        $users = User::all();
+        return view('customer.register', compact('users'));
+    }
 }
