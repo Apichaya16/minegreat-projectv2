@@ -26,7 +26,5 @@
 
 @include('customer.layouts.product')
 
-@include('customer.layouts.owner')
-
 @include('customer.layouts.news')
 @endsection

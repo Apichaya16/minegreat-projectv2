@@ -80,6 +80,12 @@ Route::group(
                 Route::put('/updatePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updatePaymentById'])->name('admin.setting.updatePaymentById');
                 Route::delete('/deletePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deletePaymentById'])->name('admin.setting.deletePaymentById');
             });
+            Route::prefix('product')->group(function () {
+                Route::get('/getProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getProductById'])->name('admin.setting.getProductById');
+                Route::post('/createProduct', [App\Http\Controllers\Admin\SettingController::class, 'createProduct'])->name('admin.setting.createProduct');
+                Route::put('/updateProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateProductById'])->name('admin.setting.updateProductById');
+                Route::delete('/deleteProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
+            });
         });
 
         Route::get('/register', function () {

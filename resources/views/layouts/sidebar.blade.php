@@ -93,6 +93,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ Request::get('page') == 'installment' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'installment']) }}">ประเภทการผ่อน</a>
                 <a class="collapse-item {{ Request::get('page') == 'payment' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'payment']) }}">ประเภทการชำระ</a>
+                <a class="collapse-item {{ Request::get('page') == 'product' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'product']) }}">จัดการสินค้า</a>
                 {{-- <a class="collapse-item {{ Request::get('page') == '3' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '3']) }}">ยกเลิกการผ่อน</a>
                 <a class="collapse-item {{ Request::get('page') == '4' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '4']) }}">พักการผ่อน</a> --}}
             </div>
