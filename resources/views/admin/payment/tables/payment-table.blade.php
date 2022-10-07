@@ -36,8 +36,8 @@
                 </td>
             </tr>
 
-            <thead class="thead-dark detail-{{ $index }}" style="display: none;">
-                <tr>
+            <thead class="bg-primary detail-{{ $index }}" style="display: none;">
+                <tr class="text-white">
                     <th class="text-center">งวดที่</th>
                     <th class="text-center" colspan="2">ยอดโอน</th>
                     <th class="text-center">วันที่โอน</th>
@@ -55,7 +55,7 @@
                         <td>
                             <button
                                 type="button"
-                                class="btn btn-primary btn-sm"
+                                class="btn btn-warning btn-sm"
                                 onclick="openEditModal({{ $p->p_id }});"
                             >
                                 <i class="fas fa-edit"></i>

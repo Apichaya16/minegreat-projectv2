@@ -139,9 +139,11 @@ Route::group(
         })->name('customer.contact');
 
         Route::middleware('auth')->group(function () {
-            Route::get('/payment', function () {
-                return view('customer.payment.index');
-            })->name('customer.payment');
+            Route::prefix('payment')->group(function () {
+                Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('customer.payment.index');
+                Route::get('/getPaymentById/{pId}', [App\Http\Controllers\PaymentController::class, 'getPaymentById'])->name('customer.payment.getPaymentById');
+                Route::get('/{accId}', [App\Http\Controllers\PaymentController::class, 'create'])->name('customer.payment.create');
+            });
         });
 
     }

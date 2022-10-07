@@ -22,3 +22,6 @@ function showLoading(title = 'Loading...') {
         }
     })
 }
+function hideLoading() {
+    Swal.close();
+}
