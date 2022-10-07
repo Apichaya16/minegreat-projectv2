@@ -20,8 +20,8 @@
                             </li>
                             @auth
                                 @if (!auth()->user()->hasAdmin())
-                                    <li class="{{ Route::is('customer.payment') ? 'current-list-item' : '' }} h5">
-                                        <a href="{{ route('customer.payment') }}">การผ่อนชำระ</a>
+                                    <li class="{{ Route::is('customer.payment.index*') ? 'current-list-item' : '' }} h5">
+                                        <a href="{{ route('customer.payment.index') }}">การผ่อนชำระ</a>
                                     </li>
                                 @endif
                             @endauth

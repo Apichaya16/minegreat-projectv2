@@ -75,6 +75,7 @@
             const form = $('.form-create-payment');
             form[0].reset();
             $('#pc_id').val(id);
+            $('.btn-submit-payment').data('id', null);
             $('#paymentModal').modal('show');
         }
         function bindOnSubmitBtn() {
