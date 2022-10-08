@@ -3,15 +3,17 @@
         <tr>
             <th>#</th>
             <th>สินค้า</th>
+            <th>รุ่น</th>
             <th>เปิดใช้งาน</th>
             <th>จัดการ</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($product as $i => $item)
+        @foreach ($products as $i => $item)
         <tr>
             <td>{{ $i + 1 }}</td>
             <td>{{ $item->brand }}</td>
+            <td>{{ $item->name_th }}</td>
             <td>
                 <div class="form-group">
                     <div class="custom-control custom-switch">

@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'แก้ไขข้อมูล')
 
 

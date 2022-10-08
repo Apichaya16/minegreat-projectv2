@@ -34,13 +34,27 @@
                         <label for="payment_type">ไอดี</label>
                         <input type="text" name="product_id" id="product_id" class="form-control" required>
                     </div> --}}
-                    <div class="form-group">
-                        <label for="payment_type">สี</label>
-                        <input type="text" name="color" id="color" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="payment_type">ความจุ</label>
-                        <input type="text" name="capacity" id="capacity" class="form-control" required>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group w-100">
+                                <label for="color">สี</label>
+                                <select name="colors[]" id="color" class="form-control select2" multiple="multiple" style="width: 100%" required>
+                                    @foreach ($colors as $c)
+                                        <option value="{{ $c->id }}">{{ $c->name_th }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group w-100">
+                                <label for="capacity">ความจุ</label>
+                                <select name="capacities[]" id="capacity" class="form-control select2" multiple="multiple" style="width: 100%" required>
+                                    @foreach ($capacites as $ca)
+                                        <option value="{{ $ca->id }}">{{ $ca->size }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch">

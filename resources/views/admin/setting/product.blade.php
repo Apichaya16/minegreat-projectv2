@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'ตั้งค่า')
 
 @section('content')
@@ -6,7 +6,7 @@
     <div class="card-header py-3">
         <h5>จัดการสินค้า
             <span class="float-right">
-                <button type="button" class="btn btn-success" onclick="createModal();">+ เพิ่มสินค้า</button>
+                <button type="button" class="btn btn-success" onclick="openCreateModal();">+ เพิ่มสินค้า</button>
             </span>
         </h5>
     </div>
@@ -25,6 +25,7 @@
 
 @push('scripts')
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/utils/validate.js') }}"></script>
 <script>
     $(function () {
         $.ajaxSetup({
@@ -33,32 +34,72 @@
             }
         });
 
+        setupModal();
         setupDatatable();
+
+        bindSelect2();
         bindOnSubmitBtn();
     });
     function setupDatatable() {
         $('.product-datatable').DataTable({
             // order: [[0,'desc']],
             columnDefs : [
-                {className: "text-center", targets: [0,2,3]},
-                {orderable: false, targets: [2,3]},
+                {className: "text-center", targets: [0,3,4]},
+                {orderable: false, targets: [3,4]},
             ]
         });
         bindToggleSW();
         bindDeleteBtn();
     }
-    function createModal() {
-        const form = $('.form-product');
-        form[0].reset();
+    function bindSelect2() {
+        $('.select2').each(function (i, v) {
+            $(this).select2({
+                width: 'resolve'
+            });
+        });
+    }
+    function setupModal() {
+        $('#productModal').on('hide.bs.modal', function (event) {
+            $('.form-product').clearValidation();
+        })
+    }
+    function openCreateModal() {
+        bindSelect2();
+        $('.form-product')[0].reset();
         $('#productModal').modal('show');
     }
     function openEditModal(id) {
+        showLoading();
         const url = "{{ route('admin.setting.getProductById', '') }}/" + id
         $.get(url,
             function (resps, textStatus, jqXHR) {
+                hideLoading();
                 const {data} = resps;
-                // console.log(data);
-                // $('#payment_type').val(data.name);
+                let inputs = $('#productModal').find('input');
+                $.each(inputs, function (i, v) {
+                    let id = $(this).prop('id');
+                    $(this).val(data[id]);
+                });
+
+                if (Array.isArray(data['color_maps'])) {
+                    $("#color").val('').trigger('change');
+                    let ids = [];
+                    for (let i = 0; i < data['color_maps'].length; i++) {
+                        const item = data['color_maps'][i];
+                        ids.push(item.color.id);
+                    }
+                    $("#color").val(ids).trigger('change');
+                }
+                if (Array.isArray(data['capacity_maps'])) {
+                    $("#capacity").val('').trigger('change');
+                    let ids = [];
+                    for (let i = 0; i < data['capacity_maps'].length; i++) {
+                        const item = data['capacity_maps'][i];
+                        ids.push(item.capacity.id);
+                    }
+                    $("#capacity").val(ids).trigger('change');
+                }
+
                 $('.btn-submit').data('id', data.id);
                 $('#customSwitch').prop('checked', data.is_active);
                 $('#productModal').modal('show');

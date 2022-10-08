@@ -81,10 +81,10 @@ Route::group(
                 Route::delete('/deletePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deletePaymentById'])->name('admin.setting.deletePaymentById');
             });
             Route::prefix('product')->group(function () {
-                Route::get('/getProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getProductById'])->name('admin.setting.getProductById');
-                Route::post('/createProduct', [App\Http\Controllers\Admin\SettingController::class, 'createProduct'])->name('admin.setting.createProduct');
-                Route::put('/updateProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateProductById'])->name('admin.setting.updateProductById');
-                Route::delete('/deleteProductById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
+                Route::get('/getProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'getProductById'])->name('admin.setting.getProductById');
+                Route::post('/createProduct', [App\Http\Controllers\Admin\ProductController::class, 'createProduct'])->name('admin.setting.createProduct');
+                Route::put('/updateProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'updateProductById'])->name('admin.setting.updateProductById');
+                Route::delete('/deleteProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
             });
         });
 

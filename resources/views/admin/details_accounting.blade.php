@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'บัญชีลูกค้า')
 @section('button_page')
 <style>
@@ -46,7 +46,7 @@
                                 <td>{{ $data->installment }}</td>
                                 <td>{{ $data->price }}</td>
                                 <td>{{ $data->percen_consider }}</td>
-                               
+
                                 <td>
                                     <span class="badge rounded-pill bg-{{$data->statusType->color}}"> {{ $data->statusType->name }}</span>
                                 </td>
@@ -82,7 +82,7 @@
                             <td>{{ $data->percen_consider }}</td>
                            <td>{{ $data->amount_consider }}</td>
                            </tr></tr> --}}
-                            
+
                         @endforeach
                     </tbody>
                 </table>

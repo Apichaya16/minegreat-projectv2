@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'จัดการข้อมูลการผ่อนชำระ')
 @section('content')
 <div class="card shadow mb-4">
@@ -51,10 +51,12 @@
             });
         }
         function openEditModal(id) {
+            showLoading();
             $('.modal-title').text('แก้ไขรายละเอียดการผ่อน');
             const url = "{{ route('admin.getPaymentById.accounting', '') }}/" + id
             $.get(url,
                 function (resps, textStatus, jqXHR) {
+                    hideLoading();
                     const {data} = resps;
                     // console.log(data);
                     $('#order_number').val(data.order_number);

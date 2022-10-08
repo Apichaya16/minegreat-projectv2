@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'รายละเอียดการผ่อน')
 @section('button_page')
 <a type="button" class="btn btn-success" href="{{ route('admin.create.accounting') }}">

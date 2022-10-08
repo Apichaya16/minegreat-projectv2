@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\InstallmentType;
 use App\Models\PaymentType;
 use App\Models\Product;
+use App\Models\ProductCapacity;
+use App\Models\ProductColor;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,8 +30,11 @@ class SettingController extends Controller
                 $paymentTypes = PaymentType::orderBy('seqno', 'asc')->get();
                 return view('admin.setting.paymentType', compact('paymentTypes'));
             case 'product':
-                $product = product::orderBy('brand','asc')->get();
-                return view('admin.setting.product', compact('product'));
+                $products = Product::orderBy('brand','asc')->with('colorMaps.color', 'capacityMaps.capacity')->get();
+                // dd($products);
+                $colors = ProductColor::where('is_active', 1)->get();
+                $capacites = ProductCapacity::where('is_active', 1)->get();
+                return view('admin.setting.product', compact('products', 'colors', 'capacites'));
             default:
                 # code...
                 break;
@@ -157,68 +162,5 @@ class SettingController extends Controller
     {
         $paymentTypes = PaymentType::orderBy('seqno', 'asc')->get();
         return view('admin.setting.tables.payment-table', compact('paymentTypes'))->render();
-    }
-
-    public function getProductById($id)
-    {
-        $product = product::find($id);
-        return response()->json(['status' => true, 'data' => $product]);
-    }
-
-    public function createProduct(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            // $lastCount = PaymentType::all()->count();
-            $newItem = new Product;
-            // $newItem->seqno = $lastCount;
-            $newItem->brand = $request->brand;
-            $newItem->name_th = $request->name_th;
-            $newItem->name_en = $request->name_en;
-            $newItem->desc_th = $request->desc_th;
-            $newItem->desc_en = $request->desc_en;
-            // $newItem->is_active = $request->is_active == 'on' ? 1 : 0;
-            $newItem->save();
-            $detail = new ProductDetail;
-            // $detail->product_id = $request->product_id;
-            $detail->color = $request->color;
-            $detail->capacity = $request->capacity;
-            $detail->save();
-            DB::commit();
-            return response()->json(['status' => true, 'message' => 'success', 'html' => '']);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
-        }
-    }
-
-    public function updateProductById(Request $request, $id)
-    {
-        try {
-            DB::beginTransaction();
-            $result = Product::where('id', $id)->update(['brand' => $request->brand, 'name_th' => $request->name_th,'name_en' => $request->name_en,'desc_th' => $request->desc_th,'desc_en']);
-            if ($result) {
-                // $html = $this->renderProductTable();
-            }
-            DB::commit();
-            return response()->json(['status' => true, 'message' => 'success', 'html' => '']);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], $th->getCode());
-        }
-    }
-
-    public function deleteProductById($id)
-    {
-        try {
-            DB::beginTransaction();
-            Product::where('id', $id)->delete();
-            // $html = $this->renderProductTable();
-            DB::commit();
-            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], $th->getCode());
-        }
     }
 }

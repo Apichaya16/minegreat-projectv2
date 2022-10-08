@@ -18,7 +18,11 @@
             <td>{{ $user->last_name }}</td>
             <td>{{ $user->age }}</td>
             <td>{{ $user->tel }}</td>
-            <td>{{ substr_replace($user->cid, 'XXXXX-XX-', 7, -1) }}</td>
+            <td>
+                @if ($user->cid != '')
+                    {{ substr_replace($user->cid, 'XXXXX-XX-', 7, -1) }}
+                @endif
+            </td>
             <td>
                 <button type="button" class="btn btn-warning btn-sm" onclick="openEditModal({{ $user->u_id }});">
                     <i class="fas fa-edit"></i>

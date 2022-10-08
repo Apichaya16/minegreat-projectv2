@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'สรุปข้อมูลโดยรวม')
 @section('content')
 
@@ -155,50 +155,4 @@
         </div>
     </div>
 </div>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <div class="card-body">
-            @foreach ($installmentTypes as $item)
-                <h4 class="small font-weight-bold">
-                    {{ $item->name }}
-                    <span class="float-right">{{ $accounts->where('type_pay', $item->it_id)->count() }}</span>
-                </h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="card-body">
-            <div class="chart-pie pt-4 pb-2">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <canvas id="myPieChart" width="379" height="245" style="display: block; width: 379px; height: 245px;"
-                    class="chartjs-render-monitor"></canvas>
-            </div>
-            <div class="mt-4 text-center small">
-                <span class="mr-2">
-                    <i class="fas fa-circle text-primary"></i> Direct
-                </span>
-                <span class="mr-2">
-                    <i class="fas fa-circle text-success"></i> Social
-                </span>
-                <span class="mr-2">
-                    <i class="fas fa-circle text-info"></i> Referral
-                </span>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    @endsection
+@endsection

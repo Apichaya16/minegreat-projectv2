@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetail extends Model
 {
     use HasFactory;
+
+    public function colors()
+    {
+        return $this->belongsTo(ProductColor::class, 'color');
+    }
+
+    public function capacities()
+    {
+        return $this->belongsTo(ProductCapacity::class, 'capacity');
+    }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('admin.layouts.menu')
 @section('name_page', 'ข้อมูลการลงทะเบียนลูกค้า')
 @section('button_page')
 <a type="button" class="btn btn-success" href="{{ route('admin.create.user') }}">
@@ -163,9 +163,12 @@
             });
         }
         function openEditModal(id) {
+            showLoading();
+
             const url = "{{ route('admin.detail.user', '') }}/" + id
             $.get(url,
                 function (resps, textStatus, jqXHR) {
+                    hideLoading();
                     const {data} = resps;
                     console.log(data);
                     $('#number_customers').val(data.number_customers);
