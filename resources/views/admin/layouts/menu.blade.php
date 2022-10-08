@@ -15,6 +15,7 @@
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -35,14 +36,14 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('layouts.sidebar')
+        @include('admin.layouts.sidebar')
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
 
-                @include('layouts.topbar')
+                @include('admin.layouts.topbar')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -55,7 +56,7 @@
 
                     @yield('content')
 
-                    @include('layouts.footer')
+                    @include('admin.layouts.footer')
 
                 </div>
                 <!-- End of Content Wrapper -->
@@ -104,12 +105,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('js/utils/sweetAlert.js') }}"></script>
 
-    <!-- Page level plugins -->
-    {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script> --}}
-
-    <!-- Page level custom scripts -->
-    {{-- <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script> --}}
-    {{-- <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script> --}}
+    <script src="{{ asset('vendor/select2/dist/js/select2.full.min.js') }}"></script>
 
     @stack('scripts')
 </body>
