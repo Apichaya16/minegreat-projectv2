@@ -34,25 +34,30 @@
                         <label for="payment_type">ไอดี</label>
                         <input type="text" name="product_id" id="product_id" class="form-control" required>
                     </div> --}}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group w-100">
-                                <label for="color">สี</label>
-                                <select name="colors[]" id="color" class="form-control select2" multiple="multiple" style="width: 100%" required>
-                                    @foreach ($colors as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name_th }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary btn-sm" id="addDetail">+ เพิ่ม</button>
+                    </div>
+                    <div class="container-details" id="details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group w-100">
+                                    <label for="color">สี</label>
+                                    <select name="color" class="form-control select2" style="width: 100%" required>
+                                        @foreach ($colors as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name_th }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group w-100">
-                                <label for="capacity">ความจุ</label>
-                                <select name="capacities[]" id="capacity" class="form-control select2" multiple="multiple" style="width: 100%" required>
-                                    @foreach ($capacites as $ca)
-                                        <option value="{{ $ca->id }}">{{ $ca->size }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group w-100">
+                                    <label for="capacity">ความจุ</label>
+                                    <select name="capacities[]" class="form-control select2" multiple="multiple" style="width: 100%" required>
+                                        @foreach ($capacites as $ca)
+                                            <option value="{{ $ca->id }}">{{ $ca->size }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

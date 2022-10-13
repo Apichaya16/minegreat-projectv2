@@ -17,6 +17,30 @@
     </div>
 </div>
 @include('admin.setting.modal.product-modal')
+<div id="newDetails" class="d-none">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group w-100">
+                <label for="color">สี</label>
+                <select name="color" class="form-control select2" style="width: 100%" required>
+                    @foreach ($colors as $c)
+                        <option value="{{ $c->id }}">{{ $c->name_th }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group w-100">
+                <label for="capacity">ความจุ</label>
+                <select name="capacities[]" class="form-control select2" multiple="multiple" style="width: 100%" required>
+                    @foreach ($capacites as $ca)
+                        <option value="{{ $ca->id }}">{{ $ca->size }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('css')
@@ -39,6 +63,7 @@
 
         bindSelect2();
         bindOnSubmitBtn();
+        bindAddDetails();
     });
     function setupDatatable() {
         $('.product-datatable').DataTable({
@@ -52,7 +77,7 @@
         bindDeleteBtn();
     }
     function bindSelect2() {
-        $('.select2').each(function (i, v) {
+        $('#details .select2').each(function (i, v) {
             $(this).select2({
                 width: 'resolve'
             });
@@ -61,10 +86,19 @@
     function setupModal() {
         $('#productModal').on('hide.bs.modal', function (event) {
             $('.form-product').clearValidation();
+            let newDetails = $('#newDetails').html();
+            $('#details').html(newDetails);
+            bindSelect2();
         })
     }
+    function bindAddDetails() {
+        $('#addDetail').on('click', function () {
+            let newDetails = $('#newDetails').html();
+            $('#details').append(newDetails);
+            bindSelect2();
+        });
+    }
     function openCreateModal() {
-        bindSelect2();
         $('.form-product')[0].reset();
         $('#productModal').modal('show');
     }
@@ -88,7 +122,7 @@
                         const item = data['color_maps'][i];
                         ids.push(item.color.id);
                     }
-                    $("#color").val(ids).trigger('change');
+                    // $("#color").val(ids).trigger('change');
                 }
                 if (Array.isArray(data['capacity_maps'])) {
                     $("#capacity").val('').trigger('change');
@@ -97,7 +131,7 @@
                         const item = data['capacity_maps'][i];
                         ids.push(item.capacity.id);
                     }
-                    $("#capacity").val(ids).trigger('change');
+                    // $("#capacity").val(ids).trigger('change');
                 }
 
                 $('.btn-submit').data('id', data.id);
@@ -136,7 +170,7 @@
             $.ajax({
                 type: "POST",
                 url: "{{ route('admin.setting.createProduct') }}",
-                data: form.serialize(),
+                data: getProductDetail(),
                 success: function (response) {
                     const {status, html} = response;
                     if (status) {
@@ -186,7 +220,7 @@
             $.ajax({
                 type: "PUT",
                 url: "{{ route('admin.setting.updateProductById', '') }}/" + id,
-                data: form.serialize(),
+                data: getProductDetail(),
                 success: function (response) {
                     const {html} = response;
                     $('#productModal').modal('hide');
@@ -203,11 +237,30 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'พบข้อผิดพลาด',
-                        html: error.statusText || ''
+                        html: error.responseText || ''
                     });
                 }
             });
         });
+    }
+    function getProductDetail() {
+        let jsonData = [];
+        $('#details .row').each(function (i, e) {
+            // element == this
+            let selectColor = $(this).find("select[name='color']").val();
+            let selectCapacityArr = $(this).find("select[name='capacities[]']").val();
+            jsonData.push({
+                color: selectColor,
+                capacity: selectCapacityArr
+            });
+        });
+        let brand = $('#brand').val();
+        let name_th = $('#name_th').val();
+        let name_en = $('#name_en').val();
+        let desc_th = $('#desc_th').val();
+        let desc_en = $('#desc_en').val();
+        let is_active = $('#is_active').val();
+        return {brand,name_th,name_en,desc_th,desc_en,is_active, product_detail: jsonData};
     }
     function bindToggleSW() {
         $('.custom-sw').on('change', function () {

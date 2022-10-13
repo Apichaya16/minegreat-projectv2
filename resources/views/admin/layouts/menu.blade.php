@@ -41,12 +41,12 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            <div id="content">
+            <div id="content" style="background-color: #dfe6e9">
 
                 @include('admin.layouts.topbar')
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid py-3">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -56,13 +56,13 @@
 
                     @yield('content')
 
-                    @include('admin.layouts.footer')
-
                 </div>
                 <!-- End of Content Wrapper -->
 
             </div>
             <!-- End of Page Wrapper -->
+
+            @include('admin.layouts.footer')
 
             <!-- Scroll to Top Button-->
             <a class="scroll-to-top rounded" href="#page-top">

@@ -77,22 +77,27 @@ class ProductController extends Controller
                 'desc_en' => $request->desc_en
             ]);
             if ($result) {
-                if (isset($request->colors) && count($request->colors) > 0) {
-                    ProductColorMaps::where('product_id', $id)->delete();
-                    foreach ($request->colors as $c) {
-                        ProductColorMaps::create([
-                            'product_id' => $id,
-                            'color_id' => $c
-                        ]);
-                    }
-                }
-                if (isset($request->capacities) && count($request->capacities) > 0) {
-                    ProductCapacityMaps::where('product_id', $id)->delete();
-                    foreach ($request->capacities as $ca) {
-                        ProductCapacityMaps::create([
-                            'product_id' => $id,
-                            'capacity_id' => $ca
-                        ]);
+                if (isset($request->product_detail) && count($request->product_detail) > 0) {
+                    foreach ($request->product_detail as $pd) {
+                        $olds = ProductDetail::where('product_id', $id)->where('color', $pd['color'])->withTrashed()->get();
+                        foreach ($olds as $old) {
+                            if (!in_array($old->capacity, $pd['capacity'])) {
+                                $old->delete();
+                            } else if (isset($old->deleted_at)) {
+                                $old->restore();
+                            }
+                        }
+
+                        $result = ProductDetail::where('product_id', $id)->where('color', $pd['color'])->first();
+                        if (!$result) {
+                            foreach ($pd['capacity'] as $ca) {
+                                ProductDetail::create([
+                                    'product_id' => $id,
+                                    'color' => $pd['color'],
+                                    'capacity' => $ca
+                                ]);
+                            }
+                        }
                     }
                 }
             }
