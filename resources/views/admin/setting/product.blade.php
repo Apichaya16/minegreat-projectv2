@@ -67,10 +67,11 @@
     });
     function setupDatatable() {
         $('.product-datatable').DataTable({
-            // order: [[0,'desc']],
+            // autoWidth: false,
             columnDefs : [
+                {width: '5%', targets: [0]},
                 {className: "text-center", targets: [0,3,4]},
-                {orderable: false, targets: [3,4]},
+                {orderable: false, width: '100px', targets: [3,4]},
             ]
         });
         bindToggleSW();

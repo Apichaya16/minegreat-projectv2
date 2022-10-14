@@ -25,6 +25,9 @@ class SettingController extends Controller
             case 'product':
                 $product = new ProductController();
                 return $product->index();
+            case 'color':
+                $color = new ColorController();
+                return $color->index();
             default:
                 return abort(404);
         }

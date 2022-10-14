@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ProductColor extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'seqno',
+        'name_th',
+        'name_en',
+        'is_active',
+    ];
 }
