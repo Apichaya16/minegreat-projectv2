@@ -43,7 +43,7 @@
         bindOnSubmitBtn();
     });
     function setupDatatable() {
-        $('.color-datatable').DataTable({
+        $('.capacity-datatable').DataTable({
             // autoWidth: false,
             columnDefs : [
                 {width: '5%', targets: [0]},
