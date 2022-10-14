@@ -69,22 +69,23 @@ Route::group(
             Route::get('/', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.setting.index');
 
             Route::prefix('installment')->group(function () {
-                Route::get('/getInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getInstallmentById'])->name('admin.setting.getInstallmentById');
-                Route::post('/createInstallment', [App\Http\Controllers\Admin\SettingController::class, 'createInstallment'])->name('admin.setting.createInstallment');
-                Route::put('/updateInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateInstallmentById'])->name('admin.setting.updateInstallmentById');
-                Route::delete('/deleteInstallmentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteInstallmentById'])->name('admin.setting.deleteInstallmentById');
+                Route::get('/getInstallmentById/{id}', [App\Http\Controllers\Admin\InstallmentController::class, 'getInstallmentById'])->name('admin.setting.getInstallmentById');
+                Route::post('/createInstallment', [App\Http\Controllers\Admin\InstallmentController::class, 'createInstallment'])->name('admin.setting.createInstallment');
+                Route::put('/updateInstallmentById/{id}', [App\Http\Controllers\Admin\InstallmentController::class, 'updateInstallmentById'])->name('admin.setting.updateInstallmentById');
+                Route::delete('/deleteInstallmentById/{id}', [App\Http\Controllers\Admin\InstallmentController::class, 'deleteInstallmentById'])->name('admin.setting.deleteInstallmentById');
             });
             Route::prefix('payment')->group(function () {
-                Route::get('/getPaymentTypeById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'getPaymentTypeById'])->name('admin.setting.getPaymentTypeById');
-                Route::post('/createPaymentType', [App\Http\Controllers\Admin\SettingController::class, 'createPaymentType'])->name('admin.setting.createPaymentType');
-                Route::put('/updatePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updatePaymentById'])->name('admin.setting.updatePaymentById');
-                Route::delete('/deletePaymentById/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deletePaymentById'])->name('admin.setting.deletePaymentById');
+                Route::get('/getPaymentTypeById/{id}', [App\Http\Controllers\Admin\PaymentTypeController::class, 'getPaymentTypeById'])->name('admin.setting.getPaymentTypeById');
+                Route::post('/createPaymentType', [App\Http\Controllers\Admin\PaymentTypeController::class, 'createPaymentType'])->name('admin.setting.createPaymentType');
+                Route::put('/updatePaymentById/{id}', [App\Http\Controllers\Admin\PaymentTypeController::class, 'updatePaymentById'])->name('admin.setting.updatePaymentById');
+                Route::delete('/deletePaymentById/{id}', [App\Http\Controllers\Admin\PaymentTypeController::class, 'deletePaymentById'])->name('admin.setting.deletePaymentById');
             });
             Route::prefix('product')->group(function () {
-                Route::get('/getProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'getProductById'])->name('admin.setting.getProductById');
+                Route::get('/getProductById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'getProductById'])->name('admin.setting.getProductById');
                 Route::post('/createProduct', [App\Http\Controllers\Admin\ProductController::class, 'createProduct'])->name('admin.setting.createProduct');
-                Route::put('/updateProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'updateProductById'])->name('admin.setting.updateProductById');
-                Route::delete('/deleteProductById/{id}', [App\Http\Controllers\Admin\ProductController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
+                Route::put('/updateProductById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'updateProductById'])->name('admin.setting.updateProductById');
+                Route::put('/updateActiveById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'updateActiveById'])->name('admin.setting.updateActiveById');
+                Route::delete('/deleteProductById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
             });
         });
 

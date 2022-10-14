@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <div class="form-group w-100">
                 <label for="color">สี</label>
-                <select name="color" class="form-control select2" style="width: 100%" required>
+                <select name="color" class="form-control color" style="width: 100%" required>
                     @foreach ($colors as $c)
                         <option value="{{ $c->id }}">{{ $c->name_th }}</option>
                     @endforeach
@@ -32,7 +32,7 @@
         <div class="col-md-6">
             <div class="form-group w-100">
                 <label for="capacity">ความจุ</label>
-                <select name="capacities[]" class="form-control select2" multiple="multiple" style="width: 100%" required>
+                <select name="capacities[]" class="form-control capacity select2" multiple="multiple" style="width: 100%" required>
                     @foreach ($capacites as $ca)
                         <option value="{{ $ca->id }}">{{ $ca->size }}</option>
                     @endforeach
@@ -86,21 +86,24 @@
     function setupModal() {
         $('#productModal').on('hide.bs.modal', function (event) {
             $('.form-product').clearValidation();
-            let newDetails = $('#newDetails').html();
-            $('#details').html(newDetails);
-            bindSelect2();
+            $('#details').empty();
         })
     }
     function bindAddDetails() {
         $('#addDetail').on('click', function () {
-            let newDetails = $('#newDetails').html();
-            $('#details').append(newDetails);
-            bindSelect2();
+            createRowDetailSelect2();
         });
     }
     function openCreateModal() {
+        $('.btn-submit').data('id', null);
         $('.form-product')[0].reset();
+        createRowDetailSelect2();
         $('#productModal').modal('show');
+    }
+    function createRowDetailSelect2() {
+        let newDetails = $('#newDetails').html();
+        $('#details').append(newDetails);
+        bindSelect2();
     }
     function openEditModal(id) {
         showLoading();
@@ -108,37 +111,64 @@
         $.get(url,
             function (resps, textStatus, jqXHR) {
                 hideLoading();
+                console.log(resps);
                 const {data} = resps;
                 let inputs = $('#productModal').find('input');
                 $.each(inputs, function (i, v) {
                     let id = $(this).prop('id');
                     $(this).val(data[id]);
                 });
+                $('#productModal #is_active').prop('checked', data.is_active);
 
-                if (Array.isArray(data['color_maps'])) {
-                    $("#color").val('').trigger('change');
-                    let ids = [];
-                    for (let i = 0; i < data['color_maps'].length; i++) {
-                        const item = data['color_maps'][i];
-                        ids.push(item.color.id);
-                    }
-                    // $("#color").val(ids).trigger('change');
-                }
-                if (Array.isArray(data['capacity_maps'])) {
-                    $("#capacity").val('').trigger('change');
-                    let ids = [];
-                    for (let i = 0; i < data['capacity_maps'].length; i++) {
-                        const item = data['capacity_maps'][i];
-                        ids.push(item.capacity.id);
-                    }
-                    // $("#capacity").val(ids).trigger('change');
-                }
+                const {details} = data;
+                createProductDetails(details);
 
                 $('.btn-submit').data('id', data.id);
-                $('#customSwitch').prop('checked', data.is_active);
                 $('#productModal').modal('show');
             },
         );
+    }
+    function createProductDetails(details) {
+        //data
+        let arr = [];
+        if (Array.isArray(details)) {
+            for (let i = 0; i < details.length; i++) {
+                const item = details[i];
+                if (arr.some(d => (d.color || '') === item.color)) {
+                    let index = arr.findIndex(d => d.color === item.color);
+                    if (index !== -1) {
+                        let detail = arr[index];
+                        if (!(Array.isArray(detail.capacities))) {
+                            let capacity = detail.capacities;
+                            detail.capacities = [];
+                            detail.capacities.push(capacity.id);
+                        }
+                        detail.capacities.push(item.capacities.id);
+                        arr[index] = detail;
+                    }
+                } else {
+                    let detail = item;
+                    if (!(Array.isArray(item.capacities))) {
+                        let capacity = item.capacities;
+                        item.capacities = [];
+                        item.capacities.push(capacity.id);
+                    }
+                    arr.push(item);
+                }
+            }
+        }
+        //new row detail
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
+            let newDetails = $('#newDetails').html();
+            $('#details').append(newDetails);
+        }
+        bindSelect2();
+        //set data to row detail
+        $('#details .row').each(function (i, e) {
+            $(this).find('.color').val(arr[i].color).trigger('change');
+            $(this).find('.capacity').val(arr[i].capacities).trigger('change');
+        });
     }
     function bindOnSubmitBtn() {
         $('.btn-submit').on('click', function () {
@@ -170,12 +200,12 @@
             $.ajax({
                 type: "POST",
                 url: "{{ route('admin.setting.createProduct') }}",
-                data: getProductDetail(),
+                data: getProductDetailJson(),
                 success: function (response) {
                     const {status, html} = response;
                     if (status) {
                         $('#productModal').modal('hide');
-                        // $('#container-table').html(html);
+                        $('#container-table').html(html);
                         setupDatatable();
 
                         Swal.fire({
@@ -220,7 +250,7 @@
             $.ajax({
                 type: "PUT",
                 url: "{{ route('admin.setting.updateProductById', '') }}/" + id,
-                data: getProductDetail(),
+                data: getProductDetailJson(),
                 success: function (response) {
                     const {html} = response;
                     $('#productModal').modal('hide');
@@ -237,13 +267,13 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'พบข้อผิดพลาด',
-                        html: error.responseText || ''
+                        html: error.statusText || ''
                     });
                 }
             });
         });
     }
-    function getProductDetail() {
+    function getProductDetailJson() {
         let jsonData = [];
         $('#details .row').each(function (i, e) {
             // element == this
@@ -259,16 +289,17 @@
         let name_en = $('#name_en').val();
         let desc_th = $('#desc_th').val();
         let desc_en = $('#desc_en').val();
-        let is_active = $('#is_active').val();
+        let is_active = $('#is_active').is(':checked') ? 'on' : null;
         return {brand,name_th,name_en,desc_th,desc_en,is_active, product_detail: jsonData};
     }
     function bindToggleSW() {
         $('.custom-sw').on('change', function () {
+            showLoading();
+
             const id = $(this).data('id');
-            const name = $(this).data('name');
             $.ajax({
                 type: "PUT",
-                url: "{{ route('admin.setting.updateProductById', '') }}/" + id,
+                url: "{{ route('admin.setting.updateActiveById', '') }}/" + id,
                 data: {
                     name: name,
                     is_active: $(this).is(':checked') ? 'on' : null
@@ -307,6 +338,8 @@
             }).then(async (result) => {
                 if (!result.isConfirmed) return;
 
+                showLoading();
+
                 const id = $(this).data('id');
                 $.ajax({
                     type: "DELETE",
@@ -320,7 +353,7 @@
 
                             Swal.fire({
                                 icon: 'success',
-                                title: 'แก้ไขข้อมูลสำเร็จ'
+                                title: 'ลบข้อมูลสำเร็จ'
                             });
                         }
                     },

@@ -17,8 +17,8 @@
             <td>
                 <div class="form-group">
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input custom-sw" id="customSwitch-{{ $i }}" data-id="{{ $item->id }}" data-name="{{ $item->brand }}" {{ $item->is_active ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="customSwitch-{{ $i }}"></label>
+                        <input type="checkbox" class="custom-control-input custom-sw" id="activeSW-{{ $i }}" data-id="{{ $item->id }}" {{ $item->is_active ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="activeSW-{{ $i }}"></label>
                     </div>
                 </div>
             </td>

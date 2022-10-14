@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\InstallmentType;
-use App\Models\PaymentType;
 use App\Models\Product;
-use App\Models\ProductCapacityMaps;
-use App\Models\ProductColorMaps;
+use App\Models\ProductCapacity;
+use App\Models\ProductColor;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,9 +17,17 @@ class ProductController extends Controller
 
     }
 
-    public function getProductById($id)
+    public function index()
     {
-        $products = Product::where('id', $id)->with('colorMaps.color', 'capacityMaps.capacity')->first();
+        $products = Product::orderBy('brand', 'asc')->with('details.colors', 'details.capacities')->get();
+        $colors = ProductColor::where('is_active', 1)->get();
+        $capacites = ProductCapacity::where('is_active', 1)->get();
+        return view('admin.setting.product', compact('products', 'colors', 'capacites'));
+    }
+
+    public function getProductById($pId)
+    {
+        $products = Product::where('id', $pId)->with('details.colors', 'details.capacities')->first();
         return response()->json(['status' => true, 'data' => $products]);
     }
 
@@ -38,48 +44,44 @@ class ProductController extends Controller
             $newItem->is_active = $request->is_active == 'on' ? 1 : 0;
             $newItem->save();
 
-            if (isset($request->colors) && count($request->colors) > 0) {
-                foreach ($request->colors as $c) {
-                    $detail = new ProductDetail;
-                    $detail->product_id = $newItem->id;
-                    $detail->color = $c;
-                    $detail->save();
+            if (isset($request->product_detail) && count($request->product_detail) > 0) {
+                foreach ($request->product_detail as $pd) {
+                    foreach ($pd['capacity'] as $ca) {
+                        ProductDetail::create([
+                            'product_id' => $newItem->id,
+                            'color' => $pd['color'],
+                            'capacity' => $ca,
+                        ]);
+                    }
                 }
             }
-            if (isset($request->capacities) && count($request->capacities) > 0) {
-                foreach ($request->capacities as $ca) {
-                    $detail = new ProductDetail;
-                    $detail->product_id = $newItem->id;
-                    $detail->capacity = $ca;
-                    $detail->save();
-                }
-            }
-
             DB::commit();
 
             $html = $this->renderProductTable();
             return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
         }
     }
 
-    public function updateProductById(Request $request, $id)
+    public function updateProductById(Request $request, $pId)
     {
         try {
             DB::beginTransaction();
-            $result = Product::where('id', $id)->update([
+            // dd($request->is_active);
+            $result = Product::where('id', $pId)->update([
                 'brand' => $request->brand,
                 'name_th' => $request->name_th,
                 'name_en' => $request->name_en,
                 'desc_th' => $request->desc_th,
-                'desc_en' => $request->desc_en
+                'desc_en' => $request->desc_en,
+                'is_active' => $request->is_active == 'on' ? 1 : 0,
             ]);
             if ($result) {
                 if (isset($request->product_detail) && count($request->product_detail) > 0) {
                     foreach ($request->product_detail as $pd) {
-                        $olds = ProductDetail::where('product_id', $id)->where('color', $pd['color'])->withTrashed()->get();
+                        $olds = ProductDetail::where('product_id', $pId)->where('color', $pd['color'])->withTrashed()->get();
                         foreach ($olds as $old) {
                             if (!in_array($old->capacity, $pd['capacity'])) {
                                 $old->delete();
@@ -88,13 +90,13 @@ class ProductController extends Controller
                             }
                         }
 
-                        $result = ProductDetail::where('product_id', $id)->where('color', $pd['color'])->first();
+                        $result = ProductDetail::where('product_id', $pId)->where('color', $pd['color'])->first();
                         if (!$result) {
                             foreach ($pd['capacity'] as $ca) {
                                 ProductDetail::create([
-                                    'product_id' => $id,
+                                    'product_id' => $pId,
                                     'color' => $pd['color'],
-                                    'capacity' => $ca
+                                    'capacity' => $ca,
                                 ]);
                             }
                         }
@@ -104,21 +106,37 @@ class ProductController extends Controller
             DB::commit();
             $html = $this->renderProductTable();
             return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
         }
     }
 
-    public function deleteProductById($id)
+    public function updateActiveById(Request $request, $pId)
     {
         try {
             DB::beginTransaction();
-            Product::where('id', $id)->delete();
-            // $html = $this->renderProductTable();
+            Product::where('id', $pId)->update([
+                'is_active' => $request->is_active == 'on' ? 1 : 0,
+            ]);
             DB::commit();
-            return response()->json(['status' => true, 'message' => 'success', 'html' => '']);
-        } catch (\Throwable $th) {
+            $html = $this->renderProductTable();
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable$th) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
+        }
+    }
+
+    public function deleteProductById($pId)
+    {
+        try {
+            DB::beginTransaction();
+            Product::where('id', $pId)->delete();
+            $html = $this->renderProductTable();
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable$th) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
         }
@@ -126,7 +144,7 @@ class ProductController extends Controller
 
     protected function renderProductTable()
     {
-        $products = Product::orderBy('brand','asc')->get();
+        $products = Product::orderBy('brand', 'asc')->with('details.colors', 'details.capacities')->get();
         return view('admin.setting.tables.product-table', compact('products'))->render();
     }
 }

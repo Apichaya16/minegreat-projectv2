@@ -53,9 +53,12 @@
         $('#paymentModal').modal('show');
     }
     function openEditModal(id) {
+        showLoading();
+
         const url = "{{ route('admin.setting.getPaymentTypeById', '') }}/" + id
         $.get(url,
             function (resps, textStatus, jqXHR) {
+                hideLoading();
                 const {data} = resps;
                 // console.log(data);
                 $('#payment_type').val(data.name);
@@ -170,6 +173,7 @@
     }
     function bindToggleSW() {
         $('.custom-sw').on('change', function () {
+            showLoading();
             const id = $(this).data('id');
             const name = $(this).data('name');
             $.ajax({
@@ -213,6 +217,7 @@
             }).then(async (result) => {
                 if (!result.isConfirmed) return;
 
+                showLoading();
                 const id = $(this).data('id');
                 $.ajax({
                     type: "DELETE",
