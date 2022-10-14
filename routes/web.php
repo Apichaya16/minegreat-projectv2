@@ -90,9 +90,9 @@ Route::group(
             Route::prefix('color')->group(function () {
                 Route::get('/getColorById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'getColorById'])->name('admin.setting.color.getColorById');
                 Route::post('/createColor', [App\Http\Controllers\Admin\ColorController::class, 'createColor'])->name('admin.setting.color.createColor');
-                // Route::put('/updateProductById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'updateProductById'])->name('admin.setting.updateProductById');
-                // Route::put('/updateActiveById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'updateActiveById'])->name('admin.setting.updateActiveById');
-                // Route::delete('/deleteProductById/{pId}', [App\Http\Controllers\Admin\ProductController::class, 'deleteProductById'])->name('admin.setting.deleteProductById');
+                Route::put('/updateColorById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'updateColorById'])->name('admin.setting.color.updateColorById');
+                Route::put('/updateActiveById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'updateActiveById'])->name('admin.setting.color.updateActiveById');
+                Route::delete('/deleteColorById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'deleteColorById'])->name('admin.setting.color.deleteColorById');
             });
         });
 

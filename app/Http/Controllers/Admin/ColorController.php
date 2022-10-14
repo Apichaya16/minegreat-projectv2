@@ -46,6 +46,54 @@ class ColorController extends Controller
         }
     }
 
+    public function updateColorById(Request $request, $cId)
+    {
+        try {
+            DB::beginTransaction();
+            ProductColor::where('id', $cId)->update([
+                'name_th' => $request->name_th,
+                'name_en' => $request->name_en,
+                'is_active' => $request->is_active == 'on' ? 1 : 0
+            ]);
+            $html = $this->renderColorTable();
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
+        }
+    }
+
+    public function updateActiveById(Request $request, $cId)
+    {
+        try {
+            DB::beginTransaction();
+            ProductColor::where('id', $cId)->update([
+                'is_active' => $request->is_active == 'on' ? 1 : 0
+            ]);
+            DB::commit();
+            $html = $this->renderColorTable();
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable$th) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
+        }
+    }
+
+    public function deleteColorById($cId)
+    {
+        try {
+            DB::beginTransaction();
+            ProductColor::where('id', $cId)->delete();
+            $html = $this->renderColorTable();
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable$th) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], 500);
+        }
+    }
+
     protected function renderColorTable()
     {
         $colors = ProductColor::orderBy('seqno', 'asc')->get();

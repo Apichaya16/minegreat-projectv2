@@ -20,8 +20,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::orderBy('brand', 'asc')->with('details.colors', 'details.capacities')->get();
-        $colors = ProductColor::where('is_active', 1)->get();
-        $capacites = ProductCapacity::where('is_active', 1)->get();
+        $colors = ProductColor::where('is_active', 1)->orderBy('seqno', 'asc')->get();
+        $capacites = ProductCapacity::where('is_active', 1)->orderBy('seqno', 'asc')->get();
         return view('admin.setting.product', compact('products', 'colors', 'capacites'));
     }
 

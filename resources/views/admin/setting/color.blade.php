@@ -51,6 +51,8 @@
                 {orderable: false, width: '100px', targets: [2,3]},
             ]
         });
+        bindToggleSW();
+        bindDeleteBtn();
     }
     function setupModal() {
         $('#colorModal').on('hide.bs.modal', function (event) {
@@ -73,6 +75,7 @@
                 let inputs = $('#colorModal').find('input');
                 $.each(inputs, function (i, v) {
                     let id = $(this).prop('id');
+                    if (id === 'is_active') return;
                     $(this).val(data[id]);
                 });
                 $('#colorModal #is_active').prop('checked', data.is_active);
@@ -158,30 +161,106 @@
             if (!result.isConfirmed) return;
 
             showLoading();
-            // $.ajax({
-            //     type: "PUT",
-            //     url: "{{ route('admin.setting.updateProductById', '') }}/" + id,
-            //     data: getProductDetailJson(),
-            //     success: function (response) {
-            //         const {html} = response;
-            //         $('#productModal').modal('hide');
-            //         $('#container-table').html(html);
-            //         setupDatatable();
+            $.ajax({
+                type: "PUT",
+                url: "{{ route('admin.setting.color.updateColorById', '') }}/" + id,
+                data: form.serialize(),
+                success: function (response) {
+                    const {html} = response;
+                    $('#colorModal').modal('hide');
+                    $('#container-table').html(html);
+                    setupDatatable();
 
-            //         Swal.fire({
-            //             icon: 'success',
-            //             title: 'แก้ไขข้อมูลสำเร็จ'
-            //         });
-            //     },
-            //     error: function (error) {
-            //         console.log(error);
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'พบข้อผิดพลาด',
-            //             html: error.statusText || ''
-            //         });
-            //     }
-            // });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'แก้ไขข้อมูลสำเร็จ'
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'พบข้อผิดพลาด',
+                        html: error.statusText || ''
+                    });
+                }
+            });
+        });
+    }
+    function bindToggleSW() {
+        $('.custom-sw').on('change', function () {
+            showLoading();
+
+            const id = $(this).data('id');
+            $.ajax({
+                type: "PUT",
+                url: "{{ route('admin.setting.color.updateActiveById', '') }}/" + id,
+                data: {
+                    is_active: $(this).is(':checked') ? 'on' : null
+                },
+                success: function (response) {
+                    const {html} = response;
+                    $('#colorModal').modal('hide');
+                    $('#container-table').html(html);
+                    setupDatatable();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'แก้ไขข้อมูลสำเร็จ'
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'พบข้อผิดพลาด',
+                        html: error.statusText || ''
+                    });
+                }
+            });
+        });
+    }
+    function bindDeleteBtn() {
+        $('.btn-delete').on('click', function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'ยืนยันการลบข้อมูล?',
+                text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
+                showDenyButton: true,
+                confirmButtonText: 'ยืนยัน',
+                denyButtonText: `ยกเลิก`,
+            }).then(async (result) => {
+                if (!result.isConfirmed) return;
+
+                showLoading();
+
+                const id = $(this).data('id');
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ route('admin.setting.color.deleteColorById', '') }}/" + id,
+                    success: function (response) {
+                        const {html} = response;
+                        if (html) {
+                            $('#colorModal').modal('hide');
+                            $('#container-table').html(html);
+                            setupDatatable();
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'ลบข้อมูลสำเร็จ'
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'พบข้อผิดพลาด',
+                            html: error.statusText || ''
+                        });
+                    }
+                });
+            });
         });
     }
 </script>
