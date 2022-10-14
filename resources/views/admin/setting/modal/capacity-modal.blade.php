@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="colorModal" tabindex="-1" role="dialog" aria-labelledby="colorModal" aria-hidden="true">
+<div class="modal fade" id="capacityModal" tabindex="-1" role="dialog" aria-labelledby="capacityModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">จัดการสีสินค้า</h5>
+                <h5 class="modal-title">จัดการความจุสินค้า</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -11,12 +11,8 @@
             <div class="modal-body">
                 <form class="needs-validation form-color" novalidate>
                     <div class="form-group">
-                        <label for="name_th">สี</label>
-                        <input type="text" name="name_th" id="name_th" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="name_en">สี (EN)</label>
-                        <input type="text" name="name_en" id="name_en" class="form-control" required>
+                        <label for="size">ความจุ</label>
+                        <input type="text" name="size" id="size" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch">

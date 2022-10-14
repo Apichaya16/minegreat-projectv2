@@ -94,6 +94,13 @@ Route::group(
                 Route::put('/updateActiveById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'updateActiveById'])->name('admin.setting.color.updateActiveById');
                 Route::delete('/deleteColorById/{cId}', [App\Http\Controllers\Admin\ColorController::class, 'deleteColorById'])->name('admin.setting.color.deleteColorById');
             });
+            Route::prefix('capacity')->group(function () {
+                Route::get('/getCapacityById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'getCapacityById'])->name('admin.setting.capacity.getCapacityById');
+                Route::post('/createCapacity', [App\Http\Controllers\Admin\CapacityController::class, 'createCapacity'])->name('admin.setting.capacity.createCapacity');
+                Route::put('/updateCapacityById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'updateCapacityById'])->name('admin.setting.capacity.updateCapacityById');
+                Route::put('/updateActiveById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'updateActiveById'])->name('admin.setting.capacity.updateActiveById');
+                Route::delete('/deleteCapacityById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'deleteCapacityById'])->name('admin.setting.capacity.deleteCapacityById');
+            });
         });
 
         Route::get('/register', function () {

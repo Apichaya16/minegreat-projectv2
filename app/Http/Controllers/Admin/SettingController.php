@@ -28,6 +28,9 @@ class SettingController extends Controller
             case 'color':
                 $color = new ColorController();
                 return $color->index();
+            case 'capacity':
+                $capacity = new CapacityController();
+                return $capacity->index();
             default:
                 return abort(404);
         }
