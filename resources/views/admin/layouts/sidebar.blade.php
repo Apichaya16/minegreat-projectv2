@@ -96,6 +96,7 @@
                 <a class="collapse-item {{ Request::get('page') == 'product' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'product']) }}">จัดการสินค้า</a>
                 <a class="collapse-item {{ Request::get('page') == 'color' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'color']) }}">จัดการสีสินค้า</a>
                 <a class="collapse-item {{ Request::get('page') == 'capacity' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'capacity']) }}">จัดการความจุสินค้า</a>
+                <a class="collapse-item {{ Request::get('page') == 'brand' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => 'brand']) }}">จัดการแบรนด์</a>
                 {{-- <a class="collapse-item {{ Request::get('page') == '3' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '3']) }}">ยกเลิกการผ่อน</a>
                 <a class="collapse-item {{ Request::get('page') == '4' ? 'active' : '' }}" href="{{ route('admin.setting.index', ['page' => '4']) }}">พักการผ่อน</a> --}}
             </div>

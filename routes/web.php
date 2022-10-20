@@ -101,6 +101,13 @@ Route::group(
                 Route::put('/updateActiveById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'updateActiveById'])->name('admin.setting.capacity.updateActiveById');
                 Route::delete('/deleteCapacityById/{caId}', [App\Http\Controllers\Admin\CapacityController::class, 'deleteCapacityById'])->name('admin.setting.capacity.deleteCapacityById');
             });
+            Route::prefix('brand')->group(function () {
+                Route::get('/getBrandById/{brId}', [App\Http\Controllers\Admin\BrandController::class, 'getBrandById'])->name('admin.setting.brand.getBrandById');
+                Route::post('/createBrand', [App\Http\Controllers\Admin\BrandController::class, 'createBrand'])->name('admin.setting.brand.createBrand');
+                Route::put('/updateBrandById/{brId}', [App\Http\Controllers\Admin\BrandController::class, 'updateBrandById'])->name('admin.setting.brand.updateBrandById');
+                Route::put('/updateActiveById/{brId}', [App\Http\Controllers\Admin\BrandController::class, 'updateActiveById'])->name('admin.setting.brand.updateActiveById');
+                Route::delete('/deleteBrandById/{brId}', [App\Http\Controllers\Admin\BrandController::class, 'deleteBrandById'])->name('admin.setting.brand.deleteBrandById');
+            });
         });
 
         Route::get('/register', function () {
