@@ -19,6 +19,11 @@ class Product extends Model
         'is_active',
     ];
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand');
+    }
+
     public function details()
     {
         return $this->hasMany(ProductDetail::class, 'product_id');

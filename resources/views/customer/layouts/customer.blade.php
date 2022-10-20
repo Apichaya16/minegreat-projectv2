@@ -36,7 +36,10 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     {{-- custom --}}
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    {{-- waitme --}}
+    <link rel="stylesheet" href="{{ asset('vendor/waitMe/waitMe.min.css') }}">
 
+    @livewireStyles
     @stack('css')
 
 </head>
@@ -88,6 +91,8 @@
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('js/utils/sweetAlert.js') }}"></script>
+    <!-- waitme js -->
+	<script src="{{ asset('vendor/waitMe/waitMe.min.js') }}"></script>
 
     <script>
         $(function () {
@@ -99,6 +104,7 @@
         }
     </script>
 
+    @livewireScripts
     @stack('scripts')
 
 </body>
