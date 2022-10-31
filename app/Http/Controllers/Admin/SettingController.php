@@ -31,6 +31,9 @@ class SettingController extends Controller
             case 'capacity':
                 $capacity = new CapacityController();
                 return $capacity->index();
+            case 'brand':
+                $brand = new BrandController();
+                return $brand->index();
             default:
                 return abort(404);
         }
