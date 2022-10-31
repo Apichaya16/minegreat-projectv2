@@ -17,6 +17,7 @@ class Product extends Model
         'desc_th',
         'desc_en',
         'is_active',
+        'price'
     ];
 
     public function brand()

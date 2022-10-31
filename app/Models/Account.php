@@ -12,6 +12,24 @@ class Account extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $primaryKey = 'pc_id';
+    protected $fillable = [
+        'brand',
+        'user_id',
+        'product',
+        'type',
+        'price',
+        'discount',
+        'amount_after_discount',
+        'amount_consider',
+        'installment',
+        'type_pay',
+        'status_type',
+        'balance_payment',
+        'percen_current',
+        'percen_consider',
+        'detail_promotion'
+    ];
+
     public function installmentType()
     {
         return $this->belongsTo('App\Models\InstallmentType', 'type', 'it_id');

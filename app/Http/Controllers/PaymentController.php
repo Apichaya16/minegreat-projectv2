@@ -9,15 +9,14 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $accounts = Account::where('user_id', auth()->user()->u_id)->get();
+        $accounts = Account::where('user_id', auth()->user()->u_id)->with('statusType')->get();
         $accounts->load('statusType');
         return view('customer.payment.index', compact('accounts'));
     }
 
     public function create($accId)
     {
-        $account = Account::where('pc_id', $accId)->first();
-        $account->load('installmentType', 'statusType', 'user', 'payment');
+        $account = Account::where('pc_id', $accId)->with(['installmentType', 'statusType', 'user', 'payment'])->first();
         $amount = (int) $account->installment;
         foreach ($account->payment as $k2 => $v2) {
             $account->balance_payment -= $v2->amount;

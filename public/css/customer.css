@@ -1,106 +1,232 @@
-.login-block {
-    background: #DE6262;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #FFB88C, #DE6262);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    float: left;
+.top-header-area {
+    position: absolute;
+    z-index: 999;
     width: 100%;
-    padding: 50px 0;
-}
-
-.banner-sec {
-    background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg) no-repeat left bottom;
-    background-size: cover;
-    min-height: 500px;
-    border-radius: 0 10px 10px 0;
     padding: 0;
 }
 
-.container {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+.hero-bg {
+    background-image: url('/assets/img/baner/baner.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
-.carousel-inner {
-    border-radius: 0 10px 10px 0;
+.hero-area:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: #07212e;
+    z-index: -1;
+    opacity: 0;
 }
 
-.carousel-caption {
-    text-align: left;
-    left: 5%;
+.mean-container .mean-nav {
+    float: left;
+    width: 100%;
+    background: #0c1923;
+    margin-top: 90px;
 }
 
-.login-sec {
-    padding: 50px 30px;
+.dropdown-item {
+    color: #0c1923 !important;
+    padding: 5px 10px 5px 10px !important;
+}
+.dropdown-item:hover {
+    color: white !important;
+    background-color: #F28123;
+}
+
+/* STEP FORM */
+/*progressbar*/
+.progressbar {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+    width: 100%;
+}
+
+.progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    width: 33.33%;
+    float: left;
     position: relative;
+    text-decoration: none;
 }
 
-.login-sec .copy-text {
+.progressbar li a:hover {
+    text-decoration: none;
+}
+
+.progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 50px;
+    line-height: 50px;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background: #eeeeee;
+    border-radius: 50%;
+    margin: 0 auto 5px auto;
+}
+
+/*progressbar connectors*/
+.progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
     position: absolute;
-    width: 80%;
-    bottom: 20px;
-    font-size: 13px;
+    left: -50%;
+    top: 9px;
+    z-index: -1;
+    /*put it behind the numbers*/
+}
+
+.progressbar li:first-child:after {
+    /*connector not needed before the first step*/
+    content: none;
+}
+
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+.progressbar li.active:before,
+.progressbar li.active:after {
+    background: #F28123;
+    color: white;
+}
+
+/* RIBBON */
+.box {
+    width: 200px;
+    height: 300px;
+    position: relative;
+    border: 1px solid #bbb;
+    background: #eee;
+    float: left;
+    margin: 20px;
+}
+
+.ribbon {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 93px;
+    height: 93px;
+    text-align: right;
+}
+
+.ribbon span {
+    font-size: 0.8rem;
+    color: #fff;
+    text-transform: uppercase;
     text-align: center;
-}
-
-.login-sec .copy-text i {
-    color: #FEB58A;
-}
-
-.login-sec .copy-text a {
-    color: #E36262;
-}
-
-.login-sec h2 {
-    margin-bottom: 30px;
-    font-weight: 800;
-    font-size: 30px;
-    color: #DE6262;
-}
-
-.login-sec h2:after {
-    content: " ";
-    width: 100px;
-    height: 5px;
-    background: #FEB58A;
+    font-weight: bold;
+    line-height: 32px;
+    transform: rotate(45deg);
+    width: 125px;
     display: block;
-    margin-top: 20px;
-    border-radius: 3px;
-    margin-left: auto;
-    margin-right: auto
-}
-
-.btn-login {
-    background: #DE6262;
-    color: #fff;
-    font-weight: 600;
-}
-
-.banner-text {
-    width: 70%;
+    background: #79a70a;
+    background: linear-gradient(#9bc90d 0%, #79a70a 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
     position: absolute;
-    bottom: 40px;
-    padding-left: 20px;
+    top: 17px;
+    right: -29px;
 }
 
-.banner-text h2 {
+.ribbon span::before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid #79A70A;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79A70A;
+}
+
+.ribbon span::after {
+    content: '';
+    position: absolute;
+    right: 0%;
+    top: 100%;
+    z-index: -1;
+    border-right: 3px solid #79A70A;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79A70A;
+}
+
+.red span {
+    background: linear-gradient(#f70505 0%, #8f0808 100%);
+}
+
+.red span::before {
+    border-left-color: #8f0808;
+    border-top-color: #8f0808;
+}
+
+.red span::after {
+    border-right-color: #8f0808;
+    border-top-color: #8f0808;
+}
+
+.blue span {
+    background: linear-gradient(#2989d8 0%, #1e5799 100%);
+}
+
+.blue span::before {
+    border-left-color: #1e5799;
+    border-top-color: #1e5799;
+}
+
+.blue span::after {
+    border-right-color: #1e5799;
+    border-top-color: #1e5799;
+}
+
+.foo {
+    clear: both;
+}
+
+.bar {
+    content: "";
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid #79a70a;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79a70a;
+}
+
+.baz {
+    font-size: 1rem;
     color: #fff;
-    font-weight: 600;
-}
-
-.banner-text h2:after {
-    content: " ";
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    line-height: 2em;
+    transform: rotate(45deg);
     width: 100px;
-    height: 5px;
-    background: #FFF;
     display: block;
-    margin-top: 20px;
-    border-radius: 3px;
-}
-
-.banner-text p {
-    color: #fff;
+    background: #79a70a;
+    background: linear-gradient(#9bc90d 0%, #79a70a 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 100px;
+    left: 1000px;
 }

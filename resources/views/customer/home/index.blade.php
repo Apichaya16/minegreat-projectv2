@@ -72,7 +72,13 @@
     <hr>
 
     <div data-aos="fade-up">
-        <h4>แบรนด์มือถือ</h4>
+        <h4>แบรนด์มือถือ
+            <span class="float-right">
+                <a href="{{ route('customer.payment.register') }}">
+                    สนใจสินค้า <i class="fas fa-arrow-right"></i>
+                </a>
+            </span>
+        </h4>
         <div class="row align-items-center">
             <div class="col-3 text-center">
                 <img src="https://www.siamphone.com/spec/apple/images/logo/thumb_logo_apple.png" alt="">

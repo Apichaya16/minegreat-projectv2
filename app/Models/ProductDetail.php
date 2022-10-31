@@ -17,6 +17,11 @@ class ProductDetail extends Model
         'is_active'
     ];
 
+    public function products()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
     public function colors()
     {
         return $this->belongsTo(ProductColor::class, 'color');

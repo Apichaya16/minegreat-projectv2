@@ -35,7 +35,7 @@
 	<!-- responsive -->
 	<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     {{-- custom --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
     {{-- waitme --}}
     <link rel="stylesheet" href="{{ asset('vendor/waitMe/waitMe.min.css') }}">
 
@@ -46,11 +46,11 @@
 <body>
 
 	<!--PreLoader-->
-    <div class="loader">
+    {{-- <div class="loader">
         <div class="loader-inner">
             <div class="circle"></div>
         </div>
-    </div>
+    </div> --}}
     <!--PreLoader Ends-->
 
     @include('customer.layouts.header')
@@ -61,6 +61,15 @@
 
     <div class="container py-4">
         @yield('content')
+
+        {{-- <div
+            class="fb-customerchat"
+            page_id="<ENTER-YOUR-FACEBOOK-ID-HERE>"
+            theme_color="#459645"
+            logged_in_greeting="Hi! How can we help you?"
+            logged_out_greeting="GoodBye!... Hope to see you soon."
+            minimized="false"
+        ></div> --}}
     </div>
 
     @include('customer.layouts.footer')
@@ -102,6 +111,21 @@
             let now = new Date().getFullYear();
             $('#copyright').text(now);
         }
+        // window.fbAsyncInit = function() {
+        //     FB.init({
+        //         appId            : '912333495590130',
+        //         autoLogAppEvents : true,
+        //         xfbml            : true,
+        //         version          : 'v2.11'
+        //     });
+        // };
+        // (function(d, s, id){
+        //     var js, fjs = d.getElementsByTagName(s)[0];
+        //     if (d.getElementById(id)) {return;}
+        //     js = d.createElement(s); js.id = id;
+        //     js.src = "https://connect.facebook.net/en_US/sdk.js";
+        //     fjs.parentNode.insertBefore(js, fjs);
+        // }(document, 'script', 'facebook-jssdk'));
     </script>
 
     @livewireScripts

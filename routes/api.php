@@ -22,4 +22,5 @@ Route::prefix('product')->group(function () {
     Route::get('getBrands', [App\Http\Controllers\Api\ApiController::class, 'getBrands'])->name('api.product.getBrands');
     Route::get('getProductByBrandId/{bId}', [App\Http\Controllers\Api\ApiController::class, 'getProductByBrandId'])->name('api.product.getProductByBrandId');
     Route::get('getColorByProductId/{pId}', [App\Http\Controllers\Api\ApiController::class, 'getColorByProductId'])->name('api.product.getColorByProductId');
+    Route::get('getCapacityByProductId/{pId}/{cId}', [App\Http\Controllers\Api\ApiController::class, 'getCapacityByProductId'])->name('api.product.getCapacityByProductId');
 });

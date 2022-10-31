@@ -30,7 +30,24 @@ class ApiController extends Controller
 
     public function getColorByProductId($pId)
     {
-        $pds = Product::where('id', $pId)->with(['details.colors'])->get();
-        return response()->json(['status' => true, 'message' => 'success', 'items' => $pds]);
+        $sql = "SELECT C.*
+                FROM product_details D
+                LEFT JOIN product_colors C ON C.id = D.color
+                WHERE D.product_id = '$pId'
+                GROUP BY D.color";
+        $result = DB::select($sql);
+        return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
+    }
+
+    public function getCapacityByProductId($pId, $cId)
+    {
+        $sql = "SELECT C.*
+                FROM product_details D
+                LEFT JOIN product_capacities C ON C.id = D.capacity
+                WHERE D.product_id = '$pId'
+                AND D.color = '$cId'
+                GROUP BY D.capacity";
+        $result = DB::select($sql);
+        return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
     }
 }
