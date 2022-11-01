@@ -42,7 +42,7 @@ class Account extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\Users', 'user_id', 'u_id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'u_id');
     }
 
     public function payment()
@@ -53,5 +53,10 @@ class Account extends Model
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class, 'type_pay', 'id');
+    }
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product');
     }
 }

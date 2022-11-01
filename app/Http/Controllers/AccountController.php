@@ -62,7 +62,14 @@ class AccountController extends Controller
         $acc->product = $request->product;
         $acc->price = $request->price;
         $acc->balance_payment = $request->balance_payment;
-        $acc->percen_current = $request->percen_current;
+
+        if ($request->percen_current) {
+            $percen_current = ((int)$request->installment / (int)$request->price) * 100;
+            $acc->percen_current = $percen_current;
+        } else {
+            $acc->percen_current = $request->percen_current;
+        }
+
         $acc->percen_consider = $request->percen_consider;
         $acc->amount_consider = $request->price;
         $acc->status_type = $request->status_type;

@@ -61,6 +61,12 @@ Route::group(
             });
         });
 
+        Route::prefix('approve')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\ApproveController::class, 'index'])->name('admin.approve.index');
+            Route::get('getAccountDetailById/{id}', [App\Http\Controllers\Admin\ApproveController::class, 'getAccountDetailById'])->name('admin.approve.getAccountDetailById');
+            Route::put('update/{id}', [App\Http\Controllers\Admin\ApproveController::class, 'update'])->name('admin.approve.update');
+        });
+
         // Route::get('/check_payment', function () {
         //     return view('admin.check_payment');
         // })->name('admin.check.payment');
