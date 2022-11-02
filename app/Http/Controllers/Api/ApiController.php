@@ -18,13 +18,13 @@ class ApiController extends Controller
 
     public function getBrands()
     {
-        $b = Brand::all();
+        $b = Brand::where('is_active', 1)->get();
         return response()->json(['status' => true, 'message' => 'success', 'items' => $b]);
     }
 
     public function getProductByBrandId($bId)
     {
-        $pds = Product::where('brand', $bId)->with('brand')->get();
+        $pds = Product::where('brand', $bId)->with('brands')->get();
         return response()->json(['status' => true, 'message' => 'success', 'items' => $pds]);
     }
 

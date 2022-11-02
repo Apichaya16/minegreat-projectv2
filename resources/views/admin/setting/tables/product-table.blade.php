@@ -12,7 +12,7 @@
         @foreach ($products as $i => $item)
         <tr>
             <td>{{ $i + 1 }}</td>
-            <td>{{ $item->brand }}</td>
+            <td>{{ $item->brands->name_en }}</td>
             <td>{{ $item->name_th }}</td>
             <td>
                 <div class="form-group">

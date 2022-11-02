@@ -12,7 +12,11 @@
                 <form class="needs-validation form-product" novalidate>
                     <div class="form-group">
                         <label for="payment_type">แบรนด์</label>
-                        <input type="text" name="brand" id="brand" class="form-control" required>
+                        <select name="brand" id="brand" class="form-control" required>
+                            @foreach ($brands as $b)
+                                <option value="{{ $b->id }}">{{ $b->name_en }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="payment_type">ชื่อสินค้า (ภาษาไทย)</label>

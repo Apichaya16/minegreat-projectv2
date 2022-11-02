@@ -20,7 +20,7 @@ class Product extends Model
         'price'
     ];
 
-    public function brand()
+    public function brands()
     {
         return $this->belongsTo(Brand::class, 'brand');
     }

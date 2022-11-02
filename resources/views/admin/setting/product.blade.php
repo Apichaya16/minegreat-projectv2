@@ -85,7 +85,7 @@
         });
     }
     function setupModal() {
-        $('#productModal').on('hide.bs.modal', function (event) {
+        $('#productModal').on('hidden.bs.modal', function (event) {
             $('.form-product').clearValidation();
             $('#details').empty();
         })
@@ -119,6 +119,7 @@
                     let id = $(this).prop('id');
                     $(this).val(data[id]);
                 });
+                $('#productModal #brand').val(data.brands.id);
                 $('#productModal #is_active').prop('checked', data.is_active);
 
                 const {details} = data;

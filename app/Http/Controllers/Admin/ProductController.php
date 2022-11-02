@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCapacity;
 use App\Models\ProductColor;
@@ -19,15 +20,16 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::orderBy('brand', 'asc')->with('details.colors', 'details.capacities')->get();
+        $products = Product::orderBy('brand', 'asc')->with(['brands', 'details.colors', 'details.capacities'])->get();
+        $brands = Brand::where('is_active', 1)->get();
         $colors = ProductColor::where('is_active', 1)->orderBy('seqno', 'asc')->get();
         $capacites = ProductCapacity::where('is_active', 1)->orderBy('seqno', 'asc')->get();
-        return view('admin.setting.product', compact('products', 'colors', 'capacites'));
+        return view('admin.setting.product', compact(['products', 'brands', 'colors', 'capacites']));
     }
 
     public function getProductById($pId)
     {
-        $products = Product::where('id', $pId)->with('details.colors', 'details.capacities')->first();
+        $products = Product::where('id', $pId)->with(['brands', 'details.colors', 'details.capacities'])->first();
         return response()->json(['status' => true, 'data' => $products]);
     }
 
