@@ -13,4 +13,9 @@ class Payment extends Model
     protected $dates = ['deleted_at'];
     protected $table = 'payment';
     protected $primaryKey = 'p_id';
+
+    public function paymentStatus()
+    {
+        return $this->belongsTo(PaymentStatus::class, 'status_id');
+    }
 }

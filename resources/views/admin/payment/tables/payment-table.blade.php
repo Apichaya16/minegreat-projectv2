@@ -12,13 +12,13 @@
     <tbody>
         @foreach ($accounts as $index => $data)
             <tr class="text-center">
-                <td>{{ $data->user == '' ? 'not user' : $data->user->number_customers }}</td>
-                <td>{{ $data->installmentType->name }}</td>
+                <td>{{ $data->number_customers == '' ? 'not user' : $data->number_customers }}</td>
+                <td>{{ $data->installment_name }}</td>
                 <td>{{ number_format($data->balance_payment, 0, '', ',') }}</td>
                 <td>{{ number_format($data->percen_current, 2, '.', ',') }}</td>
                 <td>
-                    <span class="badge rounded-pill bg-{{ $data->statusType->color }}" style="color: white">
-                        {{ $data->statusType->name }}
+                    <span class="badge rounded-pill bg-{{ $data->type_color }} text-white">
+                        {{ $data->type_name }}
                     </span>
                 </td>
                 <td>
@@ -42,16 +42,26 @@
                     <th class="text-center" colspan="2">ยอดโอน</th>
                     <th class="text-center">วันที่โอน</th>
                     <th class="text-center">ยอดรวมชำระ</th>
+                    {{-- <th class="text-center">สถานะ</th> --}}
                     <th class="text-center">จัดการข้อมูล</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data->payment as $k => $p)
+                @foreach ($payments as $k => $p)
+                    @if ($data->pc_id == $p->account_id)
                     <tr class="detail-{{ $index }} text-center" style="display: none;">
                         <td>{{ $p->order_number }}</td>
                         <td colspan="2">{{ number_format($p->amount, 0, '', ',') }}</td>
                         <td>{{ $p->date_payment }}</td>
-                        <td>{{ number_format($p->sum, 0, '', ',') }}</td>
+                        <td>
+                            @if (isset($p->sum))
+                            {{ number_format($p->sum, 0, '', ',') }}
+                            @else
+                            <div class="badge rounded-pill badge-{{$p->status_color}} text-white">
+                                {{ $p->status_name }}
+                            </div>
+                            @endif
+                        </td>
                         <td>
                             <button
                                 type="button"
@@ -69,6 +79,7 @@
                             </button>
                         </td>
                     </tr>
+                    @endif
                 @endforeach
             </tbody>
         @endforeach

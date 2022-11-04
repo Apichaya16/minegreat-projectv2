@@ -14,7 +14,7 @@
                     <div class="row mb-4">
                         <div class="col">
                             <label for="exampleInputPassword1">รหัสลูกค้า</label>
-                            <input type="text" class="form-control" value="{{ $data->user->number_customers }}"
+                            <input type="text" class="form-control" value="{{ $data->number_customers }}"
                                 readonly>
                         </div>
                         <div class="col">
@@ -24,18 +24,18 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">ชื่อสินค้า</label>
-                            <input type="text" class="form-control" value="{{ $data->product }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->product_name }}" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-4">
                         <div class="col">
                             <label for="exampleInputPassword1">แบรนด์สินค้า</label>
-                            <input type="text" class="form-control" value="{{ $data->brand }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->brand_name }}" readonly>
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">รายละเอียดสินค้า</label>
-                            <input type="text" class="form-control" value="{{ $data->details }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->product_desc }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -48,15 +48,15 @@
                     <div class="row mb-4">
                         <div class="col">
                             <label>จำนวนเงินที่เปิดบิลผ่อน</label>
-                            <input type="text" class="form-control" value="{{ $data->installmentType->name }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->installment }}" readonly>
                         </div>
                         <div class="col">
                             <label>ประเภทการชำระ</label>
-                            <input type="text" class="form-control" value="{{ $data->paymentType->name }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->payment_name }}" readonly>
                         </div>
                         <div class="col">
                             <label>สถานะการผ่อน</label>
-                            <input type="text" class="form-control" value="{{ $data->statusType->name }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->type_name }}" readonly>
                         </div>
                     </div>
                 </div>

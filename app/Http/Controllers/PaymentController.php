@@ -32,7 +32,7 @@ class PaymentController extends Controller
         try {
             $account = Account::find($pId);
             if ($account) {
-                $account->load('installmentType', 'statusType', 'user', 'payment');
+                $account->load(['installmentType', 'statusType', 'user', 'payment']);
             }
             return response()->json(['status' => true, 'message' => 'success', 'data' => $account]);
         } catch (\Throwable $th) {

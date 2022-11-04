@@ -13,13 +13,14 @@
     <tbody>
         @foreach ($accounts as $index => $data)
         <tr>
-            <td>{{ $data->user->number_customers }}</td>
-            <td>{{ $data->installmentType->name }}</td>
+            <td>{{ $data->number_customers }}</td>
+            <td>{{ $data->installment_name }}</td>
             <td>{{ number_format($data->balance_payment, 0, '', ',') }}</td>
             <td>{{ $data->percen_current }}</td>
             <td>
-                <span class="badge rounded-pill bg-{{ $data->statusType->color }}">
-                    {{ $data->statusType->name }}</span>
+                <span class="badge rounded-pill bg-{{ $data->type_color }}">
+                    {{ $data->type_name }}
+                </span>
             </td>
             <td>
                 <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"

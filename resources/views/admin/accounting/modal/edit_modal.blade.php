@@ -15,7 +15,7 @@
                             <div class="col">
                                 <label for="exampleInputPassword1">รหัสลูกค้า</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $data->user->number_customers }}" readonly>
+                                    value="{{ $data->number_customers }}" readonly>
                             </div>
                             <div class="col">
                                 <label for="exampleInputPassword1">ราคาผ่อน</label>
@@ -24,18 +24,18 @@
                             </div>
                             <div class="col">
                                 <label for="exampleInputPassword1">ชื่อสินค้า</label>
-                                <input type="text" class="form-control" name="product" value="{{ $data->product }}" required>
+                                <input type="text" class="form-control" name="product" value="{{ $data->product_name }}" readonly>
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="exampleInputPassword1">แบรนด์สินค้า</label>
-                                <input type="text" class="form-control" name="brand" value="{{ $data->brand }}" required>
+                                <input type="text" class="form-control" name="brand" value="{{ $data->brand_name }}" readonly>
                             </div>
                             <div class="col">
                                 <label for="exampleInputPassword1">รายละเอียดสินค้า</label>
-                                <input type="text" class="form-control" name="details" value="{{ $data->details }}" required>
+                                <input type="text" class="form-control" name="details" value="{{ $data->product_desc }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -45,16 +45,20 @@
                     <div class="container-status">
                         <h5 class="text-left badge badge-pill badge-primary custom-badge">รูปแบบการผ่อน / สถานะ</h5>
                         <div class="row mb-4">
-                            <div class="col">
+                            <div class="col-md-3">
                                 <label>จำนวนเงินที่เปิดบิลผ่อน</label>
+                                <input type="text" name="installment" id="installment" class="form-control" value="{{ $data->installment }}" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label>ประเภทการผ่อน</label>
                                 <select name="type" class="form-control" required>
                                     @foreach ($installmentTypes as $it)
-                                    <option value="{{ $it->it_id }}" {{ ($it->it_id == $data->type) ? 'selected' : '' }}>{{
+                                    <option value="{{ $it->id }}" {{ ($it->id == $data->type) ? 'selected' : '' }}>{{
                                         $it->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-md-3">
                                 <label>ประเภทการชำระ</label>
                                 <select name="type_pay" class="form-control" required>
                                     @foreach ($paymentTypes as $pt)
@@ -63,7 +67,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-md-3">
                                 <label>สถานะการผ่อน</label>
                                 <select name="status_type" class="form-control" required>
                                     @foreach ($typeStatus as $type)
@@ -83,12 +87,12 @@
                             <div class="col">
                                 <label>ส่วนลด</label>
                                 <input type="text" class="form-control" name="discount" value="{{ $data->discount }}"
-                                    readonly>
+                                required>
                             </div>
                             <div class="col">
                                 <label>รายละเอียดโปรโมชั่น</label>
                                 <input type="text" class="form-control" name="detail_promotion"
-                                    value="{{ $data->detail_promotion }}" readonly>
+                                    value="{{ $data->detail_promotion }}" required>
                             </div>
                         </div>
 

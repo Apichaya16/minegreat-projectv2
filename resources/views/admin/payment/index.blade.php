@@ -68,6 +68,7 @@
                         $('#date_payment').val(strSplit[0]);
                         $('#time_payment').val(strSplit[1]);
                     }
+                    $('#status_id').val(data.status_id);
                     $('#paymentModal').modal('show');
                 },
             );

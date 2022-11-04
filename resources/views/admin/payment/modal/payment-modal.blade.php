@@ -39,7 +39,16 @@
                             <label for="time_payment">เวลาโอน</label>
                             <input type="time" class="form-control" id="time_payment" name="time_payment" required>
                         </div>
-
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col text-left">
+                            <label for="status_id">สถานะ</label>
+                            <select name="status_id" id="status_id" class="form-control" required>
+                                @foreach ($paymentStatus as $ps)
+                                    <option value="{{ $ps->id }}">{{ $ps->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
