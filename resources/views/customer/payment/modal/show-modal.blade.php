@@ -48,8 +48,12 @@
                             <input type="text" class="form-control" id="installmentPrice" readonly>
                         </div>
                         <div class="col">
-                            <label>ประเภทการชำระ</label>
+                            <label>ประเภทการผ่อน</label>
                             <input type="text" class="form-control" id="installmentType" readonly>
+                        </div>
+                        <div class="col">
+                            <label>ประเภทการชำระ</label>
+                            <input type="text" class="form-control" id="paymentType" readonly>
                         </div>
                         <div class="col">
                             <label>สถานะการผ่อน</label>

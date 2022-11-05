@@ -173,8 +173,12 @@ Route::group(
 
             Route::prefix('payment')->group(function () {
                 Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('customer.payment.index');
-                Route::get('/getPaymentById/{pId}', [App\Http\Controllers\PaymentController::class, 'getPaymentById'])->name('customer.payment.getPaymentById');
+                Route::get('/getPaymentDetailById/{pId}', [App\Http\Controllers\PaymentController::class, 'getPaymentDetailById'])->name('customer.payment.getPaymentDetailById');
                 Route::get('/{accId}', [App\Http\Controllers\PaymentController::class, 'create'])->name('customer.payment.create');
+
+                Route::get('/getPaymentById/{pId}', [App\Http\Controllers\PaymentController::class, 'getPaymentById'])->name('customer.payment.getPaymentById');
+                Route::post('/create', [App\Http\Controllers\PaymentController::class, 'storePayment'])->name('customer.payment.storePayment');
+                Route::put('/update/{pId}', [App\Http\Controllers\PaymentController::class, 'updatePaymentById'])->name('customer.payment.updatePaymentById');
             });
         });
 

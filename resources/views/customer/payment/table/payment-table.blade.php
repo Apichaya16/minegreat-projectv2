@@ -9,19 +9,29 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($account->payment as $i => $p)
+        @foreach ($payments as $i => $p)
         <tr>
             <td>{{ $p->order_number }}</td>
             <td>{{ number_format($p->amount, 0, '', ',') }}</td>
             <td>{{ $p->date_payment }}</td>
-            <td>{{ number_format($p->sum, 0, '', ',') }}</td>
             <td>
-                {{-- <button type="button" class="btn btn-primary btn-sm" onclick="openEditModal({{ $p->p_id }});">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm btn-delete" data-id="{{ $p->p_id }}">
-                    <i class="fas fa-trash-alt"></i>
-                </button> --}}
+                @if (isset($p->sum))
+                {{ number_format($p->sum, 0, '', ',') }}
+                @else
+                <div class="badge rounded-pill badge-{{$p->status_color}} text-white">
+                    {{ $p->status_name }}
+                </div>
+                @endif
+            </td>
+            <td>
+                <div class="d-flex flex-column flex-md-row justify-content-center">
+                    <button type="button" class="btn btn-warning btn-sm m-1" onclick="openModal('{{ $p->p_id }}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm m-1">
+                        <i class="fas fa-window-close"></i>
+                    </button>
+                </div>
             </td>
         </tr>
         @endforeach

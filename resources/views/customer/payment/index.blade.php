@@ -45,7 +45,7 @@
                             @foreach ($accounts as $i => $acc)
                                 <tr>
                                     <td>{{ $i + 1 }}</td>
-                                    <td>{{ $acc->product }}</td>
+                                    <td>{{ $acc->products->brands->name_en }} {{ $acc->products->name_en }}</td>
                                     <td>
                                         <div class="badge badge-pill badge-{{ $acc->statusType->color }}">
                                             {{ $acc->statusType->name }}
@@ -53,7 +53,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column flex-md-row justify-content-center">
-                                            <button type="button" class="btn btn-primary btn-sm m-1" onclick="openShowModal({{ $acc->pc_id }})">
+                                            <button type="button" class="btn btn-primary btn-sm m-1" onclick="openShowModal('{{ $acc->pc_id }}')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <a href="{{ route('customer.payment.create', ['accId' => $acc->pc_id]) }}" class="btn btn-warning btn-sm m-1">
@@ -103,23 +103,24 @@
     }
     function openShowModal(id) {
         showLoading();
-        $.get("{{ route('customer.payment.getPaymentById', '') }}/" + id,
+        $.get("{{ route('customer.payment.getPaymentDetailById', '') }}/" + id,
             function (resps, textStatus, jqXHR) {
                 hideLoading();
                 const {data} = resps
                 console.log(data);
-                $('#cusId').val(data.user.number_customers);
+                $('#cusId').val(data.number_customers);
                 $('#price').val(data.price);
-                $('#productName').val(data.product);
-                $('#brand').val(data.brand);
-                $('#desc').val(data.details);
+                $('#productName').val(data.product_name);
+                $('#brand').val(data.brand_name);
+                $('#desc').val(data.product_desc);
                 $('#installmentPrice').val(data.installment);
-                $('#installmentType').val(data.installment_type.name);
-                $('#status').val(data.status_type.name);
+                $('#installmentType').val(data.installment_name);
+                $('#paymentType').val(data.payment_name);
+                $('#status').val(data.type_name);
 
                 // discount
-                $('#discount').val(data.discount);
-                $('#promotion').val(data.detail_promotion);
+                $('#discount').val(data.discount || '-');
+                $('#promotion').val(data.detail_promotion || '-');
                 $('#priceDiscount').val(data.amount_after_discount);
                 $('#percent').val(data.percen_current);
                 $('#percentPass').val(data.percen_consider);

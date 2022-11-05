@@ -57,7 +57,7 @@ class AccountController extends Controller
         return view('admin.accounting.accounting', compact('accounts', 'typeStatus', 'installmentTypes', 'paymentTypes'));
     }
 
-    public function payment(Request $request)
+    public function payment(Request $request) //จัดการข้อมูลการผ่อนชำระ
     {
         $filter = $request->get('filter');
         $sql = "SELECT a.*
@@ -90,6 +90,7 @@ class AccountController extends Controller
                     ->whereIn('account_id', $acIds)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
+                    ->orderBy('payment.order_number', 'desc')
                     ->get();
         foreach ($accounts as $acc) {
             $amount = $acc->installment;

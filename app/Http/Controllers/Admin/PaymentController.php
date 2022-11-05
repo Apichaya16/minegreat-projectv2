@@ -3,12 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account;
-use App\Models\InstallmentType;
 use App\Models\Payment;
-use App\Models\PaymentType;
-use App\Models\TypeStatus;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +11,7 @@ class PaymentController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function getPaymentById($pId)

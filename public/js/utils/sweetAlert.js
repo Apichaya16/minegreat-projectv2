@@ -14,6 +14,14 @@ function showAlertWithConfirm(type, title, msg) {
         }
     });
 }
+function showAlert(type, title, msg) {
+    Swal.fire({
+        title: title,
+        text: msg,
+        icon: type,
+        confirmButtonText: 'ตกลง'
+    });
+}
 function showLoading(title = 'Loading...') {
     Swal.fire({
         title: title,
