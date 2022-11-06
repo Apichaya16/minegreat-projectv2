@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Constands;
 use App\Models\Account;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 {
@@ -51,18 +53,22 @@ class PaymentController extends Controller
                     ->where('account_id', $accId)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
-                    ->orderBy('payment.date_payment', 'desc')
+                    ->orderBy('payment.order_number', 'desc')
                     ->get();
-        $amount = $account->installment;
+        $balance = (float)$account->amount_after_discount;
+        $sum = (int)$account->installment + (int)$account->discount;
         foreach ($payments as $p) {
             if ($p->status_id == 2) {
-                $account->balance_payment -= $p->amount;
-                $amount += $p->amount;
-                $p->sum = $amount;
+                $balance -= $p->amount;
+                $sum += $p->amount;
+                $p->sum = $sum;
             }
         }
-        $account->percen_current = ($amount / $account->amount_after_discount) * 100;
-        return view('customer.payment.list-payment', compact(['account','payments']));
+        $account->balance_payment = $balance;
+        $account->percen_current = ($sum / $account->price) * 100;
+
+        $lastOrderNumber = collect($payments)->max('order_number') ?? 0;
+        return view('customer.payment.list-payment', compact(['account','payments', 'lastOrderNumber']));
     }
 
     public function getPaymentDetailById($pId)
@@ -110,13 +116,44 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             $date_payment = $request->date_payment . ' ' . $request->time_payment;
-            Payment::create([
+            $payment = Payment::create([
                 'account_id' => $request->account_id,
                 'amount' => $request->amount,
                 'date_payment' => $date_payment,
                 'order_number' => $request->order_number,
                 'status_id' => 1,
             ]);
+
+            if ($request->hasFile('slip_image')) {
+                $file = $request->file('slip_image');
+                $file->storeAs(Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
+                $payment->update([
+                    'slip_image' => $file->getClientOriginalName(),
+                    'slip_url' => env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName(),
+                ]);
+            }
+
+            $paymentAll = Payment::where('account_id', $request->account_id)->where('status_id', 2)->get();
+            $acc = Account::find($request->account_id);
+            $balance = (float)$acc->amount_after_discount;
+            $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($paymentAll as $p) {
+                $balance -= $p->amount;
+                $sum += $p->amount;
+                $p->sum = $sum;
+            }
+            $percent_current = ($sum / $acc->price) * 100;
+
+            if ((float)$percent_current == (float)$acc->percen_consider) {
+                Account::find($request->account_id)->update([
+                    'status_type' => 1
+                ]);
+            } else {
+                Account::find($request->account_id)->update([
+                    'status_type' => 2
+                ]);
+            }
+
             $html = $this->renderDataTable($request->account_id);
 
             DB::commit();
@@ -133,11 +170,44 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             $date_payment = $request->date_payment . ' ' . $request->time_payment;
-            Payment::find($pId)->update([
+            $payment = Payment::where('p_id', $pId)->first();
+            $payment->update([
+                'account_id' => $request->account_id,
                 'amount' => $request->amount,
                 'date_payment' => $date_payment,
-                // 'status_id' => 1,
+                'order_number' => $request->order_number,
             ]);
+
+            if ($request->hasFile('slip_image')) {
+                $file = $request->file('slip_image');
+                $file->storeAs(Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
+                $payment->update([
+                    'slip_image' => $file->getClientOriginalName(),
+                    'slip_url' => env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName(),
+                ]);
+            }
+
+            $paymentAll = Payment::where('account_id', $request->account_id)->where('status_id', 2)->get();
+            $acc = Account::find($request->account_id);
+            $balance = (float)$acc->amount_after_discount;
+            $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($paymentAll as $p) {
+                $balance -= $p->amount;
+                $sum += $p->amount;
+                $p->sum = $sum;
+            }
+            $percent_current = ($sum / $acc->price) * 100;
+
+            if ((float)$percent_current == (float)$acc->percen_consider) {
+                Account::find($request->account_id)->update([
+                    'status_type' => 1
+                ]);
+            } else {
+                Account::find($request->account_id)->update([
+                    'status_type' => 2
+                ]);
+            }
+
             $html = $this->renderDataTable($request->account_id);
 
             DB::commit();
@@ -155,18 +225,20 @@ class PaymentController extends Controller
                     ->where('account_id', $accId)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
-                    ->orderBy('payment.date_payment', 'desc')
+                    ->orderBy('payment.order_number', 'desc')
                     ->get();
         foreach ($accounts as $acc) {
-            $amount = $acc->installment;
+            $balance = (float)$acc->amount_after_discount;
+            $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
-                if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
-                    $acc->balance_payment -= $p->amount;
-                    $amount += $p->amount;
-                    $p->sum = $amount;
+                if ($p->status_id == 2) {
+                    $balance -= $p->amount;
+                    $sum += $p->amount;
+                    $p->sum = $sum;
                 }
             }
-            $acc->percen_current = ($amount / $acc->amount_after_discount) * 100;
+            $acc->balance_payment = $balance;
+            $acc->percen_current = ($sum / $acc->price) * 100;
         }
         return view('customer.payment.table.payment-table', compact('payments'))->render();
     }

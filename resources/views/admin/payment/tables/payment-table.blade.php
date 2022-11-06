@@ -30,7 +30,7 @@
                         <i class="fas fa-eye"></i>
                     </button>
 
-                    <button type="button" class="btn btn-primary btn-sm" onclick="openModal({{ $data->pc_id }});">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="openModal('{{ $data->pc_id }}');">
                         <i class="fas fa-plus"></i>
                     </button>
                 </td>
@@ -66,7 +66,7 @@
                             <button
                                 type="button"
                                 class="btn btn-warning btn-sm"
-                                onclick="openEditModal({{ $p->p_id }});"
+                                onclick="openEditModal('{{ $p->p_id }}');"
                             >
                                 <i class="fas fa-edit"></i>
                             </button>

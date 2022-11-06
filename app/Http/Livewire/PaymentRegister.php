@@ -43,7 +43,7 @@ class PaymentRegister extends Component
         $this->modelName = $detail->products->name_en;
         $this->colorName = $detail->colors->name_th;
         $this->capacityName = $detail->capacities->size;
-        $this->price = $detail->products->price;
+        $this->price = $detail->price;
 
         $this->currentStep = 2;
     }
@@ -86,7 +86,7 @@ class PaymentRegister extends Component
 
             Account::create([
                 'user_id' => auth()->user()->u_id,
-                'brand' => $this->brandProduct,
+                // 'brand' => $this->brandProduct,
                 'product' => $this->modelProduct,
                 'type' => $this->installmentType,
                 'price' => $this->price,

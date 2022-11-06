@@ -33,21 +33,20 @@ class ApiController extends Controller
         $sql = "SELECT C.*
                 FROM product_details D
                 LEFT JOIN product_colors C ON C.id = D.color
-                WHERE D.product_id = '$pId'
+                WHERE D.product_id = ?
                 GROUP BY D.color";
-        $result = DB::select($sql);
+        $result = DB::select($sql, [$pId]);
         return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
     }
 
     public function getCapacityByProductId($pId, $cId)
     {
-        $sql = "SELECT C.*
+        $sql = "SELECT C.*, D.price
                 FROM product_details D
                 LEFT JOIN product_capacities C ON C.id = D.capacity
-                WHERE D.product_id = '$pId'
-                AND D.color = '$cId'
-                GROUP BY D.capacity";
-        $result = DB::select($sql);
+                WHERE D.product_id = ?
+                AND D.color = ?";
+        $result = DB::select($sql, [$pId, $cId]);
         return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
     }
 }

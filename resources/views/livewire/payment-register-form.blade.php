@@ -98,7 +98,7 @@
         <div class="form-row">
             <div class="col">
                 <div class="form-group">
-                    <label for="installment">เงินดาวน์:</label>
+                    <label for="installment">จำนวนเงินเปิดบิลผ่อน:</label>
                     <input type="text" class="form-control @error('installment') is-invalid @enderror" wire:model.defer="installment" id="installment">
                     @error('installment') <span class="invalid-feedback">กรุณากรอกข้อมูล</span> @enderror
                 </div>
@@ -231,7 +231,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="3installment">เงินดาวน์:</label>
+                                    <label for="3installment">จำนวนเงินเปิดบิลผ่อน:</label>
                                     <input type="text" class="form-control" id="3installment" wire:model.defer="installment" readonly>
                                 </div>
                             </div>
@@ -345,7 +345,7 @@
                 $('#modelProduct').empty();
                 $('#modelProduct').append('<option>เลือกรุ่น</option>');
                 items.forEach(item => {
-                    let option = `<option value="${item.id}">${item.name_en} (${item.price} ฿)</option>`;
+                    let option = `<option value="${item.id}">${item.name_en}</option>`;
                     $('#modelProduct').append(option);
                 });
             },
@@ -421,7 +421,7 @@
                 $('#capacityProduct').empty();
                 $('#capacityProduct').append('<option>เลือกความจุ</option>');
                 items.forEach(item => {
-                    let option = `<option value="${item.id}">${item.size}</option>`;
+                    let option = `<option value="${item.id}">${item.size}  (${item.price} ฿)</option>`;
                     $('#capacityProduct').append(option);
                 });
             },

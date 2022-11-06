@@ -53,7 +53,7 @@
         function openEditModal(id) {
             showLoading();
             $('.modal-title').text('แก้ไขรายละเอียดการผ่อน');
-            const url = "{{ route('admin.getPaymentById.accounting', '') }}/" + id
+            const url = "{{ route('admin.accounting.payment.getPaymentById', '') }}/" + id
             $.get(url,
                 function (resps, textStatus, jqXHR) {
                     hideLoading();
@@ -110,7 +110,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.create_payment.accounting') }}",
+                    url: "{{ route('admin.accounting.payment.create_payment') }}",
                     data: form.serialize(),
                     success: function (response) {
                         const {status, html} = response;
@@ -160,7 +160,7 @@
                 showLoading();
                 $.ajax({
                     type: "PUT",
-                    url: "{{ route('admin.update_payment.accounting', '') }}/" + id,
+                    url: "{{ route('admin.accounting.payment.update_payment', '') }}/" + id,
                     data: form.serialize(),
                     success: function (response) {
                         const {html} = response;
@@ -199,7 +199,7 @@
                     const id = $(this).data('id');
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('admin.delete_payment.accounting', '') }}/" + id + '?filter=' + "{{ Request::get('filter') }}",
+                        url: "{{ route('admin.accounting.payment.delete_payment', '') }}/" + id + '?filter=' + "{{ Request::get('filter') }}",
                         success: function (response) {
                             const {status, html} = response;
                             if (status) {

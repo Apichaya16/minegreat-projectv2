@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
             </div>
-            <form id="paymentForm" class="needs-validation" novalidate autocomplete="off">
+            <form id="paymentForm" class="needs-validation" novalidate autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body update-form">
                     <input type="hidden" id="p_id" name="p_id">
@@ -42,6 +42,10 @@
                             <label for="time_payment">เวลาโอน</label>
                             <input type="time" class="form-control" id="time_payment" name="time_payment" required>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slip_image">แนบสลิป</label>
+                        <input type="file" class="form-control-file" id="slip_image" name="slip_image" required>
                     </div>
                 </div>
                 <div class="modal-footer">

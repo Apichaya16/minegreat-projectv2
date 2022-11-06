@@ -44,21 +44,21 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ Route::is('admin.accounting.payment*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#status"
+        <a class="nav-link {{ Route::is('admin.accounting.payment.index*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#status"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-list fa-sm fa-fw text-gray-400"></i>
             <span>สถานะการผ่อน</span>
         </a>
-        <div id="status" class="collapse {{ Route::is('admin.accounting.payment*') ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="status" class="collapse {{ Route::is('admin.accounting.payment.index*') ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::get('filter') == '1' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '1']) }}">ผ่านการพิจารณา</a>
-                <a class="collapse-item {{ Request::get('filter') == '2' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '2']) }}">อยู่ระหว่างการพิจารณา</a>
-                <a class="collapse-item {{ Request::get('filter') == '3' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '3']) }}">ยกเลิกการผ่อน</a>
-                <a class="collapse-item {{ Request::get('filter') == '4' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '4']) }}">พักการผ่อน</a>
-                <a class="collapse-item {{ Request::get('filter') == '5' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '5']) }}">รอตรวจสอบเอกสาร</a>
-                <a class="collapse-item {{ Request::get('filter') == '6' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '6']) }}">รับสินค้า</a>
-                <a class="collapse-item {{ Request::get('filter') == '7' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '7']) }}">ค้างชำระ</a>
-                <a class="collapse-item {{ Request::get('filter') == '8' ? 'active' : '' }}" href="{{ route('admin.accounting.payment', ['filter' => '8']) }}">ชำระการผ่อนครบ</a>
+                <a class="collapse-item {{ Request::get('filter') == '1' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '1']) }}">ผ่านการพิจารณา</a>
+                <a class="collapse-item {{ Request::get('filter') == '2' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '2']) }}">อยู่ระหว่างการพิจารณา</a>
+                <a class="collapse-item {{ Request::get('filter') == '3' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '3']) }}">ยกเลิกการผ่อน</a>
+                <a class="collapse-item {{ Request::get('filter') == '4' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '4']) }}">พักการผ่อน</a>
+                <a class="collapse-item {{ Request::get('filter') == '5' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '5']) }}">รอตรวจสอบเอกสาร</a>
+                <a class="collapse-item {{ Request::get('filter') == '6' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '6']) }}">รับสินค้า</a>
+                <a class="collapse-item {{ Request::get('filter') == '7' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '7']) }}">ค้างชำระ</a>
+                <a class="collapse-item {{ Request::get('filter') == '8' ? 'active' : '' }}" href="{{ route('admin.accounting.payment.index', ['filter' => '8']) }}">ชำระการผ่อนครบ</a>
             </div>
         </div>
     </li>
@@ -70,12 +70,12 @@
         </a>
     </li> --}}
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-file-invoice text-gray-400"></i>
             <span>ติดต่อทีมงาน</span>
         </a>
-    </li>
+    </li> --}}
 
     <hr class="sidebar-divider my-0">
 

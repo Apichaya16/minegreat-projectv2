@@ -17,7 +17,7 @@
                 <td>{{ $ac->products->name_th }}</td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleModal({{ $ac->pc_id }})">ตรวจสอบ</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleModal('{{ $ac->pc_id }}')">ตรวจสอบ</button>
                     </div>
                 </td>
             </tr>

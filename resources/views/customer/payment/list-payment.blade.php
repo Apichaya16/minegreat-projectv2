@@ -101,7 +101,7 @@
         @include('customer.payment.table.payment-table')
     </div>
 </div>
-@include('customer.payment.modal.show-payment')
+@include('customer.payment.modal.payment-modal')
 @endsection
 
 @push('css')
@@ -149,7 +149,8 @@
         } else {
             $('#paymentModal #modalTitle').text('แจ้งโอน');
             $('#p_id').val(null);
-            $('#order_number').prop('readonly', false);
+            let lastOrder = "{{ $lastOrderNumber }}";
+            $('#order_number').val(parseInt(lastOrder || 0) + 1);
             $('#status').addClass('d-none');
             $('#paymentModal').modal('show');
         }
@@ -212,10 +213,17 @@
                     let url = "{{route('customer.payment.storePayment')}}";
                     if (id) url = "{{route('customer.payment.updatePaymentById', '')}}/" + id;
 
+                    let formData = new FormData(form[0]);
+
                     $.ajax({
                         type: id ? "PUT" : "POST",
                         url: url,
-                        data: form.serialize(),
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        data: formData,
+                        contentType: false,
+                        processData: false,
                         success: function (response) {
                             $('body').waitMe('hide');
                             const {html} = response;

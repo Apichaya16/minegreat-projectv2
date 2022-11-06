@@ -38,7 +38,7 @@
                             <input type="text" id="product_price" class="form-control" readonly>
                         </div>
                         <div class="form-group ml-1">
-                            <label for="product_installment">เงินดาวน์</label>
+                            <label for="product_installment">จำนวนเงินเปิดบิลผ่อน</label>
                             <input type="text" id="product_installment" class="form-control" readonly>
                         </div>
                         <div class="form-group ml-1">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group ml-1">
                             <label for="discount">ส่วนลด</label>
-                            <input type="text" name="discount" id="discount" class="form-control">
+                            <input type="number" name="discount" id="discount" class="form-control" min="1">
                         </div>
                     </div>
                     <div class="form-row">
@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-group ml-1">
                             <label for="percent_consider">เปอร์เซนต์การพิจารณา</label>
-                            <input type="text" name="percen_consider" id="percen_consider" class="form-control" required>
+                            <input type="number" name="percen_consider" id="percen_consider" class="form-control"  min="1" required>
                         </div>
                         <div class="form-group ml-1">
                             <label for="status_type">สถานะ</label>
@@ -132,13 +132,16 @@
             if (discount > 0 && discount <= balance) {
                 balance = (parseInt(price) - parseInt(installment)) - parseInt(discount);
                 $('#amount_after_discount').val(balance);
+
+                let sum = parseInt(installment) + parseInt(discount);
+                let percen_current = (sum / parseInt(price)) * 100;
+                $('#percen_current').val(percen_current.toFixed(2));
             } else {
                 balance = parseInt(price) - parseInt(installment);
                 $('#amount_after_discount').val(balance);
-            }
-            let sum = parseInt(price) - parseInt(discount);
-            if (sum > 0) {
-                let percen_current = (parseInt(installment) / sum) * 100;
+
+                let sum = parseInt(installment);
+                let percen_current = (sum / parseInt(price)) * 100;
                 $('#percen_current').val(percen_current.toFixed(2));
             }
         });

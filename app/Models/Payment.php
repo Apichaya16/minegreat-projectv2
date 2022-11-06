@@ -16,7 +16,7 @@ class Payment extends Model
     protected $table = 'payment';
     protected $primaryKey = 'p_id';
 
-    protected $fillable = ['account_id', 'amount','date_payment', 'order_number', 'status'];
+    protected $fillable = ['account_id', 'amount', 'slip_image', 'slip_url','date_payment', 'order_number', 'balance_payment', 'percent_current', 'status_id'];
 
     public function paymentStatus()
     {

@@ -38,21 +38,22 @@ class ApproveController extends Controller
             DB::beginTransaction();
 
             $acc = Account::find($id);
-            $sum = (int)$acc->price - (float)$request->discount;
-            if ($sum > 0) {
-                $percen_current = ((int)$acc->installment / $sum) * 100;
-            }
             if ($request->discount) {
                 $balance = ((int)$acc->price - (int)$acc->installment) - (float)$request->discount;
+
+                // $sum = (int)$acc->installment + (float)$request->discount;
+                // $percen_current = ($sum / (int)$acc->price) * 100;
             } else {
                 $balance = (int)$acc->price - (int)$acc->installment;
+
+                // $percen_current = ((int)$acc->installment / $acc->price) * 100;
             }
 
             $acc = Account::find($id)->update([
                 'discount' => $request->discount,
                 'status_type' => $request->status_type,
-                'balance_payment' => $balance,
-                'percen_current' => $percen_current,
+                // 'balance_payment' => $balance,
+                // 'percen_current' => $percen_current,
                 'percen_consider' => $request->percen_consider,
                 'amount_after_discount' => $balance
             ]);

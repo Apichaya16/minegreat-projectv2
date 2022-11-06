@@ -1,0 +1,16 @@
+.sidebar-dark .nav-item.active .nav-link {
+    background-color: #5a5c69 !important;
+}
+
+/* custom input number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
