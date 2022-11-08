@@ -49,4 +49,25 @@ class ApiController extends Controller
         $result = DB::select($sql, [$pId, $cId]);
         return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
     }
+
+    public function getProductChart()
+    {
+        $sql = "SELECT p.name_th , p.name_en , COUNT(a.pc_id) AS product_count
+                FROM products p
+                LEFT JOIN accounts a ON a.product = p.id
+                GROUP BY p.id";
+        $datas = DB::select($sql);
+        return response()->json(['status' => true, 'datas' => $datas]);
+    }
+
+    public function getInstallmentTypeChart()
+    {
+        $sql = "SELECT it.seqno , it.name , COUNT(a.pc_id) AS installment_type_count
+                FROM installment_types it
+                LEFT JOIN accounts a ON a.`type` = it.it_id
+                GROUP BY it.it_id
+                ORDER BY it.seqno";
+        $datas = DB::select($sql);
+        return response()->json(['status' => true, 'datas' => $datas]);
+    }
 }

@@ -1,7 +1,6 @@
 @extends('admin.layouts.menu')
 @section('name_page', 'สรุปข้อมูลโดยรวม')
 @section('content')
-
 <div class="row">
     <div class="col-xl-3 col-md6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
@@ -155,4 +154,118 @@
         </div>
     </div>
 </div>
+<div class="card mb-3">
+    <div class="card-header">กราฟแสดงจำนวนสินค้าที่ขายได้</div>
+    <div class="card-body">
+        <canvas id="barChart"></canvas>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">กราฟแสดงจำนวนรูปแบบการผ่อน</div>
+    <div class="card-body">
+        <canvas id="pieChart"></canvas>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
+<script>
+$(function () {
+    getProductChart();
+    getInstallmentTypeChart();
+});
+function getProductChart() {
+    $.ajax({
+        type: "GET",
+        url: "{{route('api.chart.getProductChart')}}",
+        success: function (response) {
+            // console.log(response);
+            setupChart(response.datas);
+        }
+    });
+}
+function setupChart(items) {
+    let labels = [];
+    let datasets = [];
+    items.forEach(item => {
+        let color = getRandomColor();
+        labels.push(item.name_en);
+        datasets.push({
+            label: item.name_en,
+            backgroundColor: color,
+            borderColor: color,
+            data: [item.product_count],
+        });
+    });
+
+    const data = {
+        labels: labels,
+        datasets: datasets
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+
+    new Chart(
+        document.getElementById('barChart'),
+        config
+    );
+}
+function getInstallmentTypeChart() {
+    $.ajax({
+        type: "GET",
+        url: "{{route('api.chart.getInstallmentTypeChart')}}",
+        success: function (response) {
+            // console.log(response);
+            setupInstallmentTypeChart(response.datas);
+        }
+    });
+}
+function setupInstallmentTypeChart(items) {
+    let labels = [];
+    let datasets = [];
+    items.forEach(item => {
+        let color = getRandomColor();
+        labels.push(item.name);
+        datasets.push({
+            label: item.name,
+            backgroundColor: color,
+            borderColor: color,
+            data: [item.installment_type_count],
+        });
+    });
+
+    const data = {
+        labels: labels,
+        datasets: datasets
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+        options: {}
+    };
+
+    new Chart(
+        document.getElementById('pieChart'),
+        config
+    );
+}
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+</script>
+@endpush
+
+@push('css')
+
+@endpush
