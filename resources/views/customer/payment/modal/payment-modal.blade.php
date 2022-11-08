@@ -43,9 +43,13 @@
                             <input type="time" class="form-control" id="time_payment" name="time_payment" required>
                         </div>
                     </div>
+                    <div class="preview-image">
+                        <img alt="SLIP" class="img-thumbnail d-none" id="preview_image">
+                    </div>
                     <div class="form-group">
                         <label for="slip_image">แนบสลิป</label>
                         <input type="file" class="form-control-file" id="slip_image" name="slip_image" required>
+                        <div class="invalid-feedback">กรุณาเลือกรูปสลิป</div>
                     </div>
                 </div>
                 <div class="modal-footer">

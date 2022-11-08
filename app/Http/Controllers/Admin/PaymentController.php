@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 {
@@ -50,7 +51,7 @@ class PaymentController extends Controller
                     ->whereIn('account_id', $acIds)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
-                    ->orderBy('payment.order_number', 'desc')
+                    ->orderBy('payment.order_number', 'asc')
                     ->get();
         foreach ($accounts as $acc) {
             $balance = (float)$acc->amount_after_discount;
@@ -65,6 +66,7 @@ class PaymentController extends Controller
             $acc->balance_payment = $balance;
             $acc->percen_current = ($sum / $acc->price) * 100;
         }
+        $payments = array_reverse($payments->toArray());
 
         $paymentStatus = PaymentStatus::where('is_active', 1)->get();
         return view('admin.payment.index', compact(['accounts', 'payments', 'paymentStatus']));
@@ -94,7 +96,7 @@ class PaymentController extends Controller
                 $file = $request->file('slip_image');
                 $file->storeAs(Constands::$SLIP_PATH . $pay->p_id, $file->getClientOriginalName());
                 $pay->slip_image = $file->getClientOriginalName();
-                $pay->slip_url = env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName();
+                $pay->slip_url = env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $pay->p_id . '/' . $file->getClientOriginalName());
                 $pay->save();
             }
 
@@ -149,7 +151,7 @@ class PaymentController extends Controller
                 $file->storeAs(Constands::$SLIP_PATH . $pId, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName(),
+                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 
@@ -189,7 +191,31 @@ class PaymentController extends Controller
     {
         try {
             DB::beginTransaction();
-            Payment::where('p_id', $pId)->delete();
+
+            $payment = Payment::where('p_id', $pId)->first();
+            $payment->delete();
+
+            $paymentAll = Payment::where('account_id', $payment->account_id)->where('status_id', 2)->get();
+            $acc = Account::find($payment->account_id);
+            $balance = (float)$acc->amount_after_discount;
+            $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($paymentAll as $p) {
+                $balance -= $p->amount;
+                $sum += $p->amount;
+                $p->sum = $sum;
+            }
+            $percent_current = ($sum / $acc->price) * 100;
+
+            if ((float)$percent_current >= (float)$acc->percen_consider) {
+                Account::find($payment->account_id)->update([
+                    'status_type' => 1
+                ]);
+            } else {
+                Account::find($payment->account_id)->update([
+                    'status_type' => 2
+                ]);
+            }
+
             DB::commit();
 
             $html = $this->renderPaymentTable($request->get('filter'));
@@ -247,6 +273,7 @@ class PaymentController extends Controller
             $acc->balance_payment = $balance;
             $acc->percen_current = ($sum / $acc->price) * 100;
         }
+        $payments = array_reverse($payments->toArray());
         $html = view('admin.payment.tables.payment-table', compact(['accounts','payments']))->render();
         return $html;
     }

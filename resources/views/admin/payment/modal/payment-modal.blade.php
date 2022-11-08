@@ -40,6 +40,9 @@
                             <input type="time" class="form-control" id="time_payment" name="time_payment" required>
                         </div>
                     </div>
+                    <div class="preview-image">
+                        <img alt="SLIP" class="img-thumbnail d-none" id="preview_image">
+                    </div>
                     <div class="row mb-4">
                         <div class="col text-left">
                             <label for="status_id">สถานะ</label>

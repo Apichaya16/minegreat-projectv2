@@ -123,6 +123,8 @@
         setupDataTable();
         bindClearModal();
         bindCreateOrUpdate();
+        bindDeletePayment();
+        bindSelectImage();
     });
     function setupDataTable() {
         $('.payment-datatable').DataTable({
@@ -133,10 +135,23 @@
             ]
         });
     }
+    function bindSelectImage() {
+        $('#slip_image').on('change', function () {
+            const file = $(this)[0].files[0];
+            if (file) {
+                let url = URL.createObjectURL(file);
+                $('#preview_image').prop('src', url);
+                $('#preview_image').removeClass('d-none');
+            }
+        });
+    }
     function bindClearModal() {
         $('#paymentModal').on('hidden.bs.modal', function (e) {
             $('#paymentForm').clearValidation();
             $('#paymentForm')[0].reset();
+            $('#preview_image').addClass('d-none');
+            $('#preview_image').prop('src', null);
+            $('#slip_image').prop('required', true);
         })
     }
     async function openModal(id) {
@@ -167,10 +182,16 @@
                     console.log(resps);
                     const {data} = resps;
                     if (data) {
+                        if (data.slip_url) {
+                            $('#preview_image').prop('src', data.slip_url);
+                            $('#preview_image').removeClass('d-none');
+                            $('#slip_image').prop('required', false);
+                        } else {
+                            $('#slip_image').prop('required', true);
+                        }
                         $('#order_number').val(data.order_number);
                         $('#amount').val(data.amount);
                         let dateArr = data.date_payment.split(" ");
-                        console.log(dateArr);
                         if (dateArr.length > 1) {
                             $('#date_payment').val(dateArr[0]);
                             $('#time_payment').val(dateArr[1]);
@@ -216,7 +237,7 @@
                     let formData = new FormData(form[0]);
 
                     $.ajax({
-                        type: id ? "PUT" : "POST",
+                        type: "POST",
                         url: url,
                         headers: {
                             'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -224,6 +245,41 @@
                         data: formData,
                         contentType: false,
                         processData: false,
+                        success: function (response) {
+                            $('body').waitMe('hide');
+                            const {html} = response;
+                            if (html) {
+                                $('#paymentModal').modal('hide');
+                                showAlert('success', 'ทำรายการสำเร็จ', '');
+                                $('#container-table').html(html);
+                                setupDataTable();
+                            }
+                        }
+                    });
+                } catch (error) {
+                    showAlert('error', 'พบข้อผิดพลาด', '');
+                }
+            });
+        });
+    }
+    function bindDeletePayment() {
+        $('.btn-delete-payment').on('click', function () {
+            showAlertWithConfirm('warning', 'ยืนยันการทำรายการ?', '')
+            .then(ok => {
+                if (!ok) return;
+
+                try {
+                    $('body').waitMe({
+                        effect : 'ios',
+                        text : 'Loading...',
+                    });
+                    let id = $(this).data('pk');
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{route('customer.payment.deletePayment', '')}}/" + id,
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
                         success: function (response) {
                             $('body').waitMe('hide');
                             const {html} = response;

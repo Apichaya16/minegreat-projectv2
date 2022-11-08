@@ -53,7 +53,7 @@ class PaymentController extends Controller
                     ->where('account_id', $accId)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
-                    ->orderBy('payment.order_number', 'desc')
+                    ->orderBy('payment.order_number', 'asc')
                     ->get();
         $balance = (float)$account->amount_after_discount;
         $sum = (int)$account->installment + (int)$account->discount;
@@ -126,10 +126,10 @@ class PaymentController extends Controller
 
             if ($request->hasFile('slip_image')) {
                 $file = $request->file('slip_image');
-                $file->storeAs(Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
+                $file->storeAs("public/" . Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName(),
+                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 
@@ -172,7 +172,6 @@ class PaymentController extends Controller
             $date_payment = $request->date_payment . ' ' . $request->time_payment;
             $payment = Payment::where('p_id', $pId)->first();
             $payment->update([
-                'account_id' => $request->account_id,
                 'amount' => $request->amount,
                 'date_payment' => $date_payment,
                 'order_number' => $request->order_number,
@@ -180,10 +179,10 @@ class PaymentController extends Controller
 
             if ($request->hasFile('slip_image')) {
                 $file = $request->file('slip_image');
-                $file->storeAs(Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
+                $file->storeAs("public/" . Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . '/' . Constands::$SLIP_PATH . $file->getClientOriginalName(),
+                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 
@@ -218,6 +217,45 @@ class PaymentController extends Controller
         }
     }
 
+    public function deletePayment($pId)
+    {
+        try {
+            DB::beginTransaction();
+
+            $payment = Payment::where('p_id', $pId)->first();
+            $payment->delete();
+
+            $paymentAll = Payment::where('account_id', $payment->account_id)->where('status_id', 2)->get();
+            $acc = Account::find($payment->account_id);
+            $balance = (float)$acc->amount_after_discount;
+            $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($paymentAll as $p) {
+                $balance -= $p->amount;
+                $sum += $p->amount;
+                $p->sum = $sum;
+            }
+            $percent_current = ($sum / $acc->price) * 100;
+
+            if ((float)$percent_current >= (float)$acc->percen_consider) {
+                Account::find($payment->account_id)->update([
+                    'status_type' => 1
+                ]);
+            } else {
+                Account::find($payment->account_id)->update([
+                    'status_type' => 2
+                ]);
+            }
+
+            DB::commit();
+
+            $html = $this->renderDataTable($payment->account_id);
+
+            return response()->json(['status' => true, 'message' => 'success', 'html' => $html]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false, 'message' => $th->getMessage(), 'html' => null], $th->getCode());
+        }
+    }
+
     protected function renderDataTable($accId)
     {
         $accounts = Account::find($accId)->get();
@@ -225,7 +263,7 @@ class PaymentController extends Controller
                     ->where('account_id', $accId)
                     ->where('deleted_at', null)
                     ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
-                    ->orderBy('payment.order_number', 'desc')
+                    ->orderBy('payment.order_number', 'asc')
                     ->get();
         foreach ($accounts as $acc) {
             $balance = (float)$acc->amount_after_discount;

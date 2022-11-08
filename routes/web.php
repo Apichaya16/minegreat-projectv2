@@ -178,7 +178,8 @@ Route::group(
 
                 Route::get('/getPaymentById/{pId}', [App\Http\Controllers\PaymentController::class, 'getPaymentById'])->name('customer.payment.getPaymentById');
                 Route::post('/create', [App\Http\Controllers\PaymentController::class, 'storePayment'])->name('customer.payment.storePayment');
-                Route::put('/update/{pId}', [App\Http\Controllers\PaymentController::class, 'updatePaymentById'])->name('customer.payment.updatePaymentById');
+                Route::post('/update/{pId}', [App\Http\Controllers\PaymentController::class, 'updatePaymentById'])->name('customer.payment.updatePaymentById');
+                Route::delete('/delete/{pId}', [App\Http\Controllers\PaymentController::class, 'deletePayment'])->name('customer.payment.deletePayment');
             });
         });
 

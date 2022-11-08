@@ -28,7 +28,7 @@
                     <button type="button" class="btn btn-warning btn-sm m-1" onclick="openModal('{{ $p->p_id }}')">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm m-1">
+                    <button type="button" class="btn btn-danger btn-sm m-1 btn-delete-payment" data-pk="{{ $p->p_id }}">
                         <i class="fas fa-window-close"></i>
                     </button>
                 </div>

@@ -30,6 +30,7 @@
                 }
             });
             setupDatatable();
+            bindClearModal();
             bindOnSubmitBtn();
             bindDeleteBtn();
         });
@@ -42,6 +43,14 @@
                 ]
             });
             bindOpenDetail();
+        }
+        function bindClearModal() {
+            $('#paymentModal').on('hidden.bs.modal', function (e) {
+                // $('.form-create-payment').clearValidation();
+                $('.form-create-payment')[0].reset();
+                $('#preview_image').addClass('d-none');
+                $('#preview_image').prop('src', null);
+            })
         }
         function bindOpenDetail() {
             $('.open-detail').click(function(e) {
@@ -58,18 +67,23 @@
                 function (resps, textStatus, jqXHR) {
                     hideLoading();
                     const {data} = resps;
-                    // console.log(data);
-                    $('#order_number').val(data.order_number);
-                    $('#amount').val(data.amount);
-                    $('.btn-submit-payment').data('id', id);
-                    if (data.date_payment != '') {
-                        let strSplit = data.date_payment.split(' ');
-                        console.log(strSplit);
-                        $('#date_payment').val(strSplit[0]);
-                        $('#time_payment').val(strSplit[1]);
+                    if (data) {
+                        if (data.slip_url) {
+                            $('#preview_image').prop('src', data.slip_url);
+                            $('#preview_image').removeClass('d-none');
+                        }
+                        $('#order_number').val(data.order_number);
+                        $('#amount').val(data.amount);
+                        $('.btn-submit-payment').data('id', id);
+                        if (data.date_payment != '') {
+                            let strSplit = data.date_payment.split(' ');
+                            console.log(strSplit);
+                            $('#date_payment').val(strSplit[0]);
+                            $('#time_payment').val(strSplit[1]);
+                        }
+                        $('#status_id').val(data.status_id);
+                        $('#paymentModal').modal('show');
                     }
-                    $('#status_id').val(data.status_id);
-                    $('#paymentModal').modal('show');
                 },
             );
         }
