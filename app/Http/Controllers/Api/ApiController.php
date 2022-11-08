@@ -55,6 +55,9 @@ class ApiController extends Controller
         $sql = "SELECT p.name_th , p.name_en , COUNT(a.pc_id) AS product_count
                 FROM products p
                 LEFT JOIN accounts a ON a.product = p.id
+                WHERE p.is_active = 1
+                AND p.deleted_at IS NULL
+                AND a.deleted_at IS NULL
                 GROUP BY p.id";
         $datas = DB::select($sql);
         return response()->json(['status' => true, 'datas' => $datas]);
@@ -65,6 +68,9 @@ class ApiController extends Controller
         $sql = "SELECT it.seqno , it.name , COUNT(a.pc_id) AS installment_type_count
                 FROM installment_types it
                 LEFT JOIN accounts a ON a.`type` = it.it_id
+                WHERE it.is_active = 1
+                AND it.deleted_at IS NULL
+                AND a.deleted_at IS NULL
                 GROUP BY it.it_id
                 ORDER BY it.seqno";
         $datas = DB::select($sql);
