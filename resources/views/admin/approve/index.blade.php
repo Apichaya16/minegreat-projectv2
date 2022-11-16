@@ -1,9 +1,13 @@
 @extends('admin.layouts.menu')
 @section('name_page', 'ขอเปิดบิล')
+@section('button_page')
+<a type="button" class="btn btn-success" href="{{ route('admin.create.accounting') }}">
+    <i class="fas fa-user-plus fa-sm text-gray-50"></i> เพิ่มข้อมูลการผ่อน
+</a>
+@endsection
 
 
 @section('content')
-
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">ขอเปิดบิล</h6>
