@@ -55,9 +55,6 @@
                                             </a>
                                             @endguest
                                             @auth
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fas fa-id-card"></i> โปรไฟล์
-                                            </a>
                                             <a class="dropdown-item" href="#" onclick="document.getElementById('logoutForm').submit()">
                                                 <i class="fas fa-sign-out-alt"></i> ออกจากระบบ
                                             </a>

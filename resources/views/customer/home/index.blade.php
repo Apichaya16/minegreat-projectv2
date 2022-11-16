@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    @include('customer.layouts.feature')
+    {{-- @include('customer.layouts.feature') --}}
     {{-- @include('customer.layouts.owner') --}}
     @include('customer.layouts.dsd')
 </div>
