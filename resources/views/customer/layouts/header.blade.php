@@ -18,6 +18,9 @@
                             <li class="{{ Route::is('customer.home') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.home') }}">หน้าแรก</a>
                             </li>
+                            <li class="{{ Route::is('customer.payment.register') ? 'current-list-item' : '' }} h5">
+                                <a href="{{ route('customer.payment.register') }}">สนใจสินค้า</a>
+                            </li>
                             @auth
                                 @if (!auth()->user()->hasAdmin())
                                     <li class="{{ Route::is('customer.payment.index*') ? 'current-list-item' : '' }} h5">
