@@ -25,10 +25,10 @@
             </td>
             <td>
                 <div class="d-flex flex-column flex-md-row justify-content-center">
-                    <button type="button" class="btn btn-warning btn-sm m-1" onclick="openModal('{{ $p->p_id }}')">
+                    <button type="button" class="btn btn-warning btn-sm m-1" onclick="openModal('{{ $p->p_id }}')" {{ $p->status_id == 2 ? 'disabled' : '' }}>
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm m-1 btn-delete-payment" data-pk="{{ $p->p_id }}">
+                    <button type="button" class="btn btn-danger btn-sm m-1 btn-delete-payment" data-pk="{{ $p->p_id }}" {{ $p->status_id == 2 ? 'disabled' : '' }}>
                         <i class="fas fa-window-close"></i>
                     </button>
                 </div>

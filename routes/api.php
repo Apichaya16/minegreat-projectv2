@@ -23,6 +23,7 @@ Route::prefix('product')->group(function () {
     Route::get('getProductByBrandId/{bId}', [App\Http\Controllers\Api\ApiController::class, 'getProductByBrandId'])->name('api.product.getProductByBrandId');
     Route::get('getColorByProductId/{pId}', [App\Http\Controllers\Api\ApiController::class, 'getColorByProductId'])->name('api.product.getColorByProductId');
     Route::get('getCapacityByProductId/{pId}/{cId}', [App\Http\Controllers\Api\ApiController::class, 'getCapacityByProductId'])->name('api.product.getCapacityByProductId');
+    Route::get('getPriceByProduct', [App\Http\Controllers\Api\ApiController::class, 'getPriceByProduct'])->name('api.product.getPriceByProduct');
 });
 Route::prefix('chart')->group(function () {
     Route::get('getProductChart', [App\Http\Controllers\Api\ApiController::class, 'getProductChart'])->name('api.chart.getProductChart');

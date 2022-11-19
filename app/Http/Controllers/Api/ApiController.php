@@ -34,6 +34,8 @@ class ApiController extends Controller
                 FROM product_details D
                 LEFT JOIN product_colors C ON C.id = D.color
                 WHERE D.product_id = ?
+                AND D.is_active = 1
+                AND D.deleted_at IS NULL
                 GROUP BY D.color";
         $result = DB::select($sql, [$pId]);
         return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
@@ -45,9 +47,24 @@ class ApiController extends Controller
                 FROM product_details D
                 LEFT JOIN product_capacities C ON C.id = D.capacity
                 WHERE D.product_id = ?
-                AND D.color = ?";
+                AND D.color = ?
+                AND D.is_active = 1
+                AND D.deleted_at IS NULL";
         $result = DB::select($sql, [$pId, $cId]);
         return response()->json(['status' => true, 'message' => 'success', 'items' => $result]);
+    }
+
+    public function getPriceByProduct(Request $request)
+    {
+        $sql = "SELECT D.price
+                FROM product_details D
+                WHERE D.product_id = ?
+                AND D.capacity = ?
+                AND D.color = ?
+                AND D.is_active = 1
+                AND D.deleted_at IS NULL";
+        $result = collect(DB::select($sql, [$request->product_id, $request->capacity_id, $request->color_id]))->first();
+        return response()->json(['status' => true, 'message' => 'success', 'data' => $result]);
     }
 
     public function getProductChart()

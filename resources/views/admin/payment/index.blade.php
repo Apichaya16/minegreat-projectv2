@@ -37,6 +37,7 @@
 
         function setupDatatable() {
             $('.payment-datatable').DataTable({
+                order: [[0,'desc']],
                 columnDefs : [
                     {className: "text-center", targets: [0,1,2,3,4,5]},
                     {orderable: false, targets: [5]},

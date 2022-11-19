@@ -39,12 +39,12 @@ class ApproveController extends Controller
 
             $acc = Account::find($id);
             if ($request->discount) {
-                $balance = ((int)$acc->price - (int)$acc->installment) - (float)$request->discount;
+                $balance = (int)$acc->price - (float)$request->discount;
 
                 // $sum = (int)$acc->installment + (float)$request->discount;
                 // $percen_current = ($sum / (int)$acc->price) * 100;
             } else {
-                $balance = (int)$acc->price - (int)$acc->installment;
+                $balance = (int)$acc->price;
 
                 // $percen_current = ((int)$acc->installment / $acc->price) * 100;
             }

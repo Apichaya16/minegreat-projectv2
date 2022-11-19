@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Constands;
 use App\Models\Account;
+use App\Models\Brand;
 use App\Models\InstallmentType;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
@@ -47,6 +48,27 @@ class AccountController extends Controller
                 WHERE a.deleted_at IS NULL
                 ORDER BY a.created_at DESC";
         $accounts = DB::select($sql);
+        $acIds = collect($accounts)->pluck('pc_id')->toArray();
+
+        $payments = DB::table('payment')->select('payment.*', 'payment_status.name AS status_name', 'payment_status.color AS status_color')
+                    ->whereIn('account_id', $acIds)
+                    ->where('deleted_at', null)
+                    ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
+                    ->orderBy('payment.order_number', 'asc')
+                    ->get();
+        foreach ($accounts as $acc) {
+            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
+            $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($payments as $p) {
+                if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
+                    $balance -= $p->amount;
+                    $sum += $p->amount;
+                    $p->sum = $sum;
+                }
+            }
+            $acc->balance_payment = $balance;
+            $acc->percen_current = ($sum / $acc->price) * 100;
+        }
 
         $typeStatus = TypeStatus::all();
         $installmentTypes = InstallmentType::all();
@@ -56,19 +78,18 @@ class AccountController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         DB::beginTransaction();
         $acc = new Account();
         $acc->user_id = $request->user_id;
-        $acc->product = $request->product;
-        $acc->brand = $request->brand;
+        $acc->product = $request->modelProduct;
         $acc->details = $request->details;
         $acc->type = $request->type;
         $acc->type_pay = $request->type_pay;
         $acc->discount = $request->discount;
         $acc->installment = $request->installment;
-        $acc->product = $request->product;
         $acc->price = $request->price;
-        $acc->balance_payment = $request->balance_payment;
+        // $acc->balance_payment = $request->balance_payment;
 
         if ($request->percen_current) {
             $percen_current = ((int)$request->installment / (int)$request->price) * 100;
@@ -78,7 +99,7 @@ class AccountController extends Controller
         }
 
         $acc->percen_consider = $request->percen_consider;
-        $acc->amount_consider = $request->price;
+        // $acc->amount_consider = $request->price;
         $acc->status_type = $request->status_type;
         $acc->detail_promotion = $request->detail_promotion;
         $acc->amount_after_discount = $request->amount_after_discount;
@@ -116,7 +137,8 @@ class AccountController extends Controller
         $typeStatus = TypeStatus::all();
         $installmentType = InstallmentType::all();
         $paymentTypes = PaymentType::all();
-        return view('admin.accounting.add_account', compact('users', 'typeStatus', 'installmentType', 'paymentTypes'));
+        $brands = Brand::all();
+        return view('admin.accounting.add_account', compact('users', 'typeStatus', 'installmentType', 'paymentTypes', 'brands'));
     }
 
     public function del_acc($pcId)

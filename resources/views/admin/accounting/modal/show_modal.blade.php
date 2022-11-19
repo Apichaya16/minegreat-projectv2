@@ -81,18 +81,18 @@
                         <div class="col-md-6">
                             <label>ราคาผ่อนหลังจากหักส่วนลด</label>
                             <input type="text" class="form-control"
-                                value="{{ number_format($data->balance_payment, 2) }}" readonly>
+                                value="{{ number_format($data->amount_after_discount, 2) }}" readonly>
                         </div>
                         <div class="col-md-6">
                             <label>เปอร์เซ็นการชำระปัจจุบัน</label>
-                            <input type="text" class="form-control" value="{{ $data->percen_current }}" readonly>
+                            <input type="text" class="form-control" value="{{ number_format($data->percen_current, 2, '.', '') }}" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label>เปอร์เซ็นการพิจารณา</label>
-                            <input type="text" class="form-control" value="{{ $data->percen_consider }}" readonly>
+                            <input type="text" class="form-control" value="{{ number_format($data->percen_consider, 2, '.', '') }}" readonly>
                         </div>
                         <div class="col-md-6">
                             <label>จำนวนเงินเมื่อถึง % พิจารณา</label>

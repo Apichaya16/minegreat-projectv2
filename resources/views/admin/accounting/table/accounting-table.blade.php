@@ -16,7 +16,7 @@
             <td>{{ $data->number_customers }}</td>
             <td>{{ $data->installment_name }}</td>
             <td>{{ number_format($data->balance_payment, 0, '', ',') }}</td>
-            <td>{{ $data->percen_current }}</td>
+            <td>{{ number_format($data->percen_current, 2, '.', '') }}</td>
             <td>
                 <span class="badge rounded-pill bg-{{ $data->type_color }}">
                     {{ $data->type_name }}

@@ -54,10 +54,10 @@ class PaymentController extends Controller
                     ->orderBy('payment.order_number', 'asc')
                     ->get();
         foreach ($accounts as $acc) {
-            $balance = (float)$acc->amount_after_discount;
+            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
             $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
-                if ($p->status_id == 2) {
+                if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
                     $balance -= $p->amount;
                     $sum += $p->amount;
                     $p->sum = $sum;
@@ -261,10 +261,10 @@ class PaymentController extends Controller
                     ->orderBy('payment.order_number', 'desc')
                     ->get();
         foreach ($accounts as $acc) {
-            $balance = (float)$acc->amount_after_discount;
+            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
             $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
-                if ($p->status_id == 2) {
+                if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
                     $balance -= $p->amount;
                     $sum += $p->amount;
                     $p->sum = $sum;
