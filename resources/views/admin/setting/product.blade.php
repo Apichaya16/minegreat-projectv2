@@ -19,7 +19,8 @@
 @include('admin.setting.modal.product-modal')
 <div id="newDetails" class="d-none">
     <div class="row">
-        <div class="col-md-6">
+        <input type="hidden" name="detail_id" class="detail_id">
+        <div class="col-md-4">
             <div class="form-group w-100">
                 <label for="color">สี</label>
                 <select name="color" class="form-control color" style="width: 100%" required>
@@ -29,14 +30,20 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group w-100">
                 <label for="capacity">ความจุ</label>
-                <select name="capacities[]" class="form-control capacity select2" multiple="multiple" style="width: 100%" required>
+                <select name="capacity" class="form-control capacity select2" style="width: 100%" required>
                     @foreach ($capacites as $ca)
                         <option value="{{ $ca->id }}">{{ $ca->size }}</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group w-100">
+                <label for="color">ราคา</label>
+                <input type="text" name="price" class="form-control price" required>
             </div>
         </div>
     </div>
@@ -78,11 +85,11 @@
         bindDeleteBtn();
     }
     function bindSelect2() {
-        $('#details .select2').each(function (i, v) {
-            $(this).select2({
-                width: 'resolve'
-            });
-        });
+        // $('#details .select2').each(function (i, v) {
+        //     $(this).select2({
+        //         width: 'resolve'
+        //     });
+        // });
     }
     function setupModal() {
         $('#productModal').on('hidden.bs.modal', function (event) {
@@ -132,6 +139,7 @@
     }
     function createProductDetails(details) {
         //data
+        /*
         let arr = [];
         if (Array.isArray(details)) {
             for (let i = 0; i < details.length; i++) {
@@ -158,18 +166,21 @@
                     arr.push(item);
                 }
             }
-        }
+        }*/
         //new row detail
-        for (let i = 0; i < arr.length; i++) {
-            const item = arr[i];
+        for (let i = 0; i < details.length; i++) {
+            const item = details[i];
             let newDetails = $('#newDetails').html();
             $('#details').append(newDetails);
         }
-        bindSelect2();
+        // bindSelect2();
         //set data to row detail
         $('#details .row').each(function (i, e) {
-            $(this).find('.color').val(arr[i].color).trigger('change');
-            $(this).find('.capacity').val(arr[i].capacities).trigger('change');
+            $(this).find('.detail_id').val(details[i].id);
+            $(this).find('.color').val(details[i].color).trigger('change');
+            $(this).find('.capacity').val(details[i].capacity).trigger('change');
+            let price = parseFloat(details[i].price).toFixed(0);
+            $(this).find('.price').val(price > 0 ? price : 0);
         });
     }
     function bindOnSubmitBtn() {
@@ -279,11 +290,15 @@
         let jsonData = [];
         $('#details .row').each(function (i, e) {
             // element == this
-            let selectColor = $(this).find("select[name='color']").val();
-            let selectCapacityArr = $(this).find("select[name='capacities[]']").val();
+            let detail_id = $(this).find(".detail_id").val();
+            let color = $(this).find("select[name='color']").val();
+            let capacity = $(this).find("select[name='capacity']").val();
+            let price = $(this).find("input[name='price']").val();
             jsonData.push({
-                color: selectColor,
-                capacity: selectCapacityArr
+                id: detail_id,
+                color: color,
+                capacity: capacity,
+                price: price
             });
         });
         let brand = $('#brand').val();

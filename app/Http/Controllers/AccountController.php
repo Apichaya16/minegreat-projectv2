@@ -78,7 +78,6 @@ class AccountController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         DB::beginTransaction();
         $acc = new Account();
         $acc->user_id = $request->user_id;

@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">จัดการสินค้า</h5>
@@ -9,7 +9,7 @@
                     </button>
             </div>
             <div class="modal-body">
-                <form class="needs-validation form-product" novalidate>
+                <form class="needs-validation form-product" novalidate autocomplete="off">
                     <div class="form-group">
                         <label for="payment_type">แบรนด์</label>
                         <select name="brand" id="brand" class="form-control" required>

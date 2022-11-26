@@ -48,13 +48,12 @@ class ProductController extends Controller
 
             if (isset($request->product_detail) && count($request->product_detail) > 0) {
                 foreach ($request->product_detail as $pd) {
-                    foreach ($pd['capacity'] as $ca) {
-                        ProductDetail::create([
-                            'product_id' => $newItem->id,
-                            'color' => $pd['color'],
-                            'capacity' => $ca,
-                        ]);
-                    }
+                    ProductDetail::create([
+                        'product_id' => $newItem->id,
+                        'color' => $pd['color'],
+                        'capacity' => $pd['capacity'],
+                        'price' => $pd['price']
+                    ]);
                 }
             }
             DB::commit();
@@ -83,22 +82,27 @@ class ProductController extends Controller
             if ($result) {
                 if (isset($request->product_detail) && count($request->product_detail) > 0) {
                     foreach ($request->product_detail as $pd) {
-                        $olds = ProductDetail::where('product_id', $pId)->where('color', $pd['color'])->withTrashed()->get();
-                        foreach ($olds as $old) {
-                            if (!in_array($old->capacity, $pd['capacity'])) {
-                                $old->delete();
-                            } else if (isset($old->deleted_at)) {
-                                $old->restore();
-                            }
-                        }
-
-                        $result = ProductDetail::where('product_id', $pId)->where('color', $pd['color'])->first();
-                        if (!$result) {
-                            foreach ($pd['capacity'] as $ca) {
+                        $result = ProductDetail::where('id', $pd['id'])->withTrashed()->first();
+                        if (isset($result->deleted_at)) {
+                            $result->restore();
+                            $result->product_id = $pId;
+                            $result->color = $pd['color'];
+                            $result->capacity = $pd['capacity'];
+                            $result->price = $pd['price'];
+                            $result->save();
+                        } else {
+                            if (isset($result)) {
+                                $result->product_id = $pId;
+                                $result->color = $pd['color'];
+                                $result->capacity = $pd['capacity'];
+                                $result->price = $pd['price'];
+                                $result->save();
+                            } else {
                                 ProductDetail::create([
                                     'product_id' => $pId,
                                     'color' => $pd['color'],
-                                    'capacity' => $ca,
+                                    'capacity' => $pd['capacity'],
+                                    'price' => $pd['price']
                                 ]);
                             }
                         }
