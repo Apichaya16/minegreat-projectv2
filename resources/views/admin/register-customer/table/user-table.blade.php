@@ -28,7 +28,7 @@
                     <i class="fas fa-edit"></i>
                 </button>
 
-                <button type="button" class="btn btn-danger btn-sm del" data-id="{{ $user->u_id }}">
+                <button type="button" class="btn btn-danger btn-sm user-delete-btn" data-id="{{ $user->u_id }}">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </td>
