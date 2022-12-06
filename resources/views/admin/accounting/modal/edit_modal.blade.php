@@ -53,8 +53,7 @@
                                 <label>ประเภทการผ่อน</label>
                                 <select name="type" class="form-control" required>
                                     @foreach ($installmentTypes as $it)
-                                    <option value="{{ $it->id }}" {{ ($it->id == $data->type) ? 'selected' : '' }}>{{
-                                        $it->name }}</option>
+                                    <option value="{{ $it->it_id }}" {{ ($it->it_id == $data->type) ? 'selected' : '' }}>{{ $it->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -62,8 +61,7 @@
                                 <label>ประเภทการชำระ</label>
                                 <select name="type_pay" class="form-control" required>
                                     @foreach ($paymentTypes as $pt)
-                                    <option value="{{ $pt->id }}" {{ ($pt->id == $data->type_pay) ? 'selected' : '' }}>{{
-                                        $pt->name }}</option>
+                                    <option value="{{ $pt->id }}" {{ ($pt->id == $data->type_pay) ? 'selected' : '' }}>{{ $pt->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
