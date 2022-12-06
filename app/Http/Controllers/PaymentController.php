@@ -107,6 +107,9 @@ class PaymentController extends Controller
     public function getPaymentById($pId)
     {
         $payment = Payment::where('p_id', $pId)->with('paymentStatus')->first();
+        if ($payment->slip_url) {
+            $payment->slip_url = $payment->getSlipImage();
+        }
         return response()->json(['status' => true, 'message' => 'success', 'data' => $payment]);
     }
 
@@ -129,7 +132,7 @@ class PaymentController extends Controller
                 $file->storeAs("public/" . Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
+                    'slip_url' => Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 
@@ -182,7 +185,7 @@ class PaymentController extends Controller
                 $file->storeAs("public/" . Constands::$SLIP_PATH . $payment->p_id, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
+                    'slip_url' => Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 

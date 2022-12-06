@@ -29,12 +29,22 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
             });
+            bindSelectImage();
             setupDatatable();
             bindClearModal();
             bindOnSubmitBtn();
             bindDeleteBtn();
         });
-
+        function bindSelectImage() {
+            $('#slip_image').on('change', function () {
+                const file = $(this)[0].files[0];
+                if (file) {
+                    let url = URL.createObjectURL(file);
+                    $('#preview_image').prop('src', url);
+                    $('#preview_image').removeClass('d-none');
+                }
+            });
+        }
         function setupDatatable() {
             $('.payment-datatable').DataTable({
                 order: [[0,'desc']],
@@ -89,12 +99,24 @@
             );
         }
         function openModal(id) {
+            showLoading();
             $('.modal-title').text('เพิ่มรายละเอียดการผ่อน');
-            const form = $('.form-create-payment');
-            form[0].reset();
+            $('.form-create-payment')[0].reset();
             $('#pc_id').val(id);
             $('.btn-submit-payment').data('id', null);
-            $('#paymentModal').modal('show');
+            getLastOrderNumber(id);
+        }
+        function getLastOrderNumber(accountId) {
+            $.ajax({
+                type: "GET",
+                url: "{{route('admin.accounting.payment.getOrderNumberByPaymentId', '')}}/" + accountId,
+                success: function (response) {
+                    hideLoading();
+                    const {data} = response;
+                    $('#order_number').val(parseInt(data || 0));
+                    $('#paymentModal').modal('show');
+                }
+            });
         }
         function bindOnSubmitBtn() {
             $('.btn-submit-payment').on('click', function () {
@@ -108,7 +130,6 @@
         }
         function onCreate() {
             const form = $('.form-create-payment');
-            console.log(form);
             if (form[0].checkValidity() === false) {
                 form[0].classList.add('was-validated');
                 return
@@ -126,7 +147,9 @@
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.accounting.payment.create_payment') }}",
-                    data: form.serialize(),
+                    data: new FormData(form[0]),
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         const {status, html} = response;
                         if (status) {
@@ -174,9 +197,11 @@
 
                 showLoading();
                 $.ajax({
-                    type: "PUT",
+                    type: "POST",
                     url: "{{ route('admin.accounting.payment.update_payment', '') }}/" + id,
-                    data: form.serialize(),
+                    data: new FormData(form[0]),
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         const {html} = response;
                         $('#paymentModal').modal('hide');

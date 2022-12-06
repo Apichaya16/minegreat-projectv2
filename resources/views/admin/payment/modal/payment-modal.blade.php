@@ -11,14 +11,14 @@
                 </button>
             </div>
             <div class="modal-body update-form">
-                <form class="needs-validation form-create-payment" novalidate>
+                <form class="needs-validation form-create-payment" novalidate enctype="multipart/form-data">
                     <input type="hidden" id="pc_id" name="pc_id">
                     <input type="hidden" id="filter" name="filter" value="{{ Request::get('filter') }}">
 
                     <div class="row mb-4">
                         <div class="col text-left">
                             <label for="order_number">งวดที่</label>
-                            <input type="text" class="form-control" id="order_number" name="order_number" required>
+                            <input type="text" class="form-control" id="order_number" name="order_number" readonly>
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -40,9 +40,6 @@
                             <input type="time" class="form-control" id="time_payment" name="time_payment" required>
                         </div>
                     </div>
-                    <div class="preview-image">
-                        <img alt="SLIP" class="img-thumbnail d-none" id="preview_image">
-                    </div>
                     <div class="row mb-4">
                         <div class="col text-left">
                             <label for="status_id">สถานะ</label>
@@ -51,6 +48,18 @@
                                     <option value="{{ $ps->id }}">{{ $ps->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="preview-image">
+                                <img alt="SLIP" class="img-thumbnail d-none" id="preview_image">
+                            </div>
+                            <div class="form-group">
+                                <label for="slip_image">แนบสลิป</label>
+                                <input type="file" class="form-control-file" id="slip_image" name="slip_image" required>
+                                <div class="invalid-feedback">กรุณาเลือกรูปสลิป</div>
+                            </div>
                         </div>
                     </div>
                 </form>

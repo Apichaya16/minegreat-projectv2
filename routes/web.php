@@ -55,8 +55,9 @@ Route::group(
             Route::prefix('payment')->group(function () {
                 Route::get('/',  [App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('admin.accounting.payment.index');
                 Route::get('/getPaymentById/{pId}', [\App\Http\Controllers\Admin\PaymentController::class, 'getPaymentById'])->name('admin.accounting.payment.getPaymentById');
+                Route::get('/getOrderNumberByPaymentId/{accountId}', [\App\Http\Controllers\Admin\PaymentController::class, 'getOrderNumberByPaymentId'])->name('admin.accounting.payment.getOrderNumberByPaymentId');
                 Route::post('/create_payment', [\App\Http\Controllers\Admin\PaymentController::class, 'create_payment'])->name('admin.accounting.payment.create_payment');
-                Route::put('/update_payment/{pId}', [\App\Http\Controllers\Admin\PaymentController::class, 'update_payment'])->name('admin.accounting.payment.update_payment');
+                Route::post('/update_payment/{pId}', [\App\Http\Controllers\Admin\PaymentController::class, 'update_payment'])->name('admin.accounting.payment.update_payment');
                 Route::delete('/delete_payment/{pId}', [App\Http\Controllers\Admin\PaymentController::class, 'delete_payment'])->name('admin.accounting.payment.delete_payment');
             });
         });

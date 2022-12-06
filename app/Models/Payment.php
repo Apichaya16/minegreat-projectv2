@@ -28,7 +28,7 @@ class Payment extends Model
     public function getSlipImage()
     {
         if (Storage::disk('public')->exists(Constands::$SLIP_PATH . $this->p_id . '/' . $this->slip_image)) {
-            return Storage::url(Constands::$SLIP_PATH . $this->p_id . '/' . $this->slip_image);
+            return env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $this->p_id . '/' . $this->slip_image);
         }
     }
 }

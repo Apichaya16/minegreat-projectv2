@@ -72,9 +72,18 @@ class PaymentController extends Controller
         return view('admin.payment.index', compact(['accounts', 'payments', 'paymentStatus']));
     }
 
+    public function getOrderNumberByPaymentId($accountId)
+    {
+        $lastOrderNumber = Payment::where('account_id', $accountId)->max('order_number') ?? 0;
+        return response()->json(['status' => true, 'message' => 'success', 'data' => $lastOrderNumber + 1]);
+    }
+
     public function getPaymentById($pId)
     {
         $payment = Payment::find($pId);
+        if ($payment->slip_url) {
+            $payment->slip_url = $payment->getSlipImage();
+        }
         return response()->json(['status' => true, 'message' => 'success', 'data' => $payment]);
     }
 
@@ -94,9 +103,9 @@ class PaymentController extends Controller
 
             if ($request->hasFile('slip_image')) {
                 $file = $request->file('slip_image');
-                $file->storeAs(Constands::$SLIP_PATH . $pay->p_id, $file->getClientOriginalName());
+                $file->storeAs("public/" . Constands::$SLIP_PATH . $pay->p_id, $file->getClientOriginalName());
                 $pay->slip_image = $file->getClientOriginalName();
-                $pay->slip_url = env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $pay->p_id . '/' . $file->getClientOriginalName());
+                $pay->slip_url = Storage::url(Constands::$SLIP_PATH . $pay->p_id . '/' . $file->getClientOriginalName());
                 $pay->save();
             }
 
@@ -148,10 +157,10 @@ class PaymentController extends Controller
 
             if ($request->hasFile('slip_image')) {
                 $file = $request->file('slip_image');
-                $file->storeAs(Constands::$SLIP_PATH . $pId, $file->getClientOriginalName());
+                $file->storeAs("public/" . Constands::$SLIP_PATH . $pId, $file->getClientOriginalName());
                 $payment->update([
                     'slip_image' => $file->getClientOriginalName(),
-                    'slip_url' => env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
+                    'slip_url' => Storage::url(Constands::$SLIP_PATH . $payment->p_id . '/' . $file->getClientOriginalName()),
                 ]);
             }
 
