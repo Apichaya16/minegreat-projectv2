@@ -155,7 +155,7 @@
     </div>
 </div>
 <div class="card mb-3">
-    <div class="card-header">กราฟแสดงจำนวนสินค้าที่ขายได้</div>
+    <div class="card-header">สินค้าขายดี 10 อันดับ</div>
     <div class="card-body">
         <canvas id="barChart"></canvas>
     </div>
@@ -188,26 +188,40 @@ function getProductChart() {
 function setupChart(items) {
     let labels = [];
     let datasets = [];
+    let colors = [];
     items.forEach(item => {
-        let color = getRandomColor();
         labels.push(item.name_en);
-        datasets.push({
-            label: item.name_en,
-            backgroundColor: color,
-            borderColor: color,
-            data: [item.product_count],
-        });
+        datasets.push(`${item.product_count}`);
+        let color = getRandomColor();
+        colors.push(color);
     });
 
     const data = {
         labels: labels,
-        datasets: datasets
+        datasets: [{
+            label: 'จำนวน',
+            data: datasets,
+            backgroundColor: colors
+        }]
     };
 
     const config = {
         type: 'bar',
         data: data,
-        options: {}
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
     };
 
     new Chart(
@@ -228,20 +242,21 @@ function getInstallmentTypeChart() {
 function setupInstallmentTypeChart(items) {
     let labels = [];
     let datasets = [];
+    let colors = [];
     items.forEach(item => {
-        let color = getRandomColor();
         labels.push(item.name);
-        datasets.push({
-            label: item.name,
-            backgroundColor: color,
-            borderColor: color,
-            data: [item.installment_type_count],
-        });
+        datasets.push(`${item.installment_type_count}`);
+        let color = getRandomColor();
+        colors.push(color);
     });
 
     const data = {
         labels: labels,
-        datasets: datasets
+        datasets: [{
+            label: 'จำนวน',
+            data: datasets,
+            backgroundColor: colors
+        }]
     };
 
     const config = {

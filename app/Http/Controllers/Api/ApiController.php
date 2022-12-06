@@ -75,8 +75,10 @@ class ApiController extends Controller
                 WHERE p.is_active = 1
                 AND p.deleted_at IS NULL
                 AND a.deleted_at IS NULL
-                GROUP BY p.id";
-        $datas = DB::select($sql);
+                GROUP BY p.id
+                HAVING COUNT(a.pc_id) > 0
+                ORDER BY COUNT(a.pc_id) DESC";
+        $datas = collect(DB::select($sql))->take(10);
         return response()->json(['status' => true, 'datas' => $datas]);
     }
 

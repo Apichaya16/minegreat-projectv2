@@ -62,10 +62,10 @@ class UserController extends Controller
     {
         $msg = [
             'cid.regex' => 'รูปแบบหมายเลขบัตรประชาชน x-xxxx-xxxxx-xx-x',
-            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น'
+            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลข 0-9 เท่านั้น'
         ];
         $request->validate([
-            'cid' => 'string|regex:/([1-9]{1})-([1-9]{4})-([1-9]{5})-([1-9]{2})-([1-9]{1})/'
+            'cid' => 'string|regex:/([0-9]{1})-([0-9]{4})-([0-9]{5})-([0-9]{2})-([0-9]{1})/'
         ], $msg);
 
         DB::beginTransaction();
@@ -95,12 +95,12 @@ class UserController extends Controller
     public function update(Request $request, $userId)
     {
         $msg = [
-            'cid.regex' => 'รูปแบบหมายเลขบัตรประชาชน x-xxxx-xxxxx-xx-x และต้องเป็นตัวเลขและ "-" เท่านั้น',
-            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลขและ "-" เท่านั้น',
+            'cid.regex' => 'รูปแบบหมายเลขบัตรประชาชน x-xxxx-xxxxx-xx-x และต้องเป็นตัวเลข 0-9 และ "-" เท่านั้น',
+            'cid.string' => 'หมายเลขบัตรประชาชนต้องเป็นตัวเลข 0-9 และ "-" เท่านั้น',
             'cid.max' => 'หมายเลขบัตรประชาชนรวมเครื่องหมาย "-" ต้องไม่เกิน 17 ตัวอักษร'
         ];
         $request->validate([
-            'cid' => 'string|max:17|regex:/([1-9]{1})-([1-9]{4})-([1-9]{5})-([1-9]{2})-([1-9]{1})/'
+            'cid' => 'string|max:17|regex:/([0-9]{1})-([0-9]{4})-([0-9]{5})-([0-9]{2})-([0-9]{1})/'
         ], $msg);
 
         try {
