@@ -206,7 +206,7 @@
         });
     }
     function bindDeleteBtn() {
-        $('.btn-delete').on('click', function () {
+        $(document).on('click', '.btn-delete', function () {
             Swal.fire({
                 icon: 'warning',
                 title: 'ยืนยันการลบข้อมูล?',

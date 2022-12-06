@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group w-100">
-                <label for="capacity">ความจุ</label>
+                <label for="capacity">ความจุ/ขนาด</label>
                 <select name="capacity" class="form-control capacity select2" style="width: 100%" required>
                     @foreach ($capacites as $ca)
                         <option value="{{ $ca->id }}">{{ $ca->size }}</option>
@@ -344,7 +344,7 @@
         });
     }
     function bindDeleteBtn() {
-        $('.btn-delete').on('click', function () {
+        $(document).on('click', '.btn-delete', function () {
             Swal.fire({
                 icon: 'warning',
                 title: 'ยืนยันการลบข้อมูล?',
