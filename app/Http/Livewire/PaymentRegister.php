@@ -39,7 +39,7 @@ class PaymentRegister extends Component
             'capacityProduct' => 'required'
         ]);
 
-        $detail = ProductDetail::where('color', $this->colorProduct)->where('capacity', $this->capacityProduct)->with(['products', 'colors', 'capacities'])->first();
+        $detail = ProductDetail::where('product_id', $this->modelProduct)->where('color', $this->colorProduct)->where('capacity', $this->capacityProduct)->with(['products', 'colors', 'capacities'])->first();
         $this->modelName = $detail->products->name_en;
         $this->colorName = $detail->colors->name_th;
         $this->capacityName = $detail->capacities->size;
