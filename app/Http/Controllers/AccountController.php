@@ -115,7 +115,14 @@ class AccountController extends Controller
     {
         try {
             DB::beginTransaction();
-            Account::where('pc_id', $pcId)->update($request->all());
+            Account::where('pc_id', $pcId)->update([
+                'installment' => $request->installment,
+                'type' => $request->type,
+                'type_pay' => $request->type_pay,
+                'status_type' => $request->status_type,
+                'discount' => $request->discount,
+                'detail_promotion' => $request->detail_promotion,
+            ]);
             DB::commit();
 
             $html = $this->renderTable();
@@ -162,8 +169,54 @@ class AccountController extends Controller
 
     protected function renderTable()
     {
-        $accounts = Account::all();
-        $accounts->load('installmentType', 'statusType', 'user', 'paymentType');
+        // $accounts = Account::all();
+        // $accounts->load('installmentType', 'statusType', 'user', 'paymentType');
+        $sql = "SELECT a.*
+                ,p.name_th AS product_name
+                ,p.desc_th AS product_desc
+                ,p.is_active
+                ,b.name_en AS brand_name
+                ,it.name AS installment_name
+                ,ts.name AS type_name
+                ,ts.color AS type_color
+                ,pt.name AS payment_name
+                ,u.u_id
+                ,u.number_customers
+                ,u.first_name
+                ,u.last_name
+                FROM accounts a
+                LEFT JOIN products p ON p.id = a.product
+                LEFT JOIN brands b ON b.id = p.brand
+                LEFT JOIN installment_types it ON it.it_id = a.`type`
+                LEFT JOIN type_status ts ON ts.s_id = a.status_type
+                LEFT JOIN payment_types pt ON pt.id = a.type_pay
+                LEFT JOIN users u ON u.u_id = a.user_id
+                WHERE a.deleted_at IS NULL
+                ORDER BY a.created_at DESC";
+        $accounts = DB::select($sql);
+        $acIds = collect($accounts)->pluck('pc_id')->toArray();
+
+        $payments = DB::table('payment')->select('payment.*', 'payment_status.name AS status_name', 'payment_status.color AS status_color')
+                    ->whereIn('account_id', $acIds)
+                    ->where('deleted_at', null)
+                    ->leftJoin('payment_status', 'payment_status.id', '=', 'payment.status_id')
+                    ->orderBy('payment.order_number', 'asc')
+                    ->get();
+        foreach ($accounts as $acc) {
+            $balance = (float)$acc->amount_after_discount;
+            $sum = 0;
+            // $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
+            foreach ($payments as $p) {
+                if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
+                    $balance -= $p->amount;
+                    $sum += $p->amount;
+                    $p->sum = $sum;
+                }
+            }
+            $acc->balance_payment = $balance;
+            $acc->percen_current = ($sum / $acc->price) * 100;
+        }
 
         $typeStatus = TypeStatus::all();
         $installmentTypes = InstallmentType::all();

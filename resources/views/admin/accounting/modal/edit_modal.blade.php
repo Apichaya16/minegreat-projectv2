@@ -84,13 +84,11 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label>ส่วนลด</label>
-                                <input type="text" class="form-control" name="discount" value="{{ $data->discount }}"
-                                required>
+                                <input type="text" class="form-control" name="discount" value="{{ $data->discount }}">
                             </div>
                             <div class="col">
                                 <label>รายละเอียดโปรโมชั่น</label>
-                                <input type="text" class="form-control" name="detail_promotion"
-                                    value="{{ $data->detail_promotion }}" required>
+                                <input type="text" class="form-control" name="detail_promotion" value="{{ $data->detail_promotion }}">
                             </div>
                         </div>
 
