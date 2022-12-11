@@ -39,6 +39,18 @@
     {{-- waitme --}}
     <link rel="stylesheet" href="{{ asset('vendor/waitMe/waitMe.min.css') }}">
 
+    <style>
+        #fb-root > div.fb_dialog.fb_dialog_advanced.fb_shrink_active {
+            right: initial !important;
+            left: 18pt;
+            z-index: 9999999 !important;
+        }
+        .fb-customerchat.fb_invisible_flow.fb_iframe_widget iframe {
+            right: initial !important;
+            left: 18pt !important;
+        }
+    </style>
+
     @livewireStyles
     @stack('css')
 
@@ -61,15 +73,6 @@
 
     <div class="container py-4">
         @yield('content')
-
-        {{-- <div
-            class="fb-customerchat"
-            page_id="<ENTER-YOUR-FACEBOOK-ID-HERE>"
-            theme_color="#459645"
-            logged_in_greeting="Hi! How can we help you?"
-            logged_out_greeting="GoodBye!... Hope to see you soon."
-            minimized="false"
-        ></div> --}}
     </div>
 
     @include('customer.layouts.footer')
@@ -103,6 +106,12 @@
     <!-- waitme js -->
 	<script src="{{ asset('vendor/waitMe/waitMe.min.js') }}"></script>
 
+    {{-- Facebook CHAT --}}
+    <div id="fb-root"></div>
+    <div id="fb-customer-chat" class="fb-customerchat"></div>
+    <script src="{{ asset('js/utils/fbsdk.js') }}"></script>
+    {{-- Facebook CHAT --}}
+
     <script>
         $(function () {
             getYearNow();
@@ -111,21 +120,6 @@
             let now = new Date().getFullYear();
             $('#copyright').text(now);
         }
-        // window.fbAsyncInit = function() {
-        //     FB.init({
-        //         appId            : '912333495590130',
-        //         autoLogAppEvents : true,
-        //         xfbml            : true,
-        //         version          : 'v2.11'
-        //     });
-        // };
-        // (function(d, s, id){
-        //     var js, fjs = d.getElementsByTagName(s)[0];
-        //     if (d.getElementById(id)) {return;}
-        //     js = d.createElement(s); js.id = id;
-        //     js.src = "https://connect.facebook.net/en_US/sdk.js";
-        //     fjs.parentNode.insertBefore(js, fjs);
-        // }(document, 'script', 'facebook-jssdk'));
     </script>
 
     @livewireScripts

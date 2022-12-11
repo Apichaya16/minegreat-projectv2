@@ -31,6 +31,9 @@
                             <li class="{{ Route::is('customer.abount') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.abount') }}">เกี่ยวกับเรา</a>
                             </li>
+                            <li class="{{ Route::is('customer.evalution.index') ? 'current-list-item' : '' }} h5">
+                                <a href="{{ route('customer.evalution.index') }}">แบบประเมิน</a>
+                            </li>
                             <li class="{{ Route::is('customer.contact') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.contact') }}">ติดต่อเรา</a>
                             </li>

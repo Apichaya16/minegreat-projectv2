@@ -167,6 +167,10 @@ Route::group(
             return view('customer.contact.index');
         })->name('customer.contact');
 
+        Route::get('/evalution', function () {
+            return view('customer.evalution.index');
+        })->name('customer.evalution.index');
+
         Route::middleware('auth')->group(function () {
             Route::get('/register', function () {
                 return view('customer.payment.payment-register');
