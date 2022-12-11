@@ -45,10 +45,10 @@
                             <label for="product_installment">จำนวนเงินเปิดบิลผ่อน</label>
                             <input type="text" id="product_installment" class="form-control" readonly>
                         </div>
-                        <div class="form-group ml-1">
+                        {{-- <div class="form-group ml-1">
                             <label for="balance">คงเหลือ</label>
                             <input type="text" id="balance" class="form-control" readonly>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -131,21 +131,26 @@
         $('#discount').on('keyup', function (e) {
             let discount = $(this).val() || 0;
             const price = $('#product_price').val();
-            const installment = $('#product_installment').val();
-            let balance = (parseInt(price) - parseInt(installment));
+            // const installment = $('#product_installment').val();
+            // let balance = (parseInt(price) - parseInt(installment));
+            let balance = parseInt(price);
             if (discount > 0 && discount <= balance) {
-                balance = (parseInt(price) - parseInt(installment)) - parseInt(discount);
+                // balance = (parseInt(price) - parseInt(installment)) - parseInt(discount);
+                balance = parseInt(price) - parseInt(discount);
                 $('#amount_after_discount').val(balance);
 
-                let sum = parseInt(installment) + parseInt(discount);
+                // let sum = parseInt(installment) + parseInt(discount);
+                let sum = parseInt(discount);
                 let percen_current = (sum / parseInt(price)) * 100;
                 $('#percen_current').val(percen_current.toFixed(2));
             } else {
-                balance = parseInt(price) - parseInt(installment);
+                // balance = parseInt(price) - parseInt(installment);
+                balance = parseInt(price);
                 $('#amount_after_discount').val(balance);
 
-                let sum = parseInt(installment);
-                let percen_current = (sum / parseInt(price)) * 100;
+                // let sum = parseInt(installment);
+                // let percen_current = (sum / parseInt(price)) * 100;
+                let percen_current = 0;
                 $('#percen_current').val(percen_current.toFixed(2));
             }
         });
@@ -166,7 +171,7 @@
                     let fullName = data.user.first_name + ' ' + data.user.last_name;
                     $('#modalTitle').text(fullName);
                     $('#product_name').val(data.products.name_en);
-                    $('#product_price').val(data.products.price);
+                    $('#product_price').val(data.price);
                     $('#product_installment').val(data.installment);
                     $('#balance').val(data.balance_payment);
                     $('#amount_after_discount').val(data.balance_payment);

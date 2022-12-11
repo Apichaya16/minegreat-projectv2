@@ -82,6 +82,9 @@
                         if (data.slip_url) {
                             $('#preview_image').prop('src', data.slip_url);
                             $('#preview_image').removeClass('d-none');
+                            $('#slip_image').prop('required', false);
+                        } else {
+                            $('#slip_image').prop('required', true);
                         }
                         $('#order_number').val(data.order_number);
                         $('#amount').val(data.amount);

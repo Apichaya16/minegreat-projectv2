@@ -82,7 +82,7 @@ class PaymentRegister extends Component
         try {
             DB::beginTransaction();
 
-            $percen_current = ((int)$this->installment / (int)$this->price) * 100;
+            // $percen_current = ((int)$this->installment / (int)$this->price) * 100;
 
             Account::create([
                 'user_id' => auth()->user()->u_id,
@@ -96,8 +96,8 @@ class PaymentRegister extends Component
                 'installment' => $this->installment,
                 'type_pay' => $this->paymentType,
                 'status_type' => 9,
-                'balance_payment' => $this->balance,
-                'percen_current' => $percen_current,
+                'balance_payment' => $this->price,
+                'percen_current' => 0,
                 // 'percen_consider' => $this->paymentType,
                 // 'detail_promotion' => $this->paymentType
             ]);

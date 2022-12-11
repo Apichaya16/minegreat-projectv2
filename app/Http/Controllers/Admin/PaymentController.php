@@ -54,8 +54,10 @@ class PaymentController extends Controller
                     ->orderBy('payment.order_number', 'asc')
                     ->get();
         foreach ($accounts as $acc) {
-            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $balance = (float)$acc->amount_after_discount;
+            $sum = 0;
+            // $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
                 if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
                     $balance -= $p->amount;
@@ -112,7 +114,8 @@ class PaymentController extends Controller
             $paymentAll = Payment::where('account_id', $request->pc_id)->where('status_id', 2)->get();
             $acc = Account::find($request->pc_id);
             $balance = (float)$acc->amount_after_discount;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $sum = 0;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($paymentAll as $p) {
                 $balance -= $p->amount;
                 $sum += $p->amount;
@@ -167,7 +170,8 @@ class PaymentController extends Controller
             $paymentAll = Payment::where('account_id', $payment->account_id)->where('status_id', 2)->get();
             $acc = Account::find($payment->account_id);
             $balance = (float)$acc->amount_after_discount;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $sum = 0;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($paymentAll as $p) {
                 $balance -= $p->amount;
                 $sum += $p->amount;
@@ -207,7 +211,8 @@ class PaymentController extends Controller
             $paymentAll = Payment::where('account_id', $payment->account_id)->where('status_id', 2)->get();
             $acc = Account::find($payment->account_id);
             $balance = (float)$acc->amount_after_discount;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $sum = 0;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($paymentAll as $p) {
                 $balance -= $p->amount;
                 $sum += $p->amount;
@@ -270,8 +275,10 @@ class PaymentController extends Controller
                     ->orderBy('payment.order_number', 'desc')
                     ->get();
         foreach ($accounts as $acc) {
-            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $balance = (float)$acc->amount_after_discount;
+            $sum = 0;
+            // $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
                 if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
                     $balance -= $p->amount;

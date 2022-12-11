@@ -57,8 +57,10 @@ class AccountController extends Controller
                     ->orderBy('payment.order_number', 'asc')
                     ->get();
         foreach ($accounts as $acc) {
-            $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
-            $sum = (int)$acc->installment + (int)$acc->discount;
+            $balance = (float)$acc->amount_after_discount;
+            $sum = 0;
+            // $balance = (float)$acc->amount_after_discount - (int)$acc->installment;
+            // $sum = (int)$acc->installment + (int)$acc->discount;
             foreach ($payments as $p) {
                 if ($acc->pc_id == $p->account_id && $p->status_id == 2) {
                     $balance -= $p->amount;
@@ -88,14 +90,15 @@ class AccountController extends Controller
         $acc->discount = $request->discount;
         $acc->installment = $request->installment;
         $acc->price = $request->price;
+        $acc->percen_current = 0;
         // $acc->balance_payment = $request->balance_payment;
 
-        if ($request->percen_current) {
-            $percen_current = ((int)$request->installment / (int)$request->price) * 100;
-            $acc->percen_current = $percen_current;
-        } else {
-            $acc->percen_current = $request->percen_current;
-        }
+        // if ($request->percen_current) {
+        //     $percen_current = ((int)$request->installment / (int)$request->price) * 100;
+        //     $acc->percen_current = $percen_current;
+        // } else {
+        //     $acc->percen_current = $request->percen_current;
+        // }
 
         $acc->percen_consider = $request->percen_consider;
         // $acc->amount_consider = $request->price;

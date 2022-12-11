@@ -94,11 +94,11 @@
                             <label>เปอร์เซ็นการพิจารณา</label>
                             <input type="text" class="form-control" value="{{ number_format($data->percen_consider, 2, '.', '') }}" readonly>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label>จำนวนเงินเมื่อถึง % พิจารณา</label>
                             <input type="text" class="form-control"
                                 value="{{ number_format($data->amount_consider, 2) }}" readonly>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
