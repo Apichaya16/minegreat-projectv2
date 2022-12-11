@@ -115,14 +115,17 @@ class AccountController extends Controller
     {
         try {
             DB::beginTransaction();
-            Account::where('pc_id', $pcId)->update([
-                'installment' => $request->installment,
-                'type' => $request->type,
-                'type_pay' => $request->type_pay,
-                'status_type' => $request->status_type,
-                'discount' => $request->discount,
-                'detail_promotion' => $request->detail_promotion,
-            ]);
+            $account = Account::where('pc_id', $pcId)->first();
+            $account->installment = $request->installment;
+            $account->type = $request->type;
+            $account->type_pay = $request->type_pay;
+            $account->status_type = $request->status_type;
+            $account->detail_promotion = $request->detail_promotion;
+
+            $amount_after_discount = (float)$account->price - ((float)$request->discount ?? 0);
+            $account->discount = $request->discount;
+            $account->amount_after_discount = $amount_after_discount;
+            $account->save();
             DB::commit();
 
             $html = $this->renderTable();
