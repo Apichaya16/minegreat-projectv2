@@ -93,10 +93,10 @@
                             <label for="percentPass">เปอร์เซ็นการพิจารณา</label>
                             <input type="text" class="form-control" id="percentPass" readonly>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="priceForPass">จำนวนเงินเมื่อถึง % พิจารณา</label>
                             <input type="text" class="form-control" id="priceForPass" readonly>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

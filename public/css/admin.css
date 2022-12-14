@@ -1,5 +1,24 @@
-.sidebar-dark .nav-item.active .nav-link {
+.sidebar .nav-item .nav-link {
+    color: #ffffff !important;
+}
+.sidebar .nav-item.active .nav-link {
+    background-color: #F28123 !important;
+    color: #ffffff !important;
+}
+.sidebar-orange {
     background-color: #5a5c69 !important;
+}
+.collapse .collapse-item.active {
+    color: #F28123 !important;
+}
+
+.bg-primary {
+    background-color: #F28123 !important;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #F28123 !important;
+    border-color: #F28123 !important;
 }
 
 /* custom input number */

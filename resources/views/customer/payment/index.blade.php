@@ -122,9 +122,9 @@
                 $('#discount').val(data.discount || '-');
                 $('#promotion').val(data.detail_promotion || '-');
                 $('#priceDiscount').val(data.amount_after_discount);
-                $('#percent').val(data.percen_current + " %");
+                $('#percent').val(data.percen_current.toFixed(2) + " %");
                 $('#percentPass').val(data.percen_consider || '-' + " %");
-                $('#priceForPass').val(data.amount_consider);
+                // $('#priceForPass').val(data.amount_consider);
                 $('#showModal').modal('show');
             },
         );
