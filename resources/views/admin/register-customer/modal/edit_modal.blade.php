@@ -57,6 +57,7 @@
                                 id="cid"
                                 name="cid"
                                 placeholder="x-xxxx-xxxxx-xx-x"
+                                onkeyup="autoTab(this);"
                                 required
                             >
 

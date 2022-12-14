@@ -59,6 +59,7 @@
                             name="cid"
                             placeholder="x-xxxx-xxxxx-xx-x"
                             value="{{ old('cid') }}"
+                            onkeyup="autoTab(this);"
                             required
                         >
 
@@ -146,21 +147,37 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $('.submitBtn').on('click', function() {
-            if (!$('.form-add-user')[0].checkValidity()) {
-                $('.form-add-user').addClass('was-validated');
-                return
+<script>
+    function autoTab(obj){
+        var pattern=new String("_-____-_____-__-_"); // กำหนดรูปแบบในนี้
+        var pattern_ex=new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
+        var returnText=new String("");
+        var obj_l=obj.value.length;
+        var obj_l2=obj_l-1;
+        for(i=0;i<pattern.length;i++){
+            if(obj_l2==i && pattern.charAt(i+1)==pattern_ex){
+                returnText+=obj.value+pattern_ex;
+                obj.value=returnText;
             }
-            Swal.fire({
-                title: 'ยืนยันการบันทึกข้อมูล',
-                text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
-                icon: 'warning',
-                confirmButtonText: 'ยืนยัน',
-            }).then(result => {
-                if (!result.isConfirmed) return;
-                $('.form-add-user').submit();
-            });
+        }
+        if(obj_l>=pattern.length){
+            obj.value=obj.value.substr(0,pattern.length);
+        }
+    }
+    $('.submitBtn').on('click', function() {
+        if (!$('.form-add-user')[0].checkValidity()) {
+            $('.form-add-user').addClass('was-validated');
+            return
+        }
+        Swal.fire({
+            title: 'ยืนยันการบันทึกข้อมูล',
+            text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
+            icon: 'warning',
+            confirmButtonText: 'ยืนยัน',
+        }).then(result => {
+            if (!result.isConfirmed) return;
+            $('.form-add-user').submit();
         });
-    </script>
+    });
+</script>
 @endpush

@@ -141,7 +141,7 @@
                     <form action="{{ route('login') }}" method="POST" class="login-form needs-validation" novalidate>
                         @csrf
                         <div class="form-group">
-                            <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+                            <label for="exampleInputEmail1" class="text-uppercase">รหัสลูกค้า</label>
                             <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required>
 
                             @error('username')
@@ -151,7 +151,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                            <label for="exampleInputPassword1" class="text-uppercase">รหัสผ่าน</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                             @error('password')
