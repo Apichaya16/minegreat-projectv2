@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             ผ่านการพิจารณา</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 1)->count() }}
@@ -26,7 +26,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             อยู่ระหว่างการพิจารณา</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 2)->count() }}
@@ -45,7 +45,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             ยกเลิกการผ่อน</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 3)->count() }}
@@ -64,7 +64,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             พักการผ่อน</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 4)->count() }}
@@ -83,7 +83,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             รอตรวจสอบเอกสาร</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 5)->count() }}
@@ -102,7 +102,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             รับสินค้า</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 6)->count() }}
@@ -121,7 +121,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             ค้างชำระ</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 7)->count() }}
@@ -140,7 +140,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             ชำระการผ่อนครบ</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $accounts->where('status_type', 8)->count() }}

@@ -21,6 +21,19 @@
     border-color: #F28123 !important;
 }
 
+.text-primary {
+    color: #F28123 !important;
+}
+
+.page-link {
+    color: #5a5c69 !important;
+}
+.page-item.active .page-link {
+    color: white !important;
+    background-color: #F28123 !important;
+    border-color: #F28123 !important;
+}
+
 /* custom input number */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
