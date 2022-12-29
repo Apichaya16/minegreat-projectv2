@@ -83,7 +83,7 @@ class PaymentController extends Controller
     public function getPaymentById($pId)
     {
         $payment = Payment::find($pId);
-        if ($payment->slip_url) {
+        if (!empty($payment->slip_url)) {
             $payment->slip_url = $payment->getSlipImage();
         }
         return response()->json(['status' => true, 'message' => 'success', 'data' => $payment]);

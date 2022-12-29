@@ -58,9 +58,10 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        $remember_me = $request->has('remember_me') ? true : false;
+
         $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)) {
-            // dd(Auth::check());
+        if (Auth::attempt($credentials, $remember_me)) {
             if (auth()->user()->hasAdmin()) {
                 return redirect()->route('admin.dashboard');
             }

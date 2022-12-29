@@ -17,6 +17,7 @@ class Payment extends Model
     protected $dates = ['deleted_at'];
     protected $table = 'payment';
     protected $primaryKey = 'p_id';
+    protected $keyType = 'string';
 
     protected $fillable = ['account_id', 'amount', 'slip_image', 'slip_url','date_payment', 'order_number', 'status_id'];
 
@@ -30,5 +31,11 @@ class Payment extends Model
         if (Storage::disk('public')->exists(Constands::$SLIP_PATH . $this->p_id . '/' . $this->slip_image)) {
             return env('APP_URL') . Storage::url(Constands::$SLIP_PATH . $this->p_id . '/' . $this->slip_image);
         }
+        return null;
+    }
+
+    public function accounts()
+    {
+        return $this->belongsTo(Account::class, 'account_id');
     }
 }

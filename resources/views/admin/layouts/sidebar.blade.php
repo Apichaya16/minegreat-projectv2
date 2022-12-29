@@ -38,6 +38,13 @@
         </a>
     </li>
 
+    <li class="nav-item {{ Route::is('admin.payment.list.index*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.payment.list.index') }}">
+            <i class="fas fa-rss text-gray-400"></i>
+            <span>รายการชําระใหม่</span>
+        </a>
+    </li>
+
     <li class="nav-item {{ (request()->is('backend/accounting*')) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.accounting.index') }}">
             <i class="fas fa-file-invoice text-gray-400"></i>

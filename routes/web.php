@@ -62,6 +62,10 @@ Route::group(
             });
         });
 
+        Route::prefix('payment/list')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\PaymentListController::class, 'index'])->name('admin.payment.list.index');
+        });
+
         Route::prefix('approve')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ApproveController::class, 'index'])->name('admin.approve.index');
             Route::get('getAccountDetailById/{id}', [App\Http\Controllers\Admin\ApproveController::class, 'getAccountDetailById'])->name('admin.approve.getAccountDetailById');
@@ -170,6 +174,14 @@ Route::group(
         Route::get('/evalution', function () {
             return view('customer.evalution.index');
         })->name('customer.evalution.index');
+
+        Route::get('/payment-detail', function () {
+            return view('customer.payment-detail.index');
+        })->name('customer.payment.detail');
+
+        Route::get('/payment-condition', function () {
+            return view('customer.payment-detail.condition');
+        })->name('customer.payment.condition');
 
         Route::middleware('auth')->group(function () {
             Route::get('/register', function () {

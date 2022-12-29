@@ -21,6 +21,12 @@
                             <li class="{{ Route::is('customer.payment.register') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.payment.register') }}">สนใจสินค้า</a>
                             </li>
+                            <li class="{{ Route::is('customer.payment.detail') ? 'current-list-item' : '' }} h5">
+                                <a href="{{ route('customer.payment.detail') }}">รายละเอียดการผ่อน</a>
+                            </li>
+                            <li class="{{ Route::is('customer.payment.condition') ? 'current-list-item' : '' }} h5">
+                                <a href="{{ route('customer.payment.condition') }}">ข้อตกลงและเงื่อนไขการใช้งาน</a>
+                            </li>
                             @auth
                                 @if (!auth()->user()->hasAdmin())
                                     <li class="{{ Route::is('customer.payment.index*') ? 'current-list-item' : '' }} h5">
@@ -50,6 +56,9 @@
                                     <div class="dropdown">
                                         <a class="mobile-hide dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                             <i class="fas fa-user-circle fa-lg"></i>
+                                            @auth
+                                            {{ Auth::user()->username }}
+                                            @endauth
                                         </a>
                                         <div class="dropdown-menu shadow shadow-md">
                                             @guest

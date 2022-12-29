@@ -160,22 +160,18 @@
                                 </div>
                             @enderror
                         </div>
-
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="remember_me">
+                                <small>Remember Me</small>
+                            </label>
+                        </div>
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <div>
                                 ต้องการ<a href="{{ route('customer.register') }}" class="effect ml-1 mr-1"><span class="text-danger">สมัครสมาชิก</span></a>หรือไม่ ?
                             </div>
                             <button type="submit" class="btn btn-danger" style="border-radius: 5px">เข้าสู่ระบบ</button>
                         </div>
-
-                        {{-- <div class="form-check"> --}}
-                            {{-- <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                                <small>Remember Me</small>
-                            </label> --}}
-                            {{-- <button type="submit" class="btn btn-login float-right">Login</button>
-                        </div> --}}
-
                     </form>
                     {{-- <div class="copy-text">Created with <i class="fa fa-heart"></i> by Grafreez</div> --}}
                 </div>
