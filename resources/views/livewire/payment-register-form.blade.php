@@ -3,9 +3,9 @@
         <div class="d-flex justify-content-center">
             <!-- progressbar -->
             <ul class="progressbar mb-5">
-                <li class="{{ $currentStep != 1 ? '' : 'active' }}"><a href="#" type="button">สินค้า</a></li>
-                <li class="{{ $currentStep != 2 ? '' : 'active' }}"><a href="#" type="button">การผ่อน</a></li>
-                <li class="{{ $currentStep != 3 ? '' : 'active' }}"><a href="#" type="button">ข้อมูลส่วนตัว</a></li>
+                <li class="active"><a href="#" type="button">สินค้า</a></li>
+                <li class="{{ ($currentStep == 2) || ($currentStep == 3) ? 'active' : '' }}"><a href="#" type="button">การผ่อน</a></li>
+                <li class="{{ $currentStep == 3 ? 'active' : '' }}"><a href="#" type="button">ข้อมูลส่วนตัว</a></li>
             </ul>
         </div>
     </div>
@@ -273,6 +273,10 @@
         border-color: #F28123;
         border-width: 2px;
     }
+
+    .swal-wide{
+        width:50em !important;
+    }
 </style>
 @endpush
 
@@ -282,6 +286,38 @@
         Swal.fire(event.detail);
     });
     window.addEventListener('swal:confirm', event => {
+        let consent = `
+        <embed
+            src="{{ asset('assets/img/payment-detail/condition.pdf') }}"
+            type="application/pdf"
+            frameBorder="0"
+            scrolling="auto"
+            height="1080"
+            width="100%"
+        ></embed>
+        `;
+        Swal.fire({
+            title: 'ข้อตกลงและเงื่อนไขการใช้งาน',
+            html: consent,
+            icon: 'warning',
+            customClass: 'swal-wide',
+            showDenyButton: true,
+            confirmButtonText: 'ยอมรับข้อตกลง',
+            denyButtonText: 'ยกเลิก'
+        }).then(result => {
+            if (!result.isConfirmed) return;
+            Swal.fire({
+                title: 'ยืนยันการลงทะเบียน?',
+                icon: 'warning',
+                showDenyButton: true,
+                confirmButtonText: 'ยืนยัน',
+                denyButtonText: 'ยกเลิก'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                window.livewire.emit('submitForm');
+            });
+        });
+        /*
         Swal.fire({
             title: event.detail.title,
             text: event.detail.text,
@@ -295,6 +331,7 @@
                 window.livewire.emit('submitForm');
             }
         });
+        */
     });
     document.addEventListener('livewire:load', function () {
         bindSelectBrand();

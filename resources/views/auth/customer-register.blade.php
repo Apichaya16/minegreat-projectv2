@@ -14,7 +14,6 @@
 	<link rel="shortcut icon" type="image/png" href="{!! asset('assets/img/logo.png') !!}">
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -129,6 +128,9 @@
         .banner-text p {
             color: #fff;
         }
+        .swal-wide{
+            width:50em !important;
+        }
     </style>
 
 </head>
@@ -140,7 +142,7 @@
             <div class="card-body">
                 <h2>สมัครสมาชิก</h2>
                 <form class="needs-validation form-add-user" method="POST" action="{{ route('register') }}" novalidate>
-                @csrf
+                    @csrf
                     <div class="modal-body">
                         <div class="row mb-4">
                             <div class="col-6">
@@ -274,21 +276,43 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('js/utils/sweetAlert.js') }}"></script>
     <script>
-        $('.submitBtn').on('click', function() {
-            if (!$('.form-add-user')[0].checkValidity()) {
-                $('.form-add-user').addClass('was-validated');
-                return
-            }
-            Swal.fire({
-                title: 'ยืนยันการสมัครสมาชิก',
-                text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้อง',
-                icon: 'warning',
-                showDenyButton: true,
-                confirmButtonText: 'ยืนยัน',
-                denyButtonText: 'ยกเลิก'
-            }).then(result => {
-                if (!result.isConfirmed) return;
-                $('.form-add-user').submit();
+        $(function () {
+            $('.submitBtn').on('click', function() {
+                if (!$('.form-add-user')[0].checkValidity()) {
+                    $('.form-add-user').addClass('was-validated');
+                    return
+                }
+                let consent = `
+                <embed
+                    src="{{ asset('assets/img/payment-detail/condition.pdf') }}"
+                    type="application/pdf"
+                    frameBorder="0"
+                    scrolling="auto"
+                    height="1080"
+                    width="100%"
+                ></embed>
+                `;
+                Swal.fire({
+                    title: 'ข้อตกลงและเงื่อนไขการใช้งาน',
+                    html: consent,
+                    icon: 'warning',
+                    customClass: 'swal-wide',
+                    showDenyButton: true,
+                    confirmButtonText: 'ยอมรับข้อตกลง',
+                    denyButtonText: 'ยกเลิก'
+                }).then(result => {
+                    if (!result.isConfirmed) return;
+                    Swal.fire({
+                        title: 'ยืนยันการสมัครสมาชิก?',
+                        icon: 'warning',
+                        showDenyButton: true,
+                        confirmButtonText: 'ยืนยัน',
+                        denyButtonText: 'ยกเลิก'
+                    }).then(result => {
+                        if (!result.isConfirmed) return;
+                        $('.form-add-user').submit();
+                    });
+                });
             });
         });
     </script>

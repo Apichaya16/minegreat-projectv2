@@ -21,11 +21,16 @@
                             <li class="{{ Route::is('customer.payment.register') ? 'current-list-item' : '' }} h5">
                                 <a href="{{ route('customer.payment.register') }}">สนใจสินค้า</a>
                             </li>
-                            <li class="{{ Route::is('customer.payment.detail') ? 'current-list-item' : '' }} h5">
-                                <a href="{{ route('customer.payment.detail') }}">รายละเอียดการผ่อน</a>
-                            </li>
-                            <li class="{{ Route::is('customer.payment.condition') ? 'current-list-item' : '' }} h5">
-                                <a href="{{ route('customer.payment.condition') }}">ข้อตกลงและเงื่อนไขการใช้งาน</a>
+                            <li class="{{ Route::is('customer.payment.detail') || Route::is('customer.payment.condition') ? 'current-list-item' : '' }} h5">
+                                <a href="#">รายละเอียดการผ่อน</a>
+                                <ul class="sub-menu">
+                                    <li class="h5">
+                                        <a href="{{ route('customer.payment.detail') }}">รายละเอียดการผ่อน</a>
+                                    </li>
+                                    <li class="h5">
+                                        <a href="{{ route('customer.payment.condition') }}">ข้อตกลงและเงื่อนไขการใช้งาน</a>
+                                    </li>
+                                </ul>
                             </li>
                             @auth
                                 @if (!auth()->user()->hasAdmin())
