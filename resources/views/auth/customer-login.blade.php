@@ -12,7 +12,7 @@
     <title>Login</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -133,8 +133,8 @@
 
 <body>
 
-    <section class="login-block vh-100 d-flex align-items-center">
-        <div class="container">
+    <section class="login-block min-vh-100 d-flex align-items-center">
+        <div class="container mx-3 mx-md-auto">
             <div class="row">
                 <div class="col-md-4 login-sec">
                     <h2 class="text-center">Login Now</h2>
@@ -173,55 +173,20 @@
                             <button type="submit" class="btn btn-danger" style="border-radius: 5px">เข้าสู่ระบบ</button>
                         </div>
                     </form>
-                    {{-- <div class="copy-text">Created with <i class="fa fa-heart"></i> by Grafreez</div> --}}
+                    <div class="copy-text">
+                        <a href="{{ route('customer.home') }}"><i class="fas fa-home" style="color: #E36262"></i> หน้าหลัก</a>
+                    </div>
                 </div>
-                <div class="col-md-8 banner-sec">
+                <div class="col-md-8 banner-sec d-none d-md-block">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
                         </ol>
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active d-flex justify-content-center">
                                 <img class="d-block img-fluid" src="{{ asset('assets/img/logo.png') }}" alt="logo" width="480px">
-                                {{-- <div class="carousel-caption d-none d-md-block">
-                                    <div class="banner-text">
-                                        <h2>This is Heaven</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation</p>
-                                    </div>
-                                </div> --}}
                             </div>
-                            {{-- <div class="carousel-item">
-                                <img class="d-block img-fluid"
-                                    src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg"
-                                    alt="First slide">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <div class="banner-text">
-                                        <h2>This is Heaven</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid"
-                                    src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg"
-                                    alt="First slide">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <div class="banner-text">
-                                        <h2>This is Heaven</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation</p>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -233,9 +198,6 @@
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    {{-- <script src="{{ asset('js/sb-admin-2.min.js') }}"></script> --}}
 
     <script src="{{ asset('js/utils/validate.js') }}"></script>
 

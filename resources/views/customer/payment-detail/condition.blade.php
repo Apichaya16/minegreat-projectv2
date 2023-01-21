@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <h3 class="py-3">ข้อตกลงและเงื่อนไขการใช้งาน</h3>
     <embed
-        src="{{ asset('assets/img/payment-detail/condition.pdf') }}"
+        src="{{ asset('assets/pdf/condition.pdf') }}"
         type="application/pdf"
         frameBorder="0"
         scrolling="auto"

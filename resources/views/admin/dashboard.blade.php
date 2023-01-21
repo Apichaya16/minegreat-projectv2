@@ -1,5 +1,17 @@
 @extends('admin.layouts.menu')
 @section('name_page', 'สรุปข้อมูลโดยรวม')
+
+@push('css')
+<style>
+.border-left-primary {
+    border-left: .25rem solid #F28123 !important;
+}
+.color-icon {
+    color: #F28123 !important;
+}
+</style>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-xl-3 col-md6 mb-4">
@@ -14,7 +26,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -33,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -52,7 +64,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -71,7 +83,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -90,7 +102,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -109,7 +121,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -128,7 +140,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>
@@ -147,7 +159,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-alt fa-2x color-icon"></i>
                     </div>
                 </div>
             </div>

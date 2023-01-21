@@ -30,6 +30,9 @@
                                     <li class="h5">
                                         <a href="{{ route('customer.payment.condition') }}">ข้อตกลงและเงื่อนไขการใช้งาน</a>
                                     </li>
+                                    <li class="h5">
+                                        <a href="{{ asset('assets/pdf/user-manual.pdf') }}">คู่มือ</a>
+                                    </li>
                                 </ul>
                             </li>
                             @auth

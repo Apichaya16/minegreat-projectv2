@@ -123,9 +123,13 @@ class PaymentController extends Controller
             }
             $percent_current = ($sum / $acc->price) * 100;
 
-            if ((float)$percent_current >= (float)$acc->percen_consider) {
+            if ((float)$percent_current >= (float)$acc->percen_consider && (float)$sum != (float)$acc->amount_after_discount) {
                 Account::find($request->pc_id)->update([
                     'status_type' => 1
+                ]);
+            } else if ((float)$sum >= (float)$acc->amount_after_discount) {
+                Account::find($request->pc_id)->update([
+                    'status_type' => 8
                 ]);
             } else {
                 Account::find($request->pc_id)->update([
@@ -179,12 +183,16 @@ class PaymentController extends Controller
             }
             $percent_current = ($sum / $acc->price) * 100;
 
-            if ((float)$percent_current >= (float)$acc->percen_consider) {
-                Account::find($payment->account_id)->update([
+            if ((float)$percent_current >= (float)$acc->percen_consider && (float)$sum != (float)$acc->amount_after_discount) {
+                Account::find($request->pc_id)->update([
                     'status_type' => 1
                 ]);
+            } else if ((float)$sum >= (float)$acc->amount_after_discount) {
+                Account::find($request->pc_id)->update([
+                    'status_type' => 8
+                ]);
             } else {
-                Account::find($payment->account_id)->update([
+                Account::find($request->pc_id)->update([
                     'status_type' => 2
                 ]);
             }

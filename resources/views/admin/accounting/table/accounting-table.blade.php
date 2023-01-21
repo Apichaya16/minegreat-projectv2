@@ -3,6 +3,7 @@
     <thead class="thead-dark">
         <tr>
             <th>รหัสลูกค้า</th>
+            <th>ชื่อ-นามสกุล</th>
             <th>ประเภทการผ่อน</th>
             <th>ยอดผ่อนคงเหลือ</th>
             <th>% การชำระปัจจุบัน</th>
@@ -14,6 +15,7 @@
         @foreach ($accounts as $index => $data)
         <tr>
             <td>{{ $data->number_customers }}</td>
+            <td>{{ $data->first_name }} {{ $data->last_name }}</td>
             <td>{{ $data->installment_name }}</td>
             <td>{{ number_format($data->balance_payment, 0, '', ',') }}</td>
             <td>{{ number_format($data->percen_current, 2, '.', '') }}</td>

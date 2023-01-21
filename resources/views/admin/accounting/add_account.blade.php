@@ -12,7 +12,7 @@
                 </div>
                 <select class="form-control" name="user_id" aria-label="Default select example" required>
                     @foreach ($users as $user)
-                        <option value="{{ $user->u_id }}">{{ $user->number_customers }}</option>
+                        <option value="{{ $user->u_id }}">{{ $user->number_customers }} {{ $user->getFullName() }}</option>
                     @endforeach
                 </select>
             </div>

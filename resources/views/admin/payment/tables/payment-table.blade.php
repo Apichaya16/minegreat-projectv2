@@ -2,6 +2,7 @@
     <thead class="thead-dark">
         <tr>
             <th>รหัสลูกค้า</th>
+            <th>ชื่อ-นามสกุล</th>
             <th>ประเภทการผ่อน</th>
             <th>ยอดผ่อนคงเหลือ</th>
             <th>% การชำระปัจจุบัน</th>
@@ -13,6 +14,7 @@
         @foreach ($accounts as $index => $data)
             <tr class="text-center">
                 <td>{{ $data->number_customers == '' ? 'not user' : $data->number_customers }}</td>
+                <td class="text-left">{{ $data->first_name }} {{ $data->last_name }}</td>
                 <td>{{ $data->installment_name }}</td>
                 <td>{{ number_format($data->balance_payment, 0, '', ',') }}</td>
                 <td>{{ number_format($data->percen_current, 2, '.', ',') }}</td>
@@ -40,7 +42,7 @@
                 <tr class="text-white">
                     <th class="text-center">งวดที่</th>
                     <th class="text-center" colspan="2">ยอดโอน</th>
-                    <th class="text-center">วันที่โอน</th>
+                    <th class="text-center" colspan="2">วันที่โอน</th>
                     <th class="text-center">ยอดรวมชำระ</th>
                     {{-- <th class="text-center">สถานะ</th> --}}
                     <th class="text-center">จัดการข้อมูล</th>
@@ -52,7 +54,7 @@
                     <tr class="detail-{{ $index }} text-center" style="display: none;">
                         <td>{{ $p->order_number }}</td>
                         <td colspan="2">{{ number_format($p->amount, 0, '', ',') }}</td>
-                        <td>{{ $p->date_payment }}</td>
+                        <td colspan="2">{{ $p->date_payment }}</td>
                         <td>
                             @if (isset($p->sum))
                             {{ number_format($p->sum, 0, '', ',') }}

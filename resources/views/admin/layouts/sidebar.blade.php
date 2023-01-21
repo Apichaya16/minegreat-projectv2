@@ -31,7 +31,7 @@
         </a>
     </li>
 
-    <li class="nav-item {{ Route::is('admin.approve.index*') ? 'active' : '' }}">
+    <li class="nav-item {{ Route::is('admin.approve.index*') ? 'active' : '' }} {{ Route::is('admin.create.accounting') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.approve.index') }}">
             <i class="fas fa-file-invoice text-gray-400"></i>
             <span>ขอเปิดบิลใหม่</span>
@@ -45,7 +45,7 @@
         </a>
     </li>
 
-    <li class="nav-item {{ (request()->is('backend/accounting*')) ? 'active' : '' }}">
+    <li class="nav-item {{ Route::is('admin.accounting.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.accounting.index') }}">
             <i class="fas fa-file-invoice text-gray-400"></i>
             <span>ข้อมูลการผ่อน</span>
