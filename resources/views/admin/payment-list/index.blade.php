@@ -21,7 +21,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>วันที่</th>
+                        <th>วันที่ทำรายการ</th>
                         <th>งวดที่</th>
                         <th>ชื่อ-นามสกุล</th>
                         <th>สินค้า</th>
@@ -38,7 +38,7 @@
                         <td>{{ $p->product_nameen }}</td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('{{ $p->p_id }}');"><i class="fas fa-eye"></i></button>
                                 <button class="btn btn-sm btn-warning ml-1" onclick="openEditModal('{{ $p->p_id }}');"><i class="fas fa-edit"></i></button>
                             </div>
                         </td>
@@ -81,15 +81,47 @@ function bindClearModal() {
         $('#preview_image').prop('src', null);
     })
 }
-function openEditModal(id) {
+function openModal(id) {
     showLoading();
-    $('.modal-title').text('แก้ไขรายละเอียดการผ่อน');
+    $('.modal-title').text('รายละเอียดการผ่อน');
     const url = "{{ route('admin.accounting.payment.getPaymentById', '') }}/" + id
     $.get(url,
         function (resps, textStatus, jqXHR) {
             hideLoading();
             const {data} = resps;
-            console.log(data);
+            if (data) {
+                if (data.slip_url) {
+                    $('#preview_image').prop('src', data.slip_url);
+                    $('#preview_image').removeClass('d-none');
+                }
+                $('#order_number').val(data.order_number);
+                $('#amount').val(data.amount);
+                $('.btn-submit-payment').data('id', id);
+                if (data.date_payment != '') {
+                    let strSplit = data.date_payment.split(' ');
+                    $('#date_payment').val(strSplit[0]);
+                    $('#time_payment').val(strSplit[1]);
+                }
+                $('#status_id').val(data.status_id);
+                $('#paymentModal').modal('show');
+            }
+        },
+    );
+    $('#slip_image').addClass('d-none');
+    $('#order_number').prop('disabled', true);
+    $('#amount').prop('disabled', true);
+    $('#date_payment').prop('disabled', true);
+    $('#time_payment').prop('disabled', true);
+    $('#status_id').prop('disabled', true);
+    $('.btn-submit-payment').addClass('d-none');
+}
+function openEditModal(id) {
+    showLoading();
+    const url = "{{ route('admin.accounting.payment.getPaymentById', '') }}/" + id
+    $.get(url,
+        function (resps, textStatus, jqXHR) {
+            hideLoading();
+            const {data} = resps;
             if (data) {
                 if (data.slip_url) {
                     $('#preview_image').prop('src', data.slip_url);
@@ -103,7 +135,6 @@ function openEditModal(id) {
                 $('.btn-submit-payment').data('id', id);
                 if (data.date_payment != '') {
                     let strSplit = data.date_payment.split(' ');
-                    console.log(strSplit);
                     $('#date_payment').val(strSplit[0]);
                     $('#time_payment').val(strSplit[1]);
                 }
@@ -112,6 +143,13 @@ function openEditModal(id) {
             }
         },
     );
+    $('#slip_image').removeClass('d-none');
+    $('#order_number').prop('disabled', false);
+    $('#amount').prop('disabled', false);
+    $('#date_payment').prop('disabled', false);
+    $('#time_payment').prop('disabled', false);
+    $('#status_id').prop('disabled', false);
+    $('.btn-submit-payment').removeClass('d-none');
 }
 function bindOnSubmitBtn() {
     $('.btn-submit-payment').on('click', function () {
@@ -145,12 +183,14 @@ function onUpdate(id) {
             success: function (response) {
                 const {html} = response;
                 $('#paymentModal').modal('hide');
-                $('#container-table').html(html);
-                setupDatatable();
+                // $('#container-table').html(html);
+                // setupDatatable();
 
                 Swal.fire({
                     icon: 'success',
                     title: 'แก้ไขข้อมูลสำเร็จ'
+                }).then(r=>{
+                    if (r.value) { window.location.reload(); }
                 });
             },
             error: function (error) {
