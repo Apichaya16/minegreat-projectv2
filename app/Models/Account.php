@@ -14,6 +14,7 @@ class Account extends Model
     use Uuids;
     protected $dates = ['deleted_at'];
     protected $primaryKey = 'pc_id';
+    protected $keyType = 'string';
     protected $fillable = [
         'brand',
         'user_id',

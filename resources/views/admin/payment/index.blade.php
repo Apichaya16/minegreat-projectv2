@@ -95,6 +95,7 @@
                             $('#date_payment').val(strSplit[0]);
                             $('#time_payment').val(strSplit[1]);
                         }
+                        $('#pc_id').val(data.account_id);
                         $('#status_id').val(data.status_id);
                         $('#paymentModal').modal('show');
                     }
